@@ -1,0 +1,4 @@
+webpackJsonp([7],{DgPG:/*!*******************************!*\
+  !*** ./assets/js/register.js ***!
+  \*******************************/
+function(c,e,n){(function(c){c(document).ready(function(){c(".colleges-autocomplete").select2()})}).call(e,n(/*! jquery */"7t+N"))}},["DgPG"]);
