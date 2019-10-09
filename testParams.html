@@ -31,16 +31,15 @@
 <body>
       <div class="container">
    <h1>Hello, world!</h1>
-Esta es una prueba
   
-  Parámetros recibidos
+  Parámetros recibidos:
         
 <div class="well well-large" id="divParams">
   aqui van los params
 </div>
   <script>
       var allVars = $.getUrlVars();
-           $("#divParams").text("hola");
+           $("#divParams").text(allVars);
   </script>
                       </div>
 </body>
