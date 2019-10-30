@@ -19,6 +19,11 @@
 <div class="well well-large" id="divParams">
   aqui van los params
 </div>
+	<div class="well well-large" id="divDump">
+  aqui van los params
+</div>
+	      
+	      
   <script>
       var urlParams = new URLSearchParams(window.location.search);
      $("#divParams").text(urlParams.toString());
@@ -60,7 +65,7 @@ for(var key in data) {
     if (key != "")
 	display += "<b>" + key + "</b> : " + data[key] + "<br>";
 }
-document.getElementById("dump").innerHTML =  display;  
+document.getElementById("divDump").innerHTML =  display;  
    }	
 
   </script>
