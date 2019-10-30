@@ -12,7 +12,7 @@
 </head>
 <body>
       <div class="container">
-   <h1>Hello, world ALL!</h1>
+   <h1>Hello, world!</h1>
   
   Parámetros recibidos:
         
@@ -22,7 +22,9 @@
   <script>
       var urlParams = new URLSearchParams(window.location.search);
      $("#divParams").text(urlParams.toString());
+	  console.log("paso 1");
      getHeaders();
+	    console.log("paso 2");
     
    function getHeaders() {
 var req = new XMLHttpRequest();
