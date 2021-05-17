@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<b>Prueba Each Centralita con Arrow =>:</b>
+		<div class="miDIV">DIV A</div>
+		<div class="miDIV">DIV B</div>
+		<div class="miDIV">DIV C</div>
+		
+		<b>Resultado</b>
+		<div id="resultado">
+			
+		</div>
+		<script>
+			$( document ).ready(function() {
+				$('.miDIV').each((i, el) => {
+					$('#resultado').append('[' + i + '] ' + $(el).text() + "<br/>");
+				});
+			});
+		</script>
+	</body>
+</html>
