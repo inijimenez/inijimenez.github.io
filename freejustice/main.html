@@ -522,6 +522,10 @@
         // loads translations from your server
         // https://github.com/i18next/i18next-http-backend
         .use(i18nextHttpBackend)
+        .init({
+          loadPath: './mislocales/{{lng}}/{{ns}}.json',
+          addPath: './moslocales/add/{{lng}}/{{ns}}'
+        })
         // detect user language
         // learn more: https://github.com/i18next/i18next-browser-languageDetector
         .use(i18nextBrowserLanguageDetector)
@@ -529,12 +533,7 @@
         // for all options read: https://www.i18next.com/overview/configuration-options
         .init({
           debug: true,
-          fallbackLng: 'en',
-          backend: {
-            // for all available options read the backend's repository readme file
-            loadPath: './locales/{{lng}}/{{ns}}.json'
-          }
-
+          fallbackLng: 'en'
         }, (err, t) => {
           if (err) return console.error(err);
 
