@@ -531,9 +531,8 @@
           debug: true,
           fallbackLng: 'en',
           backend: {
-            loadPath: './locales/{{lng}}/{{ns}}.json',
-            addPath: './locales/add/{{lng}}/{{ns}}'
-
+            loadPath: './assets/locales/{{lng}}/{{ns}}.json',
+            addPath: './assets/locales/add/{{lng}}/{{ns}}'
           }
         }, (err, t) => {
           if (err) return console.error(err);
