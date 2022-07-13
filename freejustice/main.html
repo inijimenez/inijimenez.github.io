@@ -530,8 +530,11 @@
         .init({
           debug: true,
           fallbackLng: 'en',
-          loadPath: './mislocales/{{lng}}/{{ns}}.json',
-          addPath: './moslocales/add/{{lng}}/{{ns}}'
+          backend: {
+            loadPath: './mislocales/{{lng}}/{{ns}}.json',
+            addPath: './moslocales/add/{{lng}}/{{ns}}'
+
+          }
         }, (err, t) => {
           if (err) return console.error(err);
 
