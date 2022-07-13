@@ -105,6 +105,13 @@
   <section id="hero">
 
     <div class="hero-container video-overlay" data-aos="fade-up">
+
+      <ul class="nav">
+        <li><a href="#" data-i18n="nav.home"></a></li>
+        <li><a href="#" data-i18n="nav.page1"></a></li>
+        <li><a href="#" data-i18n="nav.page2"></a></li>
+      </ul>
+      
       <h1>LA ASISTENCIA JURIDICA GRATUITA</h1>
       <h2>LOS ABOGADOS Y LA DEFENSA EN ESPAÑA</h2>
 
@@ -483,8 +490,10 @@
 
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-
+ <!--- i18 translations -->
+  <script src="https://cdn.jsdelivr.net/npm/i18next@21.6.4/i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-i18next@1.2.1/jquery-i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/i18next-http-backend@1.3.1/i18nextHttpBackend.min.js"></script>
   <!-- Vendor JS Files -->
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -496,24 +505,44 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
-
   <script>
 
 
 
     $(document).ready(function () {
 
-       var matterPortA = 'https://my.matterport.com/show/?m=cEiJgppXVqU&sm=2&sr=-2.24,-.19,-2.91&sp=-1.97,9.72,-2.88';
-       var matterPortB = 'https://my.matterport.com/show/?m=AJmiDVFdSPv&sr=-3.13,-.02&ss=10';
-       var matterPortC = 'https://my.matterport.com/show/?m=vK8DeiSW7Uk&sr=.07,-.84&ss=86';
+
+      // use plugins and options as needed, for options, detail see
+      // https://www.i18next.com
+      i18next
+        // i18next-http-backend
+        // loads translations from your server
+        // https://github.com/i18next/i18next-http-backend
+        .use(i18nextHttpBackend)
+        // detect user language
+        // learn more: https://github.com/i18next/i18next-browser-languageDetector
+        .use(i18nextBrowserLanguageDetector)
+        // init i18next
+        // for all options read: https://www.i18next.com/overview/configuration-options
+        .init({
+          debug: true,
+          fallbackLng: 'en'
+        }, (err, t) => {
+          if (err) return console.error(err);
+
+          
+        });
+
+      var matterPortA = 'https://my.matterport.com/show/?m=cEiJgppXVqU&sm=2&sr=-2.24,-.19,-2.91&sp=-1.97,9.72,-2.88';
+      var matterPortB = 'https://my.matterport.com/show/?m=AJmiDVFdSPv&sr=-3.13,-.02&ss=10';
+      var matterPortC = 'https://my.matterport.com/show/?m=vK8DeiSW7Uk&sr=.07,-.84&ss=86';
 
       function scrollToAnchor(aid) {
         var aTag = $("a[name='" + aid + "']");
         $('html,body').animate({ scrollTop: aTag.offset().top }, 'slow');
       }
 
-      function showMatterPort(strTitle, strUrl)
-      {
+      function showMatterPort(strTitle, strUrl) {
         $('#tourModalTitle').html(strTitle);
         $('#tourModalFrame').attr('src', strUrl);
         $('#tourModal').modal('show');
@@ -537,7 +566,7 @@
         showMatterPort('EL COLEGIO DE ABOGADOS', matterPortC);
       });
 
-  
+
 
       /*
 
