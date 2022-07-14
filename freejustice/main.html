@@ -85,14 +85,21 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#hero" data-i18n="nav.page1">Apertura</a></li>
           <li><a class="nav-link scrollto" href="#about" data-i18n="nav.page2">Acerca de</a></li>
-          <li class="dropdown"><a href="#services" data-i18n="nav.page3"><span>Tour Virtual</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="#services" data-i18n="nav.page3"><span>Tour Virtual</span> <i
+                class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#openTourA" id="menuOpenTourA" data-i18n="nav.page3a">La Policía</a></li>
               <li><a href="#openTourB" id="menuOpenTourB" data-i18n="nav.page3b">El Juzgado</a></li>
-              <li><a href="#openTourC" id="menuOpenTourC"data-i18n="nav.page3c">El Colegio</a></li>
+              <li><a href="#openTourC" id="menuOpenTourC" data-i18n="nav.page3c">El Colegio</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#team" data-i18n="nav.page4">Cierre</a></li>
+          <li>
+            <select name="language" id="languageSwitcher"></select>
+          </li>
+          <li id="languageChangedNotification" style="">
+            <i data-i18n="footer.counter" data-i18n-options='{ "count": 0 }'></i>
+          </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -505,9 +512,27 @@
 
   <script>
 
-function dir(locale) {
-  return locale === "ar" ? "rtl" : "ltr";
-}
+    function dir(locale) {
+      return locale === "ar" ? "rtl" : "ltr";
+    }
+
+    const lngs = {
+      en: { nativeName: 'English' },
+      ar: { nativeName: 'Arabic' },
+      es: { nativeName: 'Spanih' }
+    };
+
+    const rerender = () => {
+      // start localizing, details:
+      // https://github.com/i18next/jquery-i18next#usage-of-selector-function
+      $('body').localize();
+
+      $('title').text($.t('head.title'))
+      $('meta[name=description]').attr('content', $.t('head.description'))
+      $('html').attr('lang', params.get('lang'));
+      $('html').attr('dir', dir(i18next.language));
+    }
+
 
     $(document).ready(function () {
 
@@ -541,7 +566,7 @@ function dir(locale) {
           console.log("inicios deteccion lang");
           if (params.has('lang')) {
             $('html').attr('lang', params.get('lang'));
-            $('html').attr('dir',  dir(i18next.language));
+            $('html').attr('dir', dir(i18next.language));
             i18next.changeLanguage(params.get('lang'));
           }
 
@@ -555,9 +580,30 @@ function dir(locale) {
           jqueryI18next.init(i18next, $, { useOptionsAttr: true });
           // start localizing, details:
           // https://github.com/i18next/jquery-i18next#usage-of-selector-function
-          $('body').localize();
-          $('title').text($.t('head.title'))
-          $('meta[name=description]').attr('content', $.t('head.description'))
+
+          // fill language switcher
+          Object.keys(lngs).map((lng) => {
+            const opt = new Option(lngs[lng].nativeName, lng);
+            if (lng === i18next.resolvedLanguage) {
+              opt.setAttribute("selected", "selected");
+            }
+            $('#languageSwitcher').append(opt);
+          });
+          let languageChangedCounter = 0;
+          $('#languageSwitcher').change((a, b, c) => {
+            const chosenLng = $(this).find("option:selected").attr('value');
+            i18next.changeLanguage(chosenLng, () => {
+              rerender();
+
+              // language changed message
+              languageChangedCounter++;
+              $('#languageChangedNotification').localize({ count: languageChangedCounter })
+              if (languageChangedCounter === 1) {
+                $('#languageChangedNotification').show();
+              }
+            });
+          });
+          rerender();
 
         })
 

@@ -16,5 +16,9 @@
     "page3b": "The Court",
     "page3c": "The Bar Association",
     "page4": "Closing"
+  },
+  "footer": {
+    "counter_one": "Changed language just once",
+    "counter_other": "Changed language already {{count}} times"
   }
 }

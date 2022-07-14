@@ -16,5 +16,9 @@
     "page3b": "El Juzgado",
     "page3c": "El Colegio",
     "page4": "Cierre"
+  },
+  "footer": {
+    "counter_one": "Changed language just once",
+    "counter_other": "Changed language already {{count}} times"
   }
 }
