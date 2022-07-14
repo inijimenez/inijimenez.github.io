@@ -541,13 +541,12 @@
           if (err) return console.error(err);
 
         })
-        .done(function () {
-          console.log("i18n before ready");
-          $('h3').i18n();
-          $('body').i18n();
-          console.log("i18n ready");
-        })
-        
+
+      console.log("i18n before ready");
+      $('h3').i18n();
+      $('body').i18n();
+      console.log("i18n ready");
+
     });
 
     var matterPortA = 'https://my.matterport.com/show/?m=cEiJgppXVqU&sm=2&sr=-2.24,-.19,-2.91&sp=-1.97,9.72,-2.88';
