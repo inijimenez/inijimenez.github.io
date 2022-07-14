@@ -521,6 +521,7 @@
     };
 
     const rerender = () => {
+      console.log("rerender");
       // auto-detect the best lang setting
       const params = new URLSearchParams(window.location.search);
 
@@ -531,6 +532,13 @@
           i18next.changeLanguage(params.get('lang'));
           console.log("cambiando por parámetro E");
         }
+        else{
+          console.log("languageChangedCounter:" + languageChangedCounter);  
+        }
+      }
+      else
+      {
+        console.log("no hay param lang");
       }
 
       // start localizing, details:
@@ -541,8 +549,6 @@
       $('meta[name=description]').attr('content', $.t('head.description'))
       $('html').attr('lang', i18next.language);
       $('html').attr('dir', dir(i18next.language));
-
-      console.log("languageChangedCounter: " + languageChangedCounter);
       $('#video1').attr('src', $.t('video.video1'));
     }
 
