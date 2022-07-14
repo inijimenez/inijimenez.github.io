@@ -1,9 +1,13 @@
 {
+  "head": {
+    "title": "Title AR",
+    "description": "Description AR"
+  },
   "input": {
     "placeholder": "a placeholder"
   },
   "nav": {
-    "home": "Home",
+    "home": "\"يولد جميع الناس أحرارًا ومتساوين في الكرامة والحقوق ، ولأنهم موهوبون بالعقل والضمير ، يجب أن يتصرفوا تجاه بعضهم البعض بروح الإخاء.\"",
     "page1": "Page One",
     "page2": "Page Two"
   }

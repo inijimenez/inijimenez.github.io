@@ -1,9 +1,14 @@
 {
+  "head": {
+    "title": "Title EN",
+    "description": "Description EN"
+  },
+
   "input": {
     "placeholder": "a placeholder"
   },
   "nav": {
-    "home": "All human beings are born free and equal in dignity and rights and, endowed as they are with reason and conscience, they must behave towards one another in a spirit of brotherhood.",
+    "home": "\"All human beings are born free and equal in dignity and rights and, endowed as they are with reason and conscience, they must behave towards one another in a spirit of brotherhood.\"",
     "page1": "Page One",
     "page2": "Page Two"
   }

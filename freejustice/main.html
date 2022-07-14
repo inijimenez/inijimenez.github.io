@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
   <title>La Asistencia Jurídica Gratuita en España</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
@@ -506,7 +505,9 @@
 
   <script>
 
-
+function dir(locale) {
+  return locale === "ar" ? "rtl" : "ltr";
+}
 
     $(document).ready(function () {
 
@@ -540,22 +541,23 @@
           console.log("inicios deteccion lang");
           if (params.has('lang')) {
             $('html').attr('lang', params.get('lang'));
+            $('html').attr('dir',  dir(i18next.language));
             i18next.changeLanguage(params.get('lang'));
-            console.log("lang: " + params.get('lang'));
           }
-          console.log("fin deteccion lang");
-          console.log("1 inicio i18n");
+
+          console.log("Direccion: " + dir(i18next.language));
+
           // for options see
           // https://github.com/i18next/jquery-i18next#initialize-the-plugin
 
 
-         
+
           jqueryI18next.init(i18next, $, { useOptionsAttr: true });
-          console.log("2 inicio i18n");
           // start localizing, details:
           // https://github.com/i18next/jquery-i18next#usage-of-selector-function
           $('body').localize();
-          console.log("3 inicio i18n");
+          $('title').text($.t('head.title'))
+          $('meta[name=description]').attr('content', $.t('head.description'))
 
         })
 
