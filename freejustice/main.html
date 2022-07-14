@@ -537,10 +537,10 @@
           // auto-detect the best lang setting
           const params = new URLSearchParams(window.location.search);
 
-          console.log("inicio deteccion lang");
+          console.log("inicios deteccion lang");
           if (params.has('lang')) {
             $('html').attr('lang', params.get('lang'));
-            $.i18n().locale = params.get('lang');
+            i18next.changeLanguage(params.get('lang'));
             console.log("lang: " + params.get('lang'));
           }
           console.log("fin deteccion lang");
