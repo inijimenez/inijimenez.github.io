@@ -533,9 +533,20 @@
           }
         }, (err, t) => {
           if (err) return console.error(err);
+
+          // auto-detect the best lang setting
+          const params = new URLSearchParams(window.location.search);
+
+          if (params.has('lang')) {
+            $('html').attr('lang', params.get('lang'));
+            $.i18n().locale = params.get('lang');
+          }
           console.log("1 inicio i18n");
           // for options see
           // https://github.com/i18next/jquery-i18next#initialize-the-plugin
+
+
+         
           jqueryI18next.init(i18next, $, { useOptionsAttr: true });
           console.log("2 inicio i18n");
           // start localizing, details:
