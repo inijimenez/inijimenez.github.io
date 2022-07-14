@@ -539,7 +539,7 @@
           }
         }, (err, t) => {
           if (err) return console.error(err);
-
+          console.log("i18n before ready");
           $('body').i18n();
           console.log("i18n ready");
         });
@@ -578,7 +578,6 @@
       showMatterPort('EL COLEGIO DE ABOGADOS', matterPortC);
     });
 
-    });
 
     /*
 
