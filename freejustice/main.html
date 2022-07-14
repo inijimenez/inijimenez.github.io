@@ -595,7 +595,7 @@
               $('html').attr('lang', params.get('lang'));
               $('html').attr('dir', dir(i18next.language));
               i18next.changeLanguage(params.get('lang'));
-              console.log("cambiando por parámetro G");
+              console.log("cambiando por parámetro H");
             }
             else {
               console.log("languageChangedCounter:" + languageChangedCounter);
@@ -605,12 +605,15 @@
             console.log("no hay param lang");
           }
 
+
+
+
         })
 
       // catch the event and make changes accordingly
       i18next.on('languageChanged', (lng) => {
-        console.log("on languageChanged:" + lng);
-        rerender();
+        console.log("on")
+        //rerender();
       });
 
     });
