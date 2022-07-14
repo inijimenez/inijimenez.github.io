@@ -17,6 +17,13 @@
     "page3c": "The Bar Association",
     "page4": "Closing"
   },
+  "content":
+  {
+    "text1": "\"All human beings are born free and equal in dignity and rights and, endowed as they are with reason and conscience, they must behave towards one another in a spirit of brotherhood.\"",
+    "text2": "(Art. 1 of the Declaration of Human Rights approved by the UN on December 10, 1948)",
+    "text3": "Los Abogados y la Defensa de España",
+    "text4":""
+  },
   "video": {
     "video1": "//www.youtube.com/embed/zKDNL6x5kOQ?controls=0&rel=0",
     "video2": "//www.youtube.com/embed/QH2-TGUlwu4?controls=0&rel=0"
