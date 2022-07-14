@@ -511,6 +511,7 @@
   <script src="assets/js/main.js"></script>
 
   <script>
+    let languageChangedCounter = 0;
 
     function dir(locale) {
       return locale === "ar" ? "rtl" : "ltr";
@@ -519,7 +520,7 @@
     const lngs = {
       en: { nativeName: 'English' },
       ar: { nativeName: 'Arabic' },
-      es: { nativeName: 'Spanih' }
+      es: { nativeName: 'Spanish' }
     };
 
     const rerender = () => {
@@ -529,8 +530,18 @@
 
       $('title').text($.t('head.title'))
       $('meta[name=description]').attr('content', $.t('head.description'))
-      $('html').attr('lang', params.get('lang'));
-      $('html').attr('dir', dir(i18next.language));
+      
+      // auto-detect the best lang setting
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.has('lang')) {
+        if (languageChangedCounter === 0) {
+          $('html').attr('lang', params.get('lang'));
+          $('html').attr('dir', dir(i18next.language));
+          i18next.changeLanguage(params.get('lang'));
+          console.log("cambiando por parámetro")
+        }
+      }
     }
 
 
@@ -560,18 +571,6 @@
         }, (err, t) => {
           if (err) return console.error(err);
 
-          // auto-detect the best lang setting
-          const params = new URLSearchParams(window.location.search);
-
-          console.log("inicios deteccion lang");
-          if (params.has('lang')) {
-            $('html').attr('lang', params.get('lang'));
-            $('html').attr('dir', dir(i18next.language));
-            i18next.changeLanguage(params.get('lang'));
-          }
-
-          console.log("Direccion: " + dir(i18next.language));
-
           // for options see
           // https://github.com/i18next/jquery-i18next#initialize-the-plugin
 
@@ -589,7 +588,7 @@
             }
             $('#languageSwitcher').append(opt);
           });
-          let languageChangedCounter = 0;
+
           $('#languageSwitcher').change((a, b, c) => {
             const chosenLng = $(this).find("option:selected").attr('value');
             i18next.changeLanguage(chosenLng, () => {
