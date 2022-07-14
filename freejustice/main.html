@@ -528,7 +528,7 @@
 
       $('title').text($.t('head.title'))
       $('meta[name=description]').attr('content', $.t('head.description'))
-      console.log("Rerender Lang:" +  i18next.language)
+      console.log("Rerender Lang:" + i18next.language)
       $('html').attr('lang', i18next.language);
       $('html').attr('dir', dir(i18next.language));
       $('#video1').attr('src', $.t('video.video1'));
@@ -606,9 +606,15 @@
           }
 
 
-          rerender();
+
 
         })
+
+      // catch the event and make changes accordingly
+      i18next.on('languageChanged', (lng) => {
+        console.log("on languageChanged:" + lng);
+        rerender();
+      });
 
     });
 
