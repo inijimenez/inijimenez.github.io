@@ -535,13 +535,13 @@
 
       // auto-detect the best lang setting
       const params = new URLSearchParams(window.location.search);
-
+      console.log("languageChangedCounter: " + languageChangedCounter);
       if (params.has('lang')) {
         if (languageChangedCounter === 0) {
           $('html').attr('lang', params.get('lang'));
           $('html').attr('dir', dir(i18next.language));
           i18next.changeLanguage(params.get('lang'));
-          console.log("cambiando por parámetro A")
+          console.log("cambiando por parámetro B")
         }
       }
     }
