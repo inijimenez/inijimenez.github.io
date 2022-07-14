@@ -97,7 +97,7 @@
           <li>
             <select name="language" id="languageSwitcher"></select>
           </li>
-          <li id="languageChangedNotification" style="">
+          <li id="languageChangedNotification" style="display:none">
             <i data-i18n="footer.counter" data-i18n-options='{ "count": 0 }'></i>
           </li>
         </ul>
@@ -532,12 +532,12 @@
       $('meta[name=description]').attr('content', $.t('head.description'))
       $('html').attr('lang', i18next.language);
       $('html').attr('dir', dir(i18next.language));
-      
+
       // auto-detect the best lang setting
       const params = new URLSearchParams(window.location.search);
 
       if (params.has('lang')) {
-        if (languageChangedCounter == 0) {
+        if (languageChangedCounter === 0) {
           $('html').attr('lang', params.get('lang'));
           $('html').attr('dir', dir(i18next.language));
           i18next.changeLanguage(params.get('lang'));
