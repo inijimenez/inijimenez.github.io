@@ -521,30 +521,11 @@
     };
 
     const rerender = () => {
-      console.log("rerender");
-      // auto-detect the best lang setting
-      const params = new URLSearchParams(window.location.search);
-
-      if (params.has('lang')) {
-        if (languageChangedCounter === 0) {
-          $('html').attr('lang', params.get('lang'));
-          $('html').attr('dir', dir(i18next.language));
-          i18next.changeLanguage(params.get('lang'));
-          console.log("cambiando por parámetro E");
-        }
-        else{
-          console.log("languageChangedCounter:" + languageChangedCounter);  
-        }
-      }
-      else
-      {
-        console.log("no hay param lang");
-      }
-
+      
+      
       // start localizing, details:
       // https://github.com/i18next/jquery-i18next#usage-of-selector-function
       $('body').localize();
-
       $('title').text($.t('head.title'))
       $('meta[name=description]').attr('content', $.t('head.description'))
       $('html').attr('lang', i18next.language);
@@ -570,6 +551,7 @@
         // for all options read: https://www.i18next.com/overview/configuration-options
         .init({
           debug: true,
+          languages: ['en', 'ar', 'es'],
           fallbackLng: 'en',
           load: 'languageOnly',
           backend: {
@@ -582,7 +564,7 @@
           // for options see
           // https://github.com/i18next/jquery-i18next#initialize-the-plugin
 
-
+          console.log("ResolvedLanguage" + i18next.resolvedLanguage);
 
           jqueryI18next.init(i18next, $, { useOptionsAttr: true });
           // start localizing, details:
@@ -642,22 +624,6 @@
       scrollToAnchor('openTourC');
       showMatterPort('EL COLEGIO DE ABOGADOS', matterPortC);
     });
-
-
-    /*
-    $('.counter').each(function () {
-      $(this).prop('Counter', 0).animate({
-        Counter: $(this).text()
-      }, {
-        duration: 4000,
-        easing: 'swing',
-        step: function (now) {
-          $(this).text(Math.ceil(now));
-        }
-      });
-    });
-*/
-
 
 
   </script>
