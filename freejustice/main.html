@@ -97,9 +97,6 @@
           <li>
             <select name="language" id="languageSwitcher"></select>
           </li>
-          <li id="languageChangedNotification" style="display:none">
-            <i data-i18n="footer.counter" data-i18n-options='{ "count": 0 }'></i>
-          </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -118,7 +115,7 @@
       <h2 data-i18n="app.description">LOS ABOGADOS Y LA DEFENSA EN ESPAÑA</h2>
 
       <div class="ratio ratio-16x9" style="width:70%;height:70%">
-        <iframe src="//www.youtube.com/embed/zKDNL6x5kOQ?controls=0&rel=0" title="YouTube video"
+        <iframe id="video1" title="YouTube video"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen></iframe>
       </div>
@@ -524,6 +521,16 @@
     };
 
     const rerender = () => {
+
+      if (params.has('lang')) {
+        if (languageChangedCounter === 0) {
+          $('html').attr('lang', params.get('lang'));
+          $('html').attr('dir', dir(i18next.language));
+          i18next.changeLanguage(params.get('lang'));
+          console.log("cambiando por parámetro D");
+        }
+      }
+
       // start localizing, details:
       // https://github.com/i18next/jquery-i18next#usage-of-selector-function
       $('body').localize();
@@ -536,14 +543,7 @@
       // auto-detect the best lang setting
       const params = new URLSearchParams(window.location.search);
       console.log("languageChangedCounter: " + languageChangedCounter);
-      if (params.has('lang')) {
-        if (languageChangedCounter === 0) {
-          $('html').attr('lang', params.get('lang'));
-          $('html').attr('dir', dir(i18next.language));
-          i18next.changeLanguage(params.get('lang'));
-          console.log("cambiando por parámetro C");
-        }
-      }
+      $('#video1').attr('src', $.t('video.video1'));
     }
 
 
@@ -596,13 +596,6 @@
             i18next.changeLanguage(chosenLng, () => {
               languageChangedCounter++;
               rerender();
-
-              // language changed message
-            
-              $('#languageChangedNotification').localize({ count: languageChangedCounter })
-              if (languageChangedCounter === 1) {
-                $('#languageChangedNotification').show();
-              }
             });
           });
           rerender();
