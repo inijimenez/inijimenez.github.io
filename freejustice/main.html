@@ -522,25 +522,6 @@
 
     const rerender = () => {
       console.log("rerender");
-      // auto-detect the best lang setting
-      const params = new URLSearchParams(window.location.search);
-
-      if (params.has('lang')) {
-        if (languageChangedCounter === 0) {
-          $('html').attr('lang', params.get('lang'));
-          $('html').attr('dir', dir(i18next.language));
-          i18next.changeLanguage(params.get('lang'));
-          console.log("cambiando por parámetro E");
-        }
-        else{
-          console.log("languageChangedCounter:" + languageChangedCounter);  
-        }
-      }
-      else
-      {
-        console.log("no hay param lang");
-      }
-
       // start localizing, details:
       // https://github.com/i18next/jquery-i18next#usage-of-selector-function
       $('body').localize();
@@ -604,6 +585,26 @@
               rerender();
             });
           });
+
+          // auto-detect the best lang setting
+          const params = new URLSearchParams(window.location.search);
+
+          if (params.has('lang')) {
+            if (languageChangedCounter === 0) {
+              $('html').attr('lang', params.get('lang'));
+              $('html').attr('dir', dir(i18next.language));
+              i18next.changeLanguage(params.get('lang'));
+              console.log("cambiando por parámetro F");
+            }
+            else {
+              console.log("languageChangedCounter:" + languageChangedCounter);
+            }
+          }
+          else {
+            console.log("no hay param lang");
+          }
+
+
           rerender();
 
         })
