@@ -541,7 +541,7 @@
           $('html').attr('lang', params.get('lang'));
           $('html').attr('dir', dir(i18next.language));
           i18next.changeLanguage(params.get('lang'));
-          console.log("cambiando por parámetro B")
+          console.log("cambiando por parámetro C");
         }
       }
     }
@@ -594,10 +594,11 @@
           $('#languageSwitcher').change((a, b, c) => {
             const chosenLng = $(this).find("option:selected").attr('value');
             i18next.changeLanguage(chosenLng, () => {
+              languageChangedCounter++;
               rerender();
 
               // language changed message
-              languageChangedCounter++;
+            
               $('#languageChangedNotification').localize({ count: languageChangedCounter })
               if (languageChangedCounter === 1) {
                 $('#languageChangedNotification').show();
