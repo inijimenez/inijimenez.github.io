@@ -115,7 +115,7 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 <script>
-    var randomNumber = Math.random(); // Generates random number
+    var randomNumber = (new Date()).getTime(); // Generates random number
     document.getElementById("arabic").href = document.getElementById("arabic").href + "&" + randomNumber;
     document.getElementById("spanish").href = document.getElementById("spanish").href + "&" + randomNumber;
     document.getElementById("english").href = document.getElementById("english").href + "&" + randomNumber;
