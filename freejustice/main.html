@@ -522,13 +522,31 @@
 
     const rerender = () => {
       console.log("rerender");
+      // auto-detect the best lang setting
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.has('lang')) {
+        if (languageChangedCounter === 0) {
+          $('html').attr('lang', params.get('lang'));
+          $('html').attr('dir', dir(i18next.language));
+          i18next.changeLanguage(params.get('lang'));
+          console.log("cambiando por parámetro E");
+        }
+        else{
+          console.log("languageChangedCounter:" + languageChangedCounter);  
+        }
+      }
+      else
+      {
+        console.log("no hay param lang");
+      }
+
       // start localizing, details:
       // https://github.com/i18next/jquery-i18next#usage-of-selector-function
       $('body').localize();
 
       $('title').text($.t('head.title'))
       $('meta[name=description]').attr('content', $.t('head.description'))
-      console.log("Rerender Lang:" + i18next.language)
       $('html').attr('lang', i18next.language);
       $('html').attr('dir', dir(i18next.language));
       $('#video1').attr('src', $.t('video.video1'));
@@ -586,35 +604,9 @@
               rerender();
             });
           });
-
-          // auto-detect the best lang setting
-          const params = new URLSearchParams(window.location.search);
-
-          if (params.has('lang')) {
-            if (languageChangedCounter === 0) {
-              $('html').attr('lang', params.get('lang'));
-              $('html').attr('dir', dir(i18next.language));
-              i18next.changeLanguage(params.get('lang'));
-              console.log("cambiando por parámetro H");
-            }
-            else {
-              console.log("languageChangedCounter:" + languageChangedCounter);
-            }
-          }
-          else {
-            console.log("no hay param lang");
-          }
-
-
-
+          rerender();
 
         })
-
-      // catch the event and make changes accordingly
-      i18next.on('languageChanged', (lng) => {
-        console.log("on")
-        //rerender();
-      });
 
     });
 
@@ -653,7 +645,6 @@
 
 
     /*
-
     $('.counter').each(function () {
       $(this).prop('Counter', 0).animate({
         Counter: $(this).text()
