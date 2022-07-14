@@ -521,13 +521,15 @@
     };
 
     const rerender = () => {
+      // auto-detect the best lang setting
+      const params = new URLSearchParams(window.location.search);
 
       if (params.has('lang')) {
         if (languageChangedCounter === 0) {
           $('html').attr('lang', params.get('lang'));
           $('html').attr('dir', dir(i18next.language));
           i18next.changeLanguage(params.get('lang'));
-          console.log("cambiando por parámetro D");
+          console.log("cambiando por parámetro E");
         }
       }
 
@@ -540,8 +542,6 @@
       $('html').attr('lang', i18next.language);
       $('html').attr('dir', dir(i18next.language));
 
-      // auto-detect the best lang setting
-      const params = new URLSearchParams(window.location.search);
       console.log("languageChangedCounter: " + languageChangedCounter);
       $('#video1').attr('src', $.t('video.video1'));
     }
