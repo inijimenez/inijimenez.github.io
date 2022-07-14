@@ -1,15 +1,20 @@
 {
   "head": {
-    "title": "Title EN",
-    "description": "Description EN"
+    "title": "Free Legal Assistance in Spain",
+    "description": "La Asistencia Jurídica Gratuita en España"
   },
-
-  "input": {
-    "placeholder": "a placeholder"
+  "app": {
+    "title": "FREE LEGAL ASSISTANCE",
+    "description": "LAWYERS AND THE DEFENSE OF SPAIN"
   },
   "nav": {
     "home": "\"All human beings are born free and equal in dignity and rights and, endowed as they are with reason and conscience, they must behave towards one another in a spirit of brotherhood.\"",
-    "page1": "Page One",
-    "page2": "Page Two"
+    "page1": "Apertura",
+    "page2": "Acerca de",
+    "page3": "Tour Virtual",
+    "page3a": "La Policía",
+    "page3b": "El Juzgado",
+    "page3c": "El Colegio",
+    "page4": "Cierre"
   }
 }

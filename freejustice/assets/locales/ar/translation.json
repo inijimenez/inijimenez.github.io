@@ -1,14 +1,20 @@
 {
   "head": {
-    "title": "Title AR",
-    "description": "Description AR"
+    "title": "مساعدة قانونية مجانية في إسبانيا",
+    "description": "مساعدة قانونية مجانية في إسبانيا"
   },
-  "input": {
-    "placeholder": "a placeholder"
+  "app": {
+    "title": "مساعدة قانونية مجانية",
+    "description": "المحامون والدفاع عن إسبانيا"
   },
   "nav": {
     "home": "\"يولد جميع الناس أحرارًا ومتساوين في الكرامة والحقوق ، ولأنهم موهوبون بالعقل والضمير ، يجب أن يتصرفوا تجاه بعضهم البعض بروح الإخاء.\"",
-    "page1": "Page One",
-    "page2": "Page Two"
+    "page1": "Opening",
+    "page2": "About",
+    "page3": "Virtual Tour",
+    "page3a": "The Police",
+    "page3b": "The Court",
+    "page3c": "The Bar Association",
+    "page4": "Closing"
   }
 }

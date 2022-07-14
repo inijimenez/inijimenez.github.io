@@ -1,14 +1,23 @@
 {
   "head": {
-    "title": "Title ES",
-    "description": "Description ES"
+    "title": "La Asistencia Jurídica Gratuita en España",
+    "description": "La Asistencia Jurídica Gratuita en España"
+  },
+  "app": {
+    "title": "LA ASISTENCIA JURÍDICA GRATUITA",
+    "description": "LOS ABOGADOS Y LA DEFENSA DE ESPAÑA"
   },
   "input": {
     "placeholder": "a placeholder"
   },
   "nav": {
     "home": "\"Todos los seres humanos nacen libres e iguales en dignidad y derechos y, dotados como están de razón y conciencia, deben comportarse fraternalmente los unos con los otros\"",
-    "page1": "Page One",
-    "page2": "Page Two"
+    "page1": "Apertura",
+    "page2": "Acerca de",
+    "page3": "Tour Virtual",
+    "page3a": "La Policía",
+    "page3b": "El Juzgado",
+    "page3c": "El Colegio",
+    "page4": "Cierre"
   }
 }
