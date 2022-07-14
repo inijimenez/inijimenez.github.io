@@ -528,6 +528,7 @@
 
       $('title').text($.t('head.title'))
       $('meta[name=description]').attr('content', $.t('head.description'))
+      console.log("Rerender Lang:" +  i18next.language)
       $('html').attr('lang', i18next.language);
       $('html').attr('dir', dir(i18next.language));
       $('#video1').attr('src', $.t('video.video1'));
