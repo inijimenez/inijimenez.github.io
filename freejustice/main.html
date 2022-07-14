@@ -539,12 +539,17 @@
           }
         }, (err, t) => {
           if (err) return console.error(err);
+          console.log("1 inicio i18n");
+          // for options see
+          // https://github.com/i18next/jquery-i18next#initialize-the-plugin
+          jqueryI18next.init(i18next, $, { useOptionsAttr: true });
+          console.log("2 inicio i18n");
+          // start localizing, details:
+          // https://github.com/i18next/jquery-i18next#usage-of-selector-function
+          $('body').localize();
+          console.log("3 inicio i18n");
 
         })
-
-      console.log("i18n before ready");
-      $("body").localize();
-      console.log("i18n ready");
 
     });
 
