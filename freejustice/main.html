@@ -540,6 +540,7 @@
           if (params.has('lang')) {
             $('html').attr('lang', params.get('lang'));
             $.i18n().locale = params.get('lang');
+            console.log("lang: " + params.get('lang'));
           }
           console.log("1 inicio i18n");
           // for options see
