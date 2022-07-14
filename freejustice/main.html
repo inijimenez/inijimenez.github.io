@@ -547,11 +547,12 @@
         .use(i18nextHttpBackend)
         // detect user language
         // learn more: https://github.com/i18next/i18next-browser-languageDetector
-        .use(i18nextBrowserLanguageDetector)
+        //.use(i18nextBrowserLanguageDetector)
         // init i18next
         // for all options read: https://www.i18next.com/overview/configuration-options
         .init({
           debug: true,
+          fallbackLng: 'en',
           load: 'languageOnly',
           backend: {
             loadPath: './assets/locales/{{lng}}/{{ns}}.json',
