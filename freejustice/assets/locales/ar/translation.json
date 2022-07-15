@@ -24,7 +24,7 @@
     "text4":""
   },
   "video": {
-    "video1": "//www.youtube.com/embed/W9GUvJv8KD0?controls=0&rel=0",
+    "video1": "//www.youtube.com/embed/W9GUvJv8KD0?controls=0&rel=0&cc_load_policy=1",
     "video2": "//www.youtube.com/embed/QH2-TGUlwu4?controls=0&rel=0"
   }
 }
