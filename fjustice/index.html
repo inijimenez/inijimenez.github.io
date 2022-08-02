@@ -36,6 +36,39 @@
 	============================================= -->
 	<title>Cafe | Canvas</title>
 
+  <style>
+		.feature-box-border-vertical .feature-box { position: relative; }
+
+		.feature-box-border-vertical .feature-box:not(.noborder)::before,
+		.feature-box-border-vertical.border-hover-animate .feature-box:not(.noborder)::after {
+			content: "";
+			position: absolute;
+			top: calc(64px + 13px);
+			left: 59px;
+			width: 2px;
+			height: calc(100% - 90px);
+			background-color: #EEE;
+			z-index: 0;
+		}
+
+		.feature-box-border-vertical.border-hover-animate .feature-box:not(.noborder)::after {
+			background-color: #0F6458;
+			height: 0;
+			transition: height .3s ease-in-out;
+		}
+
+		.feature-box-border-vertical .feature-box:nth-child(1):not(.noborder)::before { background-color: #0F6458; }
+
+		.feature-box-border-vertical.border-hover-animate .feature-box:hover:not(.noborder)::after { height: calc(100% - 90px); }
+
+		.feature-box-border-vertical .fbox-icon i,
+		.feature-box-border-vertical .fbox-border.fbox-light .fbox-icon i {
+			line-height: 60px;
+			font-size: 24px;
+			z-index: 1;
+			text-align: center;
+		}
+	</style>
 </head>
 
 <body class="stretched overlay-menu dark" data-loader-html="<div><img src='images/icons/loader.gif' alt='Loader'></div>">
