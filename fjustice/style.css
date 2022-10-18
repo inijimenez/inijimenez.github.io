@@ -11818,8 +11818,6 @@ body:not(.device-touch) .clients-grid .grid-item a {
 	font-style: italic;
 }
 
-.testi-content p::before,
-.testi-content p::after { content: '"'; }
 
 .testi-meta {
 	margin-top: 10px;
@@ -16809,4 +16807,14 @@ label.checkbox { padding-left: 20px; }
 	animation-name: fadeOutUpSmall;
 }
 
+.leftie 
+{
+	float: left;
+	margin: 0 15px 0 0;
+}
 
+.rightie 
+{
+	float: right;
+	margin: 0 0 0 15px;
+}
