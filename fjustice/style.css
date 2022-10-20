@@ -3578,7 +3578,7 @@ body:not(.top-search-open) .top-search-parent #primary-menu-trigger {
 .svg-trigger path {
 	fill: none;
 	transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
-	stroke: #333;
+	stroke: #fff;
 	stroke-width: 5;
 	stroke-linecap:round;
 }
@@ -3833,7 +3833,7 @@ body:not(.top-search-open) .top-search-parent #primary-menu-trigger {
 		display: none;
 		opacity: 0;
 		pointer-events: none;
-		z-index: 0;
+		z-index: 0;		
 	}
 
 	.menu-container:not(.mobile-primary-menu) {
@@ -11278,7 +11278,8 @@ body:not(.device-touch) .social-icon i {
 .tab-nav li.ui-tabs-active a {
 	position: relative;
 	top: 1px;
-	background-color: #FFF;
+	background-color: #39567D;
+    color: #fff;
 }
 
 
@@ -13624,9 +13625,9 @@ h3.titular-title { font-size: 2rem; }
 .emphasis-title h2 {
 	margin-bottom: 0;
 	font-weight: 700;
-	text-transform: uppercase;
+	text-transform: uppercase!important;
 	letter-spacing: 1px;
-	color: #333;
+	color: #39567D;
 }
 
 .emphasis-title h1,
