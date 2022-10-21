@@ -2241,7 +2241,7 @@ body:not(.top-search-open .top-search-parent) .header-misc > *:not(#top-search) 
   height: 32px;
   font-size: 32px;
   text-align: center;
-  color: #222;
+  color: #fff;
 }
 @media (max-width: 767.98px) {
   .one-page-arrow {
