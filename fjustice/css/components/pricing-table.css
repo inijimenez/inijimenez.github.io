@@ -273,7 +273,7 @@
 }
 
 .pricing--yama .pricing--title {
-	font-family: 'Playfair Display', serif;
+	font-family: 'Ubuntu', sans-serif !important;
 	font-size: 2.35em;
 	font-weight: 900;
 	line-height: 1;

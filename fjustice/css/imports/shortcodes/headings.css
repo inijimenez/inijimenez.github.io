@@ -78,7 +78,7 @@ h3.titular-title {
 .heading-block h4 {
   margin-bottom: 0;
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: uppercase!important;
   letter-spacing: 1px;
   color: #333333;
 }

@@ -3137,7 +3137,7 @@ website:   	http://www.themepunch.com
         line-height: 25px;
         font-weight: 700;
         font-style: italic;
-        font-family: ""Playfair Display"";
+        font-family: 'Ubuntu', sans-serif !important;
         padding: 0px 0px 10px 0px;
         text-decoration: none;
         text-align: left;
@@ -3229,7 +3229,7 @@ website:   	http://www.themepunch.com
         line-height: 25px;
         font-weight: 700;
         font-style: italic;
-        font-family: "Playfair Display";
+        font-family: 'Ubuntu', sans-serif !important;
         padding: 0px 0px 10px 0px;
         text-decoration: none;
         text-align: left;
@@ -3355,7 +3355,7 @@ website:   	http://www.themepunch.com
         line-height: 70px;
         font-weight: 400;
         font-style: normal;
-        font-family: "Playfair Display";
+        font-family: 'Ubuntu', sans-serif !important;;
         padding: 0px 0px 0px 0px;
         text-decoration: none;
         text-align: center;
@@ -3462,7 +3462,7 @@ website:   	http://www.themepunch.com
         line-height: 50px;
         font-weight: 400;
         font-style: normal;
-        font-family: "Playfair Display";
+        font-family: 'Ubuntu', sans-serif !important;
         padding: 0px 0px 0px 0px;
         text-decoration: none;
         text-align: left;
@@ -3479,7 +3479,7 @@ website:   	http://www.themepunch.com
         line-height: 50px;
         font-weight: 400;
         font-style: normal;
-        font-family: "Playfair Display";
+        font-family: 'Ubuntu', sans-serif !important;
         padding: 0px 0px 0px 0px;
         text-decoration: none;
         text-align: left;
@@ -3497,7 +3497,7 @@ website:   	http://www.themepunch.com
         line-height: 40px;
         font-weight: 400;
         font-style: normal;
-        font-family: "Playfair Display";
+        font-family: 'Ubuntu', sans-serif !important;
         padding: 0 0 0 0px;
         text-decoration: none;
         background-color: transparent;
@@ -3626,7 +3626,7 @@ website:   	http://www.themepunch.com
         line-height: 40px;
         font-weight: 400;
         font-style: normal;
-        font-family: "Playfair Display";
+        font-family: 'Ubuntu', sans-serif !important;
         padding: 0 0 0 0px;
         text-decoration: none;
         background-color: transparent;
@@ -4383,7 +4383,7 @@ tp-caption.Team-Thumb,
     line-height: 40px;
     font-weight: 400;
     font-style: normal;
-    font-family: "Playfair Display";
+    font-family: 'Ubuntu', sans-serif !important;
     padding: 0 0 0 0px;
     text-decoration: none;
     background-color: transparent;

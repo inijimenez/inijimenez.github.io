@@ -124,7 +124,7 @@ website:    http://www.themepunch.com
         font-size: 40px;
         line-height: 30px;
         font-weight: 400;
-        font-family: "Playfair Display";
+        font-family: 'Ubuntu', sans-serif !important;
         width: 50px;
         margin-right: 17px;
         display: inline-block;
@@ -154,7 +154,7 @@ website:    http://www.themepunch.com
         font-size: 20px;
         line-height: 20px;
         font-weight: 400;
-        font-family: "Playfair Display";
+        font-family: 'Ubuntu', sans-serif !important;
         position: relative;
         padding-top: 10px;
         padding-left: 30px;
