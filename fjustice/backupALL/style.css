@@ -5,7 +5,7 @@
 	Description: The Multi-Purpose Template
 	Author: SemiColonWeb
 	Author URI: http://themeforest.net/user/semicolonweb
-	Version: 6.6.4
+	Version: 6.6.3
 
 -----------------------------------------------------------------------------------*/
 
@@ -146,7 +146,7 @@ dl, dt, dd, ol, ul, li {
 }
 
 ::selection {
-	background: #39567D;
+	background: #39567D
 	color: #FFF;
 	text-shadow: none;
 }
@@ -3578,7 +3578,7 @@ body:not(.top-search-open) .top-search-parent #primary-menu-trigger {
 .svg-trigger path {
 	fill: none;
 	transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
-	stroke: #333;
+	stroke: #fff;
 	stroke-width: 5;
 	stroke-linecap:round;
 }
@@ -3833,7 +3833,7 @@ body:not(.top-search-open) .top-search-parent #primary-menu-trigger {
 		display: none;
 		opacity: 0;
 		pointer-events: none;
-		z-index: 0;
+		z-index: 0;		
 	}
 
 	.menu-container:not(.mobile-primary-menu) {
@@ -11279,7 +11279,7 @@ body:not(.device-touch) .social-icon i {
 	position: relative;
 	top: 1px;
 	background-color: #39567D;
-	color:#fff;
+    color: #fff;
 }
 
 
@@ -11461,6 +11461,7 @@ body:not(.device-touch) .social-icon i {
 	border: 1px solid #DDD;
 	border-top: 0;
 	padding: 20px;
+
 }
 
 
@@ -11819,8 +11820,6 @@ body:not(.device-touch) .clients-grid .grid-item a {
 	font-style: italic;
 }
 
-.testi-content p::before,
-.testi-content p::after { content: '"'; }
 
 .testi-meta {
 	margin-top: 10px;
@@ -13627,7 +13626,7 @@ h3.titular-title { font-size: 2rem; }
 .emphasis-title h2 {
 	margin-bottom: 0;
 	font-weight: 700;
-	text-transform: uppercase;
+	text-transform: uppercase!important;
 	letter-spacing: 1px;
 	color: #39567D;
 }
@@ -14348,7 +14347,6 @@ body:not(.device-touch) #gotoTop {
 
 #copyrights {
 	padding: 40px 0;
-	background-color: #DDD;
 	font-size: 0.875rem;
 	line-height: 1.8;
 }
@@ -16809,7 +16807,6 @@ label.checkbox { padding-left: 20px; }
 	-webkit-animation-name: fadeOutUpSmall;
 	animation-name: fadeOutUpSmall;
 }
-
 
 .leftie 
 {
