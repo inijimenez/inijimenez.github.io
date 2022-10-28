@@ -1,0 +1,31 @@
+{
+    "@metadata": {
+      "authors": [
+        "Iñigo Jimenez"
+      ],
+      "last-updated": "2022-10-28",
+      "locale": "en",
+      "other-metadata": "sample json format"
+    },
+    "menu.home": "Home",
+    "menu.about": "About",
+    "menu.introduction": "Introduction",
+    "menu.virtualtour": "Virtual Tour",
+    "menu.contact": "Contact",
+    "app-title": "LEGAL AID SYSTEM IN SPAIN",
+    "app-subtitle": "How the Free Legal Assistance system works in Spain",
+    "welcome.1":"I hope that this virtual visit will be useful to you and that you can get an idea of ​​how free legal assistance works in Spain, a system of which all of us in the legal profession are very proud.",
+    "welcome.2":"Many Thanks",
+    "welcome.3":"President of Spanish Bar Association",
+    "virtual.1.title":"THE POLICE",
+    "virtual.1.subtitle":"Lawyers and defence in the sphere of criminal law",
+    "virtual.2.title":"THE COURT HOUSE",
+    "virtual.2.subtitle":"Lawyers and defence on other jurisdictions",    
+    "virtual.3.title":"THE BAR ASSOCIATION",
+    "virtual.3.subtitle":"Organization of the legal profession in Spain",
+    "welcome": "Welcoming message. Should be friendly.",
+    "letter": "Notification about letter from someone. Should be informal.",
+    "letters": "Total letters count.",
+    "copyright": "The name of the site (transliterated) and copyrights.",
+    "about": "Link to About Us page. The URL should contain the proper locale."
+  }

@@ -1,0 +1,31 @@
+{
+  "@metadata": {
+    "authors": [
+      "Iñigo Jimenez"
+    ],
+    "last-updated": "2022-10-28",
+    "locale": "es",
+    "other-metadata": "sample json format"
+  },
+  "menu.home": "Home",
+  "menu.about": "Acerca de",
+  "menu.introduction": "Introducción",
+  "menu.virtualtour": "Tour Virtual",
+  "menu.contact": "Contacto",
+  "app-title": "EL SISTEMA DE JUSTICIA GRATUITA EN ESPAÑA",
+  "app-subtitle":"Cómo funciona el sistema de Justicia Gratuita en España",
+  "welcome.1":"Espero que esta visita virtual os sea de utilidad y podáis haceros una idea de cómo funciona la asistencia jurídica gratuita en España, un sistema del que todos los que ejercemos la abogacía nos sentimos muy orgullosos.",
+  "welcome.2":"Muchas gracias",
+  "welcome.3":"Presidenta del Consejo General de la Abogacía Española",
+  "virtual.1.title":"LA POLICÍA",
+  "virtual.1.subtitle":"Lawyers and defence in the sphere of criminal law",
+  "virtual.2.title":"EL JUZGADO",
+  "virtual.2.subtitle":"Lawyers and defence on other jurisdictions",    
+  "virtual.3.title":"EL COLEGIO DE ABOGADOS",
+  "virtual.3.subtitle":"Organization of the legal profession in Spain",
+  "welcome": "Welcoming message. Should be friendly.",
+  "letter": "Notification about letter from someone. Should be informal.",
+  "letters": "Total letters count.",
+  "copyright": "The name of the site (transliterated) and copyrights.",
+  "about": "Link to About Us page. The URL should contain the proper locale."
+}
