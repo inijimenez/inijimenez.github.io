@@ -21,7 +21,21 @@
 	<link rel="stylesheet" href="css/custom.css" type="text/css" />
 	<link rel="stylesheet" href="css/jquery.mb.YTPlayer.min.css" media="all" type="text/css">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-
+<style>
+	.bg_video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 56.25vw;
+  /* 9/16*100 = 56.25 */
+  min-height: 100vh;
+  min-width: 177.77vh;
+  /* 16/9*100 = 177.77 */
+}
+</style>
 
 	<!-- Document Title
 	============================================= -->
@@ -29,6 +43,8 @@
 </head>
 
 <body class="stretched" data-spy="scroll" data-target="#primary-menu" data-offset="1000">
+
+
 
 	<!-- Document Wrapper
 	============================================= -->
@@ -127,7 +143,8 @@
 						</div>
 						<div class="swiper-slide dark">
 							<div class="embed-responsive embed-responsive-16by9">								
-								<div id="video_main" class="player" data-property="{videoURL:'https://youtu.be/LR67_ppVc1k',containment:'body',autoPlay:true, mute:true, startAt:0, opacity:1}"></div>								
+								    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    							<div id="video_main_player" class="bg_video"></div>
 							</div>
 						</div>
 					</div>
@@ -2253,10 +2270,36 @@
 	============================================= -->
 	<div id="gotoTop" class="icon-angle-up"></div>
 
+	<script>
+		console.log("inyección INICIO");
+		var tag = document.createElement('script');
+		tag.src = "//www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		console.log("inyección FIN");
+
+		// 3. This function creates an <iframe> (and YouTube player)
+		//    after the API code downloads.
+		var player;
+		function onYouTubeIframeAPIReady() {
+			console.log("onYouTubeIframeAPIReady BEGIN");
+			player = new YT.Player('video_main_player', {
+					
+			});
+			console.log("onYouTubeIframeAPIReady END");
+		}
+
+	</script>
+
+
 	<!-- JavaScripts
 	============================================= -->
+
+
+
 	<script src="js/jquery.js"></script>
 	<script src="js/plugins.min.js"></script>
+	
 
 
 	<!-- Footer Scripts
@@ -2271,18 +2314,17 @@
 	<script src="js/jquery.i18n/jquery.i18n.parser.js"></script>
 	<script src="js/jquery.i18n/jquery.i18n.emitter.js"></script>
 	<script src="js/jquery.i18n/jquery.i18n.emitter.bidi.js"></script>
-	<script src="js/jquery.mb.YTPlayer.js"></script>
+
 
 
 
 	<script>
-
-
-		function changeVideo(idVideo, url)
+		function changeVideo(idPlayer, idVideo)
 		{	
-			console.log("INICIO changeVideo:" + idVideo + " url:" + url);
-			$("#video_main").YTPChangeMovie({videoURL:url,ratio:'4/3'});
-			console.log("FIN changeVideo:" + idVideo + " url:" + url);
+			console.log("INICIO changeVideo:" + idPlayer + " url:" + idVideo);			
+			player.curlVideoById({'videoId': idVideo});
+			console.log("Change Video:" + idVideo);
+			console.log("FIN changeVideo:" + idPlayer + " url:" + idVideo);
 		}
 
 		function updateText() {
@@ -2301,15 +2343,15 @@
 					// Change URL's
 					var url = $.i18n('virtual.1.video.1', 'NO URL');
 					console.log("URL VIDEO:" + url);
-					changeVideo("video_main", url);
+					changeVideo("video_main_player", url);
 				});
 		}
 		// Enable debug
 		$.i18n.debug = true;
 
 		$(function () {
-			console.log("ready!");
-			updateText();
+			console.log("ready!");			
+			//updateText();
 			$('#select-lang').on('change keyup', updateText);
 			//$.i18n( {locale: 'es'} );			
 		});
