@@ -2270,26 +2270,6 @@
 	============================================= -->
 	<div id="gotoTop" class="icon-angle-up"></div>
 
-	<script>
-		console.log("inyección INICIO");
-		var tag = document.createElement('script');
-		tag.src = "//www.youtube.com/iframe_api";
-		var firstScriptTag = document.getElementsByTagName('script')[0];
-		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-		console.log("inyección FIN");
-
-		// 3. This function creates an <iframe> (and YouTube player)
-		//    after the API code downloads.
-		var player;
-		function onYouTubeIframeAPIReady() {
-			console.log("onYouTubeIframeAPIReady BEGIN");
-			player = new YT.Player('video_main_player', {
-					
-			});
-			console.log("onYouTubeIframeAPIReady END");
-		}
-
-	</script>
 
 
 	<!-- JavaScripts
@@ -2319,15 +2299,24 @@
 
 
 	<script>
+
+		var main_player;
+
+		function onYouTubeIframeAPIReady () {
+			console.log("aqui voy onYouTubeIframeAPIReady!!!");
+			//player = new YT.player('video_main_player',  {videoId: 'YE7VzlLtp-4'});
+		}
+
 		function changeVideo(idPlayer, idVideo)
 		{	
 			console.log("INICIO changeVideo:" + idPlayer + " url:" + idVideo);			
-			player.curlVideoById({'videoId': idVideo});
+			main_player.cueVideoById({'videoId': idVideo});
 			console.log("Change Video:" + idVideo);
 			console.log("FIN changeVideo:" + idPlayer + " url:" + idVideo);
 		}
 
 		function updateText() {
+			console.log("updateText");
 			var i18n = $.i18n(), language;
 			language = $('#select-lang').val();
 
@@ -2349,12 +2338,23 @@
 		// Enable debug
 		$.i18n.debug = true;
 
-		$(function () {
-			console.log("ready!");			
-			//updateText();
+		$(document).ready(function() {			
+			console.log("document ready!");	
+			updateText();
+			$.getScript("https://www.youtube.com/iframe_api", function() {
+				loadVideos();
+			});
+
 			$('#select-lang').on('change keyup', updateText);
-			//$.i18n( {locale: 'es'} );			
 		});
+
+		function loadVideos() {
+
+			window.YT.ready(function() {
+					console.log("window.YT.ready");					
+					main_player = new window.YT.Player("video_main_player", {videoId: "LR67_ppVc1k"});
+			});
+		}
 
 		function dir(locale) {
 			return locale === "ar" ? "rtl" : "ltr";
