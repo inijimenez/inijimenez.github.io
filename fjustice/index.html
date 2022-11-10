@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="css/animate.css" type="text/css" />
 	<link rel="stylesheet" href="css/magnific-popup.css" type="text/css" />
 	<link rel="stylesheet" href="css/custom.css" type="text/css" />
+	<link rel="stylesheet" href="css/jquery.mb.YTPlayer.min.css" media="all" type="text/css">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
@@ -125,10 +126,8 @@
 							</div>
 						</div>
 						<div class="swiper-slide dark">
-							<div class="embed-responsive embed-responsive-16by9">
-								<iframe style="min-width:280px; min-height:157px;" width="560px" height="315px"
-									class="embed-responsive-item" src="https://www.youtube.com/embed/0kEFwWZdTbo"
-									allowfullscreen></iframe>
+							<div class="embed-responsive embed-responsive-16by9">								
+								<div id="video_main" class="player" data-property="{videoURL:'https://youtu.be/LR67_ppVc1k',containment:'body',autoPlay:true, mute:true, startAt:0, opacity:1}"></div>								
 							</div>
 						</div>
 					</div>
@@ -2272,20 +2271,18 @@
 	<script src="js/jquery.i18n/jquery.i18n.parser.js"></script>
 	<script src="js/jquery.i18n/jquery.i18n.emitter.js"></script>
 	<script src="js/jquery.i18n/jquery.i18n.emitter.bidi.js"></script>
+	<script src="js/jquery.mb.YTPlayer.js"></script>
+
+
+
 	<script>
 
-		function changeVideo(idFrame, url)
-		{
-			var video = $('<iframe/>', {
-				id: 'video_'+idFrame,
-				src: url,
-				width: 420,
-				height: 315,
-				allowfullscreen: '',
-				frameborder: '0'
-			});
-			debugger;
-			$("#" + idFrame).append(video);
+
+		function changeVideo(idVideo, url)
+		{	
+			console.log("INICIO changeVideo:" + idVideo + " url:" + url);
+			$("#video_main").YTPChangeMovie({videoURL:url,ratio:'4/3'});
+			console.log("FIN changeVideo:" + idVideo + " url:" + url);
 		}
 
 		function updateText() {
@@ -2304,7 +2301,7 @@
 					// Change URL's
 					var url = $.i18n('virtual.1.video.1', 'NO URL');
 					console.log("URL VIDEO:" + url);
-					changeVideo("frm.virtual.1.video.1",url);
+					changeVideo("video_main", url);
 				});
 		}
 		// Enable debug
