@@ -144,7 +144,7 @@
 						<div class="swiper-slide dark">
 							<div class="embed-responsive embed-responsive-16by9">								
 								    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    							<div id="video_main_player" class="bg_video"></div>
+    							<div id="video_player_0" class="bg_video"></div>
 							</div>
 						</div>
 					</div>
@@ -194,9 +194,7 @@
 					<div class="heading-block center m-0" style="padding: 100px;">
 						<h2 style="font-size: 52px;" data-i18n="menu.introduction">INTRODUCTION</h2>
 						<div class="embed-responsive embed-responsive-16by9">
-							<iframe style="min-width:280px; min-height:157px;" width="560px" height="315px"
-								class="embed-responsive-item" src="https://www.youtube.com/embed/ZQfkQfz-G5A"
-								allowfullscreen></iframe>
+							<div id="video_player_1" width="560px" height="315px"></div>
 						</div>
 					</div>
 				</div>
@@ -263,14 +261,6 @@
 												<div class="row gutter-40 col-mb-80">
 													<div class="postcontent col-lg-9">
 														<div id="posts" class="post-timeline">
-															<div class="entry">
-																<div class="entry-timeline"> 00 <span>sec-A</span>
-																	<div class="timeline-divider"></div>
-																</div>
-																<div class="entry-content">
-																	<div class="entry-image" id="frm.virtual.1.video.1">aqui voyu</div>
-																</div>
-															</div>
 															<div class="entry">
 																<div class="entry-timeline"> 01 <span>sec-A</span>
 																	<div class="timeline-divider"></div>
@@ -397,14 +387,13 @@
 																</div>
 															</div>
 															<div class="entry">
-																<div class="entry-timeline"> 00 <span>sec-A</span>
+																<div class="entry-timeline"> 00v <span>sec-A</span>
 																	<div class="timeline-divider"></div>
 																</div>
 																<div class="entry-content">
-																	<div class="entry-image"> <iframe width="560"
-																			height="315"
-																			src="https://www.youtube.com/embed/e-afIIjdh04"
-																			allowfullscreen></iframe> </div>
+																	<div class="entry-image">
+																		<div id="video_player_2" width="560px" height="315px"></div>
+																	</div>	
 																</div>
 															</div>
 															<div class="entry">
@@ -886,10 +875,9 @@
 																	<div class="timeline-divider"></div>
 																</div>
 																<div class="entry-content">
-																	<div class="entry-image"> <iframe width="560"
-																			height="315"
-																			src="https://www.youtube.com/embed/16GYqUeP6mo"
-																			allowfullscreen></iframe> </div>
+																	<div class="entry-image">																		
+																		<div id="video_player_3" width="560px" height="315px"></div> 
+																	</div>
 																</div>
 															</div>
 															<div class="entry">
@@ -1245,10 +1233,7 @@
 																<div class="entry-timeline"> 00 <span>sec-C</span>
 																	<div class="timeline-divider"></div>
 																</div>
-																<div class="entry-image"> <iframe width="560"
-																		height="315"
-																		src="https://www.youtube.com/embed/t-nfEOE_dYI"
-																		allowfullscreen></iframe> </div>
+																<div class="entry-image"> <div id="video_player_4" width="560px" height="315px"></div> </div>
 															</div>
 															<div class="entry">
 																<div class="entry-timeline"> 01 <span>sec-C</span>
@@ -1473,10 +1458,9 @@
 																<div class="entry-timeline"> 00 <span>sec-C</span>
 																	<div class="timeline-divider"></div>
 																</div>
-																<div class="entry-image"> <iframe width="560"
-																		height="315"
-																		src="https://www.youtube.com/embed/j7dkYkJWfhM"
-																		allowfullscreen></iframe> </div>
+																<div class="entry-image">
+																	<div id="video_player_5" width="560px" height="315px"></div>
+																</div>
 															</div>
 															<div class="entry">
 																<div class="entry-timeline"> 03 <span>sec-C</span>
@@ -1696,6 +1680,15 @@
 																	</div>
 																</div>
 															</div>
+															<div class="entry">
+																<div class="entry-timeline"> 00 <span>sec-C</span>
+																	<div class="timeline-divider"></div>
+																</div>
+																<div class="entry-image">
+																	<div id="video_player_6" width="560px" height="315px"></div>
+																</div>
+															</div>
+
 															<div class="entry">
 																<div class="entry-timeline"> 05 <span>sec-C</span>
 																	<div class="timeline-divider"></div>
@@ -2300,19 +2293,22 @@
 
 	<script>
 
-		var main_player;
+		var video_player = [6];		
+		var virtual_videos = [6];
+
+
 
 		function onYouTubeIframeAPIReady () {
 			console.log("aqui voy onYouTubeIframeAPIReady!!!");
 			//player = new YT.player('video_main_player',  {videoId: 'YE7VzlLtp-4'});
 		}
 
-		function changeVideo(idPlayer, idVideo)
+		function changeVideo(videoPlayer, idVideo)
 		{	
-			console.log("INICIO changeVideo:" + idPlayer + " url:" + idVideo);			
-			main_player.cueVideoById({'videoId': idVideo});
+			console.log("INICIO changeVideo: url:" + idVideo);			
+			videoPlayer.cueVideoById({'videoId': idVideo});
 			console.log("Change Video:" + idVideo);
-			console.log("FIN changeVideo:" + idPlayer + " url:" + idVideo);
+			console.log("FIN changeVideo url:" + idVideo);
 		}
 
 		function updateText() {
@@ -2330,9 +2326,19 @@
 					document.documentElement.lang = language;
 					$('body').i18n();
 					// Change URL's
-					var url = $.i18n('virtual.1.video.1', 'NO URL');
-					console.log("URL VIDEO:" + url);
-					changeVideo("video_main_player", url);
+					virtual_videos[0]  = $.i18n('virtual.video.0', 'NO URL');
+					virtual_videos[1]  = $.i18n('virtual.video.1', 'NO URL');
+					virtual_videos[2]  = $.i18n('virtual.video.2', 'NO URL');
+					virtual_videos[3]  = $.i18n('virtual.video.3', 'NO URL');
+					virtual_videos[4]  = $.i18n('virtual.video.4', 'NO URL');
+					virtual_videos[5]  = $.i18n('virtual.video.5', 'NO URL');
+					virtual_videos[6]  = $.i18n('virtual.video.6', 'NO URL');
+					
+					for (i=0;i<virtual_videos.length;i++)
+					{
+					 	console.log("Loading video [" + i + "]");
+						changeVideo(video_player[i], virtual_videos[i]);	
+					}
 				});
 		}
 		// Enable debug
@@ -2350,9 +2356,16 @@
 
 		function loadVideos() {
 
+			console.log("loadVideos");
 			window.YT.ready(function() {
 					console.log("window.YT.ready");					
-					main_player = new window.YT.Player("video_main_player", {videoId: "LR67_ppVc1k"});
+					video_player[0] = new window.YT.Player("video_player_0", {videoId: virtual_videos[0]});
+					video_player[1] = new window.YT.Player("video_player_1", {videoId: virtual_videos[1]});
+					video_player[2] = new window.YT.Player("video_player_2", {videoId: virtual_videos[2]});
+					video_player[3] = new window.YT.Player("video_player_3", {videoId: virtual_videos[3]});
+					video_player[4] = new window.YT.Player("video_player_4", {videoId: virtual_videos[4]});
+					video_player[5] = new window.YT.Player("video_player_5", {videoId: virtual_videos[5]});
+					video_player[6] = new window.YT.Player("video_player_6", {videoId: virtual_videos[6]});
 			});
 		}
 
