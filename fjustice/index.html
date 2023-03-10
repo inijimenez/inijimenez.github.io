@@ -144,7 +144,7 @@
 						<div class="swiper-slide dark">
 							<div class="embed-responsive embed-responsive-16by9">								
 								    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    							<div id="video_player_0" class="bg_video"></div>
+    							<div id="video_player_0a" class="bg_video"></div>
 							</div>
 						</div>
 					</div>
@@ -184,8 +184,14 @@
 											<span data-i18n="welcome.3">President of Spanish Bar Association</span>
 										</div>
 									</div>
+	
 								</div>
 							</div>
+						</div>
+						<div class="row">
+										<div class="embed-responsive embed-responsive-16by9">
+											<div id="video_player_0" width="560px" height="415px"></div>
+										</div>
 						</div>
 					</div>
 				</div>
@@ -198,6 +204,7 @@
 						</div>
 					</div>
 				</div>
+				
 
 				<div class="line"></div>
 				<div id="virtual-tour" class="section parallax m-0 border-top-0" style="padding: 100px 0;"
@@ -1433,6 +1440,11 @@
 																						Social Security scheme or,
 																						alternatively, in a social
 																						mutual fund.</li>
+																					<li data-i18n="virtual.3.2.p3.l8">to register under the
+																						appropriate category in the
+																						Social Security scheme or,
+																						alternatively, in a social
+																						mutual fund.</li>													
 																				</ul>
 																				</p>
 																				<p class="text-larger lh-1" data-i18n="virtual.3.2.p4">Aspiring
@@ -2312,9 +2324,38 @@
 
 			console.log("loadVideos");
 			window.YT.ready(function() {
-					console.log("window.YT.ready");					
-					video_player[0] = new window.YT.Player("video_player_0", {videoId: virtual_videos[0]});
-					video_player[1] = new window.YT.Player("video_player_1", {videoId: virtual_videos[1]});
+					console.log("window.YT.ready");	
+
+       video_player[0] = new window.YT.Player('video_player_0', {
+          height: '800',
+          width: '518',
+          videoId: virtual_videos[0],
+          playerVars: {
+                cc_load_policy: 1,
+                fs: 1,
+                controls: 0,
+                showinfo: 0,
+                autoplay: 0,
+                rel: 0,
+                color: 'white'
+        }
+        });
+              video_player[1] = new window.YT.Player('video_player_1', {
+          height: '800',
+          width: '518',
+          videoId: virtual_videos[1],
+          playerVars: {
+                cc_load_policy: 1,
+                fs: 1,
+                controls: 0,
+                showinfo: 0,
+                autoplay: 0,
+                rel: 0,
+                color: 'white'
+        }
+        });
+
+
 					video_player[2] = new window.YT.Player("video_player_2", {videoId: virtual_videos[2]});
 					video_player[3] = new window.YT.Player("video_player_3", {videoId: virtual_videos[3]});
 					video_player[4] = new window.YT.Player("video_player_4", {videoId: virtual_videos[4]});
