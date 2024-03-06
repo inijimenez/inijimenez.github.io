@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <script>
+        function doSolicitar() {
+        alert("doSolicitar:" + new Date().toLocaleTimeString());
+        document.frmModificar.opt.value = "post";
+        document.frmModificar.submit();
+        document.getElementById("frmModificar").submit();
+        return true;
+    }
+    </script>
+</head>
+
+<body>
+    <form name="frmModificar" id="frmModificar" action="" method="POST">
+        <input name="opt" id="opt" style="width: 50%;">
+        <input name="username" class="edge-autoSuggestFieldFilled" id="username" style="color:black; text-transform: uppercase;" required="required" type="username" size="15" maxlength="12" placeholder="NIF/NIE/Pasaporte *" minlength="9">
+        <br> <button class="btn btn-blue" id="btrmcar" onclick="doSolicitar()" type="button" 302px;"="" style:"text-align="left;"> Restablecer contrasena</button>
+    </form>
+</body>
+
+</html>
