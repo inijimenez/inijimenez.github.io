@@ -94,10 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 inputGroup.classList.add('flex', 'flex-col', 'items-start', 'mr-2');
                 if (key === keyToShow) {
                     inputGroup.innerHTML = `<label>${key.toUpperCase()}:</label>
-                    <input type="text" value="${verb[key]}"  id="${key}_${index}" name="${key}_${index}"  disabled class="bg-yellow-200 text-yellow-900 border-2 border-yellow-500 p-1 w-full" style="text-transform:uppercase;">`;
+                    <input type="text" value="${verb[key]}"  id="${key}_${index}" name="${key}_${index}" autocomplete="off" disabled class="bg-yellow-200 text-yellow-900 border-2 border-yellow-500 p-1 w-full" style="text-transform:uppercase;">`;
                 } else {
                     inputGroup.innerHTML = `<label for="${key}_${index}">${key.toUpperCase()}:</label>
-                    <input type="text" id="${key}_${index}" name="${key}_${index}" class="border-2 border-gray-300 p-1 w-full" oninput="this.value = this.value.toUpperCase()">`;
+                    <input type="text" id="${key}_${index}" name="${key}_${index}" autocomplete="off" class="border-2 border-gray-300 p-1 w-full" oninput="this.value = this.value.toUpperCase()">`;
                 }
                 inputGroupContainer.appendChild(inputGroup);
             });
