@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     slider.oninput = function() {
         numVerbsDisplay.textContent = this.value;
         verbsRange = this.value
-        localStorage.setItem('numVerbs', numVerbs);
+        localStorage.setItem('numVerbs', this.value);
     };
 
     let verbsStatistics = JSON.parse(localStorage.getItem('verbsStatistics')) || {};
