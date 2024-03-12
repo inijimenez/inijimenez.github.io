@@ -136,8 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!verbsStatistics[verb.id]) {
                         verbsStatistics[verb.id] = { hits: 0, misses: 0, details_hits: { infinitive: 0, past: 0, participle: 0, meaning: 0 }, details_misses: { infinitive: 0, past: 0, participle: 0, meaning: 0 } };
                     }
-
-                    if (userAnswer === correctAnswer) {
+                    //if (userAnswer === correctAnswer) {
+                    if (correctAnswer.split('/').map(val => val.trim().toUpperCase()).includes(userAnswer)) {
+                        // El usuario respondió correctamente
                         inputField.style.borderColor = 'green';                        
                         verbsStatistics[verb.id].details_hits[key] += 1;
                     } else {
