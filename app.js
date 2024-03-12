@@ -1,6 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
     const numberOfQuestions = 10;
-    const verbsRange = 64;
+    let verbsRange;
+    const slider = document.getElementById('numVerbsSlider');
+    const numVerbsDisplay = document.getElementById('numVerbsValue');
+
+    // Cargar el número de verbos guardado o usar el valor por defecto
+    const savedNumVerbs = localStorage.getItem('numVerbs') || 10;
+    slider.value = savedNumVerbs;
+    numVerbsDisplay.textContent = savedNumVerbs;
+    verbsRange = savedNumVerbs;
+
+    // Actualizar el valor mostrado cuando el slider cambia
+    slider.oninput = function() {
+        numVerbsDisplay.textContent = this.value;
+        verbsRange = this.value
+        localStorage.setItem('numVerbs', numVerbs);
+    };
+
     let verbsStatistics = JSON.parse(localStorage.getItem('verbsStatistics')) || {};
 
     const userNameDisplay = document.getElementById('userNameDisplay');
