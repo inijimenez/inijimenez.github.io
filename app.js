@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function selectRandomVerbs(count, range) {
+        debugger;
         // Asegúrate de que el arreglo de verbos tenga al menos 10 elementos
         if (range.length < 10) {
             console.error("La lista de verbos no es lo suficientemente larga.");
