@@ -5,16 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const numVerbsDisplay = document.getElementById('numVerbsValue');
 
     // Cargar el número de verbos guardado o usar el valor por defecto
-    const savedNumVerbs = localStorage.getItem('numVerbs') || 10;
+    const savedNumVerbs = parseInt(localStorage.getItem('numVerbs'), 10) || 10;
     slider.value = savedNumVerbs;
     numVerbsDisplay.textContent = savedNumVerbs;
     verbsRange = savedNumVerbs;
 
     // Actualizar el valor mostrado cuando el slider cambia
     slider.oninput = function () {
-        numVerbsDisplay.textContent = this.value;
-        verbsRange = this.value
-        localStorage.setItem('numVerbs', this.value);
+        const sliderValue = parseInt(this.value, 10); // Convierte el valor del slider a un entero
+        numVerbsDisplay.textContent = sliderValue;
+        verbsRange = sliderValue; // Actualiza verbsRange con el valor entero
+        localStorage.setItem('numVerbs', sliderValue);
     };
 
     let verbsStatistics = JSON.parse(localStorage.getItem('verbsStatistics')) || {};
