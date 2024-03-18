@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     verbsRange = savedNumVerbs;
 
     // Actualizar el valor mostrado cuando el slider cambia
-    slider.oninput = function() {
+    slider.oninput = function () {
         numVerbsDisplay.textContent = this.value;
         verbsRange = this.value
         localStorage.setItem('numVerbs', this.value);
@@ -55,9 +55,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function selectRandomVerbs(count, range) {
-        const limitedVerbs = verbs.slice(0, range);
+        // Asegúrate de que el arreglo de verbos tenga al menos 10 elementos
+        if (range.length < 10) {
+            console.error("La lista de verbos no es lo suficientemente larga.");
+            return [];
+        }
+
+        // Selecciona los últimos 10 verbos
+        const lastTenVerbs = range.slice(-10);
+
+        // Mezcla los últimos 10 verbos
+        const shuffledLastTenVerbs = lastTenVerbs.sort(() => 0.5 - Math.random());
+
+        // Selecciona los primeros 3 verbos del arreglo mezclado
+        const selectedVerbs = shuffledLastTenVerbs.slice(0, count);
+
+        return selectedVerbs;
+        /*const limitedVerbs = verbs.slice(0, range);
         const shuffled = limitedVerbs.sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, count);
+        return shuffled.slice(0, count);*/
     }
 
     function displayTest(verbs) {
@@ -73,10 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
         verbs.forEach((verb, index) => {
             const questionDiv = document.createElement('div');
             questionDiv.classList.add('question', 'flex', 'flex-wrap', 'gap-4', 'p-3', 'border', 'rounded', 'mb-4');
-            
 
 
-             // Crear y añadir un elemento para mostrar el ID del verbo
+
+            // Crear y añadir un elemento para mostrar el ID del verbo
             const verbIdDisplay = document.createElement('div');
             verbIdDisplay.textContent = `Verb ID: ${verb.id}`;
             verbIdDisplay.classList.add('verb-id', 'font-bold');
@@ -84,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const inputGroupContainer = document.createElement('div');
             inputGroupContainer.classList.add('input-group', 'flex', 'border', 'p-2', 'rounded');
-    
+
 
             const keys = ['infinitive', 'past', 'participle', 'meaning'];
             const keyToShow = keys[Math.floor(Math.random() * keys.length)];
@@ -139,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     //if (userAnswer === correctAnswer) {
                     if (correctAnswer.split('/').map(val => val.trim().toUpperCase()).includes(userAnswer)) {
                         // El usuario respondió correctamente
-                        inputField.style.borderColor = 'green';                        
+                        inputField.style.borderColor = 'green';
                         verbsStatistics[verb.id].details_hits[key] += 1;
                     } else {
                         inputField.style.borderColor = 'red';
@@ -159,8 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 verbsStatistics[verb.id].hits += 1;
                 score++;
                 questionDiv.style.backgroundColor = 'lightblue';
-            } else
-            {
+            } else {
                 verbsStatistics[verb.id].misses += 1;
             }
         });
@@ -220,20 +235,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const verbReport = document.createElement('div');
                 // Se crea un contenedor para todo el contenido del reporte de este verbo
                 let verbInfoHTML = `<h4>[<b>${verb.id}</b>] ${verb.infinitive}<sup style="color:red;">${stat.details_misses.infinitive}</sup><sup style="color:green;">${stat.details_hits.infinitive}</sup>, ${verb.past}<sup style="color:red;">${stat.details_misses.past}</sup><sup style="color:green;">${stat.details_hits.past}</sup>, ${verb.participle}<sup style="color:red;">${stat.details_misses.participle}</sup><sup style="color:green;">${stat.details_hits.participle}</sup> - ${verb.meaning}<sup style="color:red;">${stat.details_misses.meaning}</sup><sup style="color:green;">${stat.details_hits.meaning}</sup>`;
-            
+
                 // Agregar puntos para aciertos (verdes)
                 for (let i = 0; i < stat.hits; i++) {
                     verbInfoHTML += `<span class="hit-dot" style="height:10px; width:10px; background-color:green; border-radius:50%; display:inline-block; margin-left: 2px;"></span>`;
                 }
-            
+
                 // Agregar puntos para fallos (rojos)
                 for (let i = 0; i < stat.misses; i++) {
                     verbInfoHTML += `<span class="miss-dot" style="height:10px; width:10px; background-color:red; border-radius:50%; display:inline-block; margin-left: 2px;"></span>`;
                 }
-            
+
                 // Se cierra el contenedor <h4>
                 verbInfoHTML += `</h4>`;
-            
+
                 // Ahora asignamos todo el HTML generado al verbReport de una sola vez
                 verbReport.innerHTML = verbInfoHTML;
                 reportScreen.appendChild(verbReport);
