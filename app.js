@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function selectRandomVerbs(totalCount, verbsRange) {
-        debugger;
+        
         // Asegurar que verbsRange no sea menor que el totalCount deseado
         if (verbsRange < totalCount) {
             console.error("verbsRange debe ser mayor o igual a totalCount");
