@@ -55,28 +55,36 @@ document.addEventListener('DOMContentLoaded', () => {
         displayTest(selectedVerbs);
     }
 
-    function selectRandomVerbs(count, range) {
-        console.log("alla voy");
+    function selectRandomVerbs(totalCount, verbsRange) {
         debugger;
-        // Asegúrate de que el arreglo de verbos tenga al menos 10 elementos
-        if (range.length < 10) {
-            console.error("La lista de verbos no es lo suficientemente larga.");
+        // Asegurar que verbsRange no sea menor que el totalCount deseado
+        if (verbsRange < totalCount) {
+            console.error("verbsRange debe ser mayor o igual a totalCount");
             return [];
         }
-
-        // Selecciona los últimos 10 verbos
-        const lastTenVerbs = range.slice(-10);
-
-        // Mezcla los últimos 10 verbos
-        const shuffledLastTenVerbs = lastTenVerbs.sort(() => 0.5 - Math.random());
-
-        // Selecciona los primeros 3 verbos del arreglo mezclado
-        const selectedVerbs = shuffledLastTenVerbs.slice(0, count);
-
-        return selectedVerbs;
-        /*const limitedVerbs = verbs.slice(0, range);
-        const shuffled = limitedVerbs.sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, count);*/
+    
+        // Determinar los rangos para la selección especial y general
+        const specialRangeStart = Math.max(verbsRange - 10, 0);
+        const generalRangeEnd = specialRangeStart;
+    
+        // Seleccionar 3 verbos de los últimos 10
+        const specialVerbs = shuffleArray(verbs.slice(specialRangeStart, verbsRange)).slice(0, 3);
+    
+        // Seleccionar los verbos restantes del rango restante, excluyendo los últimos 10
+        const remainingCount = totalCount - specialVerbs.length;
+        const generalVerbs = shuffleArray(verbs.slice(0, generalRangeEnd)).slice(0, remainingCount);
+    
+        // Combinar los verbos seleccionados de ambos rangos y devolver
+        return specialVerbs.concat(generalVerbs);
+    }
+    
+    function shuffleArray(array) {
+        // Función para mezclar aleatoriamente un array
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 
     function displayTest(verbs) {
