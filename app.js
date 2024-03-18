@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function selectRandomVerbs(count, range) {
+        console.log("alla voy");
         debugger;
         // Asegúrate de que el arreglo de verbos tenga al menos 10 elementos
         if (range.length < 10) {
