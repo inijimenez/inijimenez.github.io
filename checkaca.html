@@ -1,26 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check Extension</title>
-</head>
+<html>
 <body>
-    <h1>Check Extension Status</h1>
-    <button id="check-extension">Check Extension</button>
-    <p id="status"></p>
-
     <script>
-        document.getElementById('check-extension').addEventListener('click', function() {
-            var extensionId = 'pfbjmaobgiafaiadpkbnbifnbpeoekkc';
+        const EXTENSION_ID = 'pfbjmaobgiafaiadpkbnbifnbpeoekkc';
 
-            chrome.runtime.sendMessage(extensionId, { message: 'ping' }, function(response) {
-                if (response && response.message === 'pong') {
-                    document.getElementById('status').innerText = 'La extensión está instalada.';
-                } else {
-                    document.getElementById('status').innerText = 'La extensión no está instalada.';
-                }
-            });
+        chrome.runtime.sendMessage(EXTENSION_ID, { message: 'version' }, (response) => {
+            if (chrome.runtime.lastError || !response) {
+                console.log('Extension not installed');
+            } else {
+                console.log('Extension installed, version:', response.version);
+            }
         });
     </script>
 </body>
