@@ -1,15 +1,25 @@
 <html>
 <body>
+    <div id="status"></div>
     <script>
         const EXTENSION_ID = 'pfbjmaobgiafaiadpkbnbifnbpeoekkc';
+        const statusElement = document.getElementById('status');
 
-        chrome.runtime.sendMessage(EXTENSION_ID, { message: 'version' }, (response) => {
-            if (chrome.runtime.lastError || !response) {
-                console.log('Extension not installed');
-            } else {
-                console.log('Extension installed, version:', response.version);
+        if (typeof chrome !== 'undefined' && chrome.runtime) {
+            try {
+                chrome.runtime.sendMessage(EXTENSION_ID, { message: 'version' }, (response) => {
+                    if (chrome.runtime.lastError || !response) {
+                        statusElement.textContent = 'Extension not installed or an error occurred: ' + chrome.runtime.lastError;
+                    } else {
+                        statusElement.textContent = 'Extension installed, version: ' + response.version;
+                    }
+                });
+            } catch (error) {
+                statusElement.textContent = 'An error occurred while checking the extension: ' + error;
             }
-        });
+        } else {
+            statusElement.textContent = 'Chrome runtime API is not available.';
+        }
     </script>
 </body>
 </html>
