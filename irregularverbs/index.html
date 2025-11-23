@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irregular Verbs Learning Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.4/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-200 p-5">
+    <div id="welcomeScreen" class="space-y-4">
+        <h1 class="text-xl">Welcome to the Irregular Verbs Learning Test</h1>
+        <input type="text" id="userName" placeholder="Enter your name" class="border-2 border-gray-300 p-2">
+        <button id="startTest" class="bg-blue-500 text-white px-4 py-2">Start Test</button>
+    </div>
+
+    <div id="userNameDisplay" class="text-xl mb-4 hidden"></div>
+    <div id="verbsSlider" class="space-y-4">
+        <label for="numVerbsSlider">Verbs: <span id="numVerbsValue">70</span></label>
+        <input type="range" id="numVerbsSlider" name="numVerbs" min="1" max="99" value="70">
+    </div>
+
+    <div id="testScreen" class="hidden space-y-4">
+        <!-- Test content will be dynamically generated here -->
+    </div>
+
+    <div id="reportScreen" class="space-y-4">
+        <h2 class="text-lg mb-4">Your Test Reports</h2>
+        <div id="reportsContent">
+            <!-- Reports content will be dynamically generated here -->
+        </div>
+        <button id="showReports" class="bg-green-500 text-white px-4 py-2">Show Reports</button>
+        <button id="resetStats" class="bg-green-500 text-white px-4 py-2">Reset Stats</button>
+
+    </div>
+    
+    <script src="verbs.js"></script> <!-- Asegúrate de que este script contenga la lista de verbos -->
+    <script src="app.js"></script>
+</body>
+</html>
+
