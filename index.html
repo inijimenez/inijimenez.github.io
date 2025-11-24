@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dashboard Alevín Mixto - G9 (Dinámico)</title>
+    <title>Dashboard Alevín Mixto - G9</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
@@ -38,9 +38,9 @@
                 </div>
             </div>
 
-            <!-- TARJETA PRÓXIMO PARTIDO (Se rellena dinámicamente) -->
+            <!-- TARJETA PRÓXIMO PARTIDO -->
             <div id="next-match-card" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl shadow-blue-900/20 relative overflow-hidden transform transition-transform active:scale-[0.99] min-h-[180px] flex flex-col justify-center">
-                <p class="text-center text-gray-400 text-sm animate-pulse">Buscando próximo partido...</p>
+                <p class="text-center text-gray-400 text-sm animate-pulse">Cargando...</p>
             </div>
         </div>
     </header>
@@ -70,12 +70,12 @@
                     <!-- Loading State -->
                     <div class="p-8 text-center text-gray-400 text-xs">
                         <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-blue-500"></i><br>
-                        Conectando con ECMadrid...
+                        Obteniendo datos...
                     </div>
                 </div>
             </div>
-            <div class="text-center text-[10px] text-gray-400 mt-2 italic">
-                *Datos obtenidos en tiempo real de ecmadrid.org
+            <div id="data-source-label" class="text-center text-[10px] text-gray-400 mt-2 italic">
+                Conectando...
             </div>
         </div>
 
@@ -84,195 +84,199 @@
             <div class="flex items-center justify-between mb-4 pl-1">
                 <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Resultados del Grupo</h3>
             </div>
-            <div class="space-y-4" id="matches-list">
-               <!-- Resultados dinámicos -->
-            </div>
+            <div class="space-y-4" id="matches-list"></div>
         </div>
     </main>
 
     <script>
         const TARGET_URL = 'https://www2.ecmadrid.org/Deportesdev/Clasificacion/_ShowClasif?numcom=89&depor=FUTBOL-SALA&categ=ALEVIN%20MIXTO';
-        const PROXY_URL = 'https://api.allorigins.win/get?url=';
-        const BASE_IMG_URL = 'https://www2.ecmadrid.org'; // Las imágenes vienen relativas
-        const MY_TEAM_NAME = "EL VALLE SANCHINARRO \"B\""; // Nombre exacto para resaltar
+        const PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
+        const BASE_IMG_URL = 'https://www2.ecmadrid.org'; 
+        
+        let currentNextMatch = null; // Variable global para almacenar el próximo partido
+
+        // --- DATOS DE RESPALDO (Por si falla la conexión) ---
+        const BACKUP_TEAMS = [
+            { pos: 1, name: 'FEC STA. JOAQUINA VEDRUNA "C"', pj: 2, gf: 10, gc: 3, avg: 7, pts: 4, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0061.jpg' },
+            { pos: 2, name: 'COLEGIO ALEMAN "A"', pj: 2, gf: 10, gc: 7, avg: 3, pts: 4, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0128.jpg' },
+            { pos: 3, name: 'LA INMACULADA P. HIERRO', pj: 3, gf: 15, gc: 18, avg: -3, pts: 4, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0144.jpg' },
+            { pos: 4, name: 'SANTAMARCA INTERNACIONAL', pj: 2, gf: 12, gc: 7, avg: 5, pts: 2, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0114.jpg' },
+            { pos: 5, name: 'EL VALLE SANCHINARRO "B"', pj: 3, gf: 20, gc: 17, avg: 3, pts: 2, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg' },
+            { pos: 6, name: 'SANTA MARIA LA BLANCA "A"', pj: 2, gf: 8, gc: 8, avg: 0, pts: 2, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0143.jpg' },
+            { pos: 7, name: 'ASUNCION CUESTABLANCA "B"', pj: 2, gf: 6, gc: 7, avg: -1, pts: 2, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0118.jpg' },
+            { pos: 8, name: 'CORAZONISTAS "A"', pj: 2, gf: 4, gc: 8, avg: -4, pts: 0, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0099.jpg' },
+            { pos: 9, name: 'NTRA. SRA. CONSOLACION "B"', pj: 2, gf: 6, gc: 16, avg: -10, pts: 0, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0076.jpg' }
+        ];
+
+        const BACKUP_MATCHES = [
+            { jornada: '4', localName: 'NTRA. SRA. CONSOLACION "B"', localScore: '3', visitName: 'EL VALLE SANCHINARRO "B"', visitScore: '9', fecha: '22/11/25', hora: '12:00', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0076.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', direccion: '#' },
+            { jornada: '3', localName: 'EL VALLE SANCHINARRO "B"', localScore: '5', visitName: 'SANTAMARCA INTERNACIONAL', visitScore: '8', fecha: '15/11/25', hora: '12:30', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0114.jpg', direccion: '#' },
+            { jornada: '2', localName: 'CORAZONISTAS "A"', localScore: '3', visitName: 'EL VALLE SANCHINARRO "B"', visitScore: '12', fecha: '08/11/25', hora: '10:00', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0099.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', direccion: '#' },
+            { jornada: '5', localName: 'EL VALLE SANCHINARRO "B"', localScore: '', visitName: 'ASUNCION CUESTABLANCA "B"', visitScore: '', fecha: '29/11/25', hora: '11:15', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0118.jpg', direccion: 'https://maps.google.com/?q=C/ Vicente Blasco Ibáñez' }
+        ];
 
         document.addEventListener('DOMContentLoaded', fetchData);
 
         async function fetchData() {
             try {
+                console.log("Intentando conectar...");
                 const response = await fetch(PROXY_URL + encodeURIComponent(TARGET_URL));
-                if (!response.ok) throw new Error('Error en red');
+                if (!response.ok) throw new Error('Fallo en Proxy');
                 const data = await response.json();
                 
-                parseHTML(data.contents);
+                if(!data.contents || data.contents.length < 100) throw new Error('Contenido vacío');
+
+                const success = parseHTML(data.contents);
                 
-                // Actualizar icono de estado
-                document.getElementById('status-indicator').innerHTML = '<i class="fa-solid fa-check text-green-500 text-xl"></i>';
+                if (success) {
+                    document.getElementById('status-indicator').innerHTML = '<i class="fa-solid fa-circle text-green-500 text-[10px] animate-pulse"></i><span class="ml-1 text-xs font-bold text-green-600">LIVE</span>';
+                    document.getElementById('data-source-label').innerText = "* Datos en tiempo real de ECMadrid";
+                } else {
+                    throw new Error('No se encontró el Grupo 9');
+                }
+
             } catch (error) {
-                console.error(error);
-                document.getElementById('standings-container').innerHTML = `
-                    <div class="p-4 text-center text-red-500 text-sm">
-                        <i class="fa-solid fa-triangle-exclamation text-2xl mb-2"></i><br>
-                        No se pudieron cargar los datos.<br>Inténtalo de nuevo más tarde.
-                    </div>`;
-                document.getElementById('status-indicator').innerHTML = '<i class="fa-solid fa-xmark text-red-500 text-xl"></i>';
+                console.warn("Fallo carga dinámica, usando backup:", error);
+                loadBackupData();
             }
+        }
+
+        function loadBackupData() {
+            renderStandingsUI(BACKUP_TEAMS);
+            renderMatchesUI(BACKUP_MATCHES);
+            document.getElementById('status-indicator').innerHTML = '<i class="fa-solid fa-database text-orange-400 text-xl"></i>';
+            document.getElementById('data-source-label').innerHTML = "<span class='text-orange-500 font-bold'>!</span> Modo sin conexión: Datos guardados";
         }
 
         function parseHTML(htmlString) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(htmlString, 'text/html');
-
-            // 1. ENCONTRAR EL GRUPO 9
-            // La estructura suele ser <h3>GRUPO: 9</h3> seguido de un <table>
             const headers = Array.from(doc.querySelectorAll('h3'));
             const groupHeader = headers.find(h => h.textContent.includes('GRUPO: 9'));
 
-            if (groupHeader) {
-                // --- CLASIFICACIÓN ---
-                const table = groupHeader.nextElementSibling; // La tabla suele ir justo después
-                if (table && table.tagName === 'TABLE') {
-                    renderStandings(table);
-                }
+            if (!groupHeader) return false;
 
-                // --- RESULTADOS ---
-                // Los resultados suelen estar en un segundo bloque con el mismo nombre de grupo o más abajo
-                // Buscamos el siguiente H3 con 'GRUPO: 9' o analizamos tablas posteriores
-                // En esta web, primero están todas las clasificaciones y luego todos los resultados.
-                // Buscamos de nuevo el header pero en la sección de resultados (más adelante en el DOM)
-                const allGroup9Headers = headers.filter(h => h.textContent.includes('GRUPO: 9'));
-                
-                // Asumimos que el segundo 'GRUPO: 9' es el de resultados
-                if (allGroup9Headers.length > 1) {
-                    const resultsTable = allGroup9Headers[1].nextElementSibling;
-                    if (resultsTable && resultsTable.tagName === 'TABLE') {
-                        renderMatches(resultsTable);
-                    }
-                }
+            const tableClasif = groupHeader.nextElementSibling;
+            if (tableClasif && tableClasif.tagName === 'TABLE') {
+                const teams = parseStandingsTable(tableClasif);
+                renderStandingsUI(teams);
             }
+
+            const allHeaders = headers.filter(h => h.textContent.includes('GRUPO: 9'));
+            if (allHeaders.length > 1) {
+                const tableRes = allHeaders[1].nextElementSibling;
+                if (tableRes && tableRes.tagName === 'TABLE') {
+                    const matches = parseMatchesTable(tableRes);
+                    renderMatchesUI(matches);
+                }
+            } else {
+                renderMatchesUI(BACKUP_MATCHES);
+            }
+            return true;
         }
 
-        function renderStandings(table) {
-            const container = document.getElementById('standings-container');
-            container.innerHTML = '';
-            const rows = Array.from(table.querySelectorAll('tr')).slice(1); // Ignorar header original
-
-            rows.forEach((row, index) => {
+        function parseStandingsTable(table) {
+            const rows = Array.from(table.querySelectorAll('tr')).slice(1);
+            return rows.map((row, i) => {
                 const cells = row.querySelectorAll('td');
-                if (cells.length < 8) return;
-
-                // Extracción de datos (ajustar índices según estructura real de la web ECM)
-                // Estructura típica: [Img] [Nombre] [J] [G] [E] [P] [TF] [TC] [AVG] [Ptos]
-                const imgEl = cells[0].querySelector('img');
-                const logoSrc = imgEl ? BASE_IMG_URL + imgEl.getAttribute('src') : '';
-                const name = cells[1].innerText.trim();
-                const pj = cells[2].innerText.trim();
-                const pg = cells[3].innerText.trim();
-                const pe = cells[4].innerText.trim();
-                const pp = cells[5].innerText.trim();
-                const tf = cells[6].innerText.trim();
-                const tc = cells[7].innerText.trim();
-                const avg = cells[8].innerText.trim();
-                const pts = cells[9].innerText.trim();
-
-                const isMyTeam = name.toUpperCase().includes("SANCHINARRO") && name.includes('"B"');
-                const rowStyle = isMyTeam ? 'bg-indigo-50 border-l-4 border-indigo-500' : 'hover:bg-slate-50 border-l-4 border-transparent';
-                const rankStyle = index === 0 ? 'text-yellow-500 bg-yellow-100 rounded-full w-6 h-6 flex items-center justify-center font-bold' : 'text-slate-500 font-bold';
-                const avgColor = parseInt(avg) > 0 ? 'text-green-600' : (parseInt(avg) < 0 ? 'text-red-500' : 'text-slate-400');
-
-                const html = `
-                <div class="grid grid-cols-12 items-center p-3 border-b border-slate-100 text-[11px] transition-colors ${rowStyle}">
-                    <div class="col-span-1 text-center flex justify-center"><div class="${rankStyle}">${index + 1}</div></div>
-                    <div class="col-span-4 pl-1 pr-1 flex items-center gap-1.5 overflow-hidden">
-                        <img src="${logoSrc}" class="w-5 h-5 object-contain shrink-0" onerror="this.style.display='none'">
-                        <div class="font-bold text-slate-800 truncate leading-tight">${name}</div>
-                    </div>
-                    <div class="col-span-1 text-center text-slate-500 font-medium">${pj}</div>
-                    <div class="col-span-1 text-center text-slate-600">${tf}</div>
-                    <div class="col-span-1 text-center text-slate-400">${tc}</div>
-                    <div class="col-span-2 text-center font-bold ${avgColor}">${avg}</div>
-                    <div class="col-span-2 text-center font-black text-slate-900 text-sm bg-slate-200/50 rounded py-0.5 mx-1">${pts}</div>
-                </div>`;
-                container.innerHTML += html;
-            });
+                if (cells.length < 8) return null;
+                const img = cells[0].querySelector('img');
+                return {
+                    pos: i + 1,
+                    logo: img ? img.getAttribute('src') : '',
+                    name: cells[1].innerText.trim(),
+                    pj: cells[2].innerText.trim(),
+                    gf: cells[6].innerText.trim(),
+                    gc: cells[7].innerText.trim(),
+                    avg: cells[8].innerText.trim(),
+                    pts: cells[9].innerText.trim()
+                };
+            }).filter(t => t);
         }
 
-        function renderMatches(table) {
-            const container = document.getElementById('matches-list');
-            container.innerHTML = '';
-            const rows = Array.from(table.querySelectorAll('tr')).slice(1); // Ignorar header
-            let nextMatchFound = false;
-
-            // Procesamos las filas. En ECMadrid suelen venir: Jorn, Local, Res, Visitante, Res, Fecha, Hora...
-            // Puede haber filas vacías o de separación
-            
+        function parseMatchesTable(table) {
+            const rows = Array.from(table.querySelectorAll('tr')).slice(1);
             const matches = [];
-
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                if (cells.length < 5) return;
-
-                try {
-                    const jornada = cells[0].innerText.trim();
-                    // Local
-                    const localImg = cells[1].querySelector('img')?.getAttribute('src');
-                    const localName = cells[1].innerText.trim();
-                    const localScore = cells[2].innerText.trim();
-                    // Visitante
-                    const visitName = cells[3].innerText.trim();
-                    const visitScore = cells[4].innerText.trim();
-                    const visitImg = cells[3].querySelector('img')?.getAttribute('src');
-                    // Fecha Hora
-                    const fecha = cells[5].innerText.trim();
-                    const hora = cells[6].innerText.trim();
-                    const direccion = cells[7]?.querySelector('a')?.getAttribute('href') || '#';
-                    const lugar = cells[7]?.innerText.trim().replace('MAPA', '') || 'Campo';
-
-                    const isMyMatch = localName.includes("SANCHINARRO") && localName.includes('"B"') || 
-                                      visitName.includes("SANCHINARRO") && visitName.includes('"B"');
-
-                    if (!isMyMatch) return; // Solo guardamos partidos de nuestro equipo
-
-                    const match = {
-                        jornada, localName, localScore, visitName, visitScore, fecha, hora, 
-                        localImg: localImg ? BASE_IMG_URL + localImg : '', 
-                        visitImg: visitImg ? BASE_IMG_URL + visitImg : '',
-                        direccion, lugar
-                    };
-                    matches.push(match);
-
-                } catch (e) { console.log("Error parseando fila", e); }
-            });
-
-            // Ordenar partidos: Próximos primero, luego pasados (aunque la web suele darlos ordenados)
-            // Estrategia simple: Buscar el primer partido sin resultado (futuro) para la tarjeta grande
-            // e invertir el array para la lista.
-
-            const pendingMatch = matches.find(m => m.localScore === '' || m.visitScore === '');
-            
-            // Renderizar Tarjeta Hero (Próximo Partido)
-            if (pendingMatch) {
-                renderHeroCard(pendingMatch);
-            } else {
-                document.getElementById('next-match-card').innerHTML = '<p class="text-center text-gray-500">No hay partidos programados</p>';
-            }
-
-            // Renderizar Lista (Invertimos para ver recientes arriba si ya se jugaron)
-            // Ojo: si vienen ordenados por jornada 1, 2, 3... queremos ver los últimos jugados primero.
-            // Filtramos los jugados para la lista de "Resultados"
-            const playedMatches = matches.filter(m => m.localScore !== '' && m.visitScore !== '').reverse();
-
-            playedMatches.forEach(m => {
-                const isWin = (m.localName.includes("SANCHINARRO") && parseInt(m.localScore) > parseInt(m.visitScore)) ||
-                              (m.visitName.includes("SANCHINARRO") && parseInt(m.visitScore) > parseInt(m.localScore));
-                const isDraw = m.localScore == m.visitScore;
+                if(cells.length < 5) return;
                 
-                let resultColor = isWin ? 'text-green-600 border-green-200 bg-green-50' : (isDraw ? 'text-orange-500 border-orange-200 bg-orange-50' : 'text-red-600 border-red-200 bg-red-50');
-                let sideBar = isWin ? 'bg-green-500' : (isDraw ? 'bg-orange-400' : 'bg-red-500');
+                const local = cells[1].innerText.trim();
+                const visit = cells[3].innerText.trim();
+                
+                if (local.includes('VALLE SANCHINARRO "B"') || visit.includes('VALLE SANCHINARRO "B"')) {
+                    matches.push({
+                        jornada: cells[0].innerText.trim(),
+                        localName: local,
+                        localScore: cells[2].innerText.trim(),
+                        visitName: visit,
+                        visitScore: cells[4].innerText.trim(),
+                        fecha: cells[5].innerText.trim(),
+                        hora: cells[6].innerText.trim(),
+                        localImg: cells[1].querySelector('img')?.getAttribute('src'),
+                        visitImg: cells[3].querySelector('img')?.getAttribute('src'),
+                        direccion: cells[7]?.querySelector('a')?.getAttribute('href') || '#'
+                    });
+                }
+            });
+            const played = matches.filter(m => m.localScore !== '').reverse();
+            const pending = matches.filter(m => m.localScore === '');
+            return [...pending, ...played];
+        }
 
-                const html = `
+        function renderStandingsUI(teams) {
+            const container = document.getElementById('standings-container');
+            container.innerHTML = '';
+            
+            teams.forEach(t => {
+                const isMyTeam = t.name.toUpperCase().includes("SANCHINARRO") && t.name.includes('"B"');
+                const rowStyle = isMyTeam ? 'bg-indigo-50 border-l-4 border-indigo-500' : 'hover:bg-slate-50 border-l-4 border-transparent';
+                const rankStyle = t.pos === 1 ? 'text-yellow-500 bg-yellow-100 rounded-full w-6 h-6 flex items-center justify-center font-bold' : 'text-slate-500 font-bold';
+                const avgVal = parseInt(t.avg);
+                const avgColor = avgVal > 0 ? 'text-green-600' : (avgVal < 0 ? 'text-red-500' : 'text-slate-400');
+                const logoUrl = t.logo.startsWith('http') ? t.logo : BASE_IMG_URL + t.logo;
+
+                container.innerHTML += `
+                <div class="grid grid-cols-12 items-center p-3 border-b border-slate-100 text-[11px] transition-colors ${rowStyle}">
+                    <div class="col-span-1 text-center flex justify-center"><div class="${rankStyle}">${t.pos}</div></div>
+                    <div class="col-span-4 pl-1 pr-1 flex items-center gap-1.5 overflow-hidden">
+                        <img src="${logoUrl}" class="w-5 h-5 object-contain shrink-0" onerror="this.style.display='none'">
+                        <div class="font-bold text-slate-800 truncate leading-tight">${t.name}</div>
+                    </div>
+                    <div class="col-span-1 text-center text-slate-500 font-medium">${t.pj}</div>
+                    <div class="col-span-1 text-center text-slate-600">${t.gf}</div>
+                    <div class="col-span-1 text-center text-slate-400">${t.gc}</div>
+                    <div class="col-span-2 text-center font-bold ${avgColor}">${t.avg}</div>
+                    <div class="col-span-2 text-center font-black text-slate-900 text-sm bg-slate-200/50 rounded py-0.5 mx-1">${t.pts}</div>
+                </div>`;
+            });
+        }
+
+        function renderMatchesUI(matches) {
+            const container = document.getElementById('matches-list');
+            container.innerHTML = '';
+            
+            const nextMatch = matches.find(m => m.localScore === '');
+            renderHeroCard(nextMatch);
+
+            matches.forEach(m => {
+                if(m.localScore === '') return;
+
+                const isMyTeamLocal = m.localName.toUpperCase().includes("SANCHINARRO");
+                const myScore = parseInt(isMyTeamLocal ? m.localScore : m.visitScore);
+                const rivalScore = parseInt(isMyTeamLocal ? m.visitScore : m.localScore);
+                
+                let resColor, barColor;
+                if (myScore > rivalScore) { resColor = 'text-green-600 bg-green-50 border-green-200'; barColor = 'bg-green-500'; }
+                else if (myScore < rivalScore) { resColor = 'text-red-600 bg-red-50 border-red-200'; barColor = 'bg-red-500'; }
+                else { resColor = 'text-orange-600 bg-orange-50 border-orange-200'; barColor = 'bg-orange-400'; }
+
+                const localUrl = m.localImg.startsWith('http') ? m.localImg : BASE_IMG_URL + m.localImg;
+                const visitUrl = m.visitImg.startsWith('http') ? m.visitImg : BASE_IMG_URL + m.visitImg;
+
+                container.innerHTML += `
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden relative">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 ${sideBar}"></div>
+                    <div class="absolute left-0 top-0 bottom-0 w-1 ${barColor}"></div>
                     <div class="p-4">
                         <div class="flex justify-between items-center mb-3 border-b border-slate-50 pb-2">
                             <span class="text-[10px] font-bold text-white bg-slate-800 px-2 py-0.5 rounded">Jornada ${m.jornada}</span>
@@ -280,25 +284,34 @@
                         </div>
                         <div class="flex items-center justify-between">
                             <div class="flex flex-col items-center w-1/3 gap-1">
-                                <img src="${m.localImg}" class="w-8 h-8 object-contain">
+                                <img src="${localUrl}" class="w-8 h-8 object-contain">
                                 <span class="text-[9px] font-bold text-center leading-tight text-slate-600 truncate w-full">${m.localName}</span>
                             </div>
-                            <div class="text-xl font-black ${resultColor} px-3 py-1 rounded-lg border">
+                            <div class="text-xl font-black ${resColor} px-3 py-1 rounded-lg border">
                                 ${m.localScore} - ${m.visitScore}
                             </div>
                             <div class="flex flex-col items-center w-1/3 gap-1">
-                                <img src="${m.visitImg}" class="w-8 h-8 object-contain">
+                                <img src="${visitUrl}" class="w-8 h-8 object-contain">
                                 <span class="text-[9px] font-bold text-center leading-tight text-slate-600 truncate w-full">${m.visitName}</span>
                             </div>
                         </div>
                     </div>
                 </div>`;
-                container.innerHTML += html;
             });
         }
 
         function renderHeroCard(m) {
             const card = document.getElementById('next-match-card');
+            if (!m) {
+                card.innerHTML = '<p class="text-center text-gray-400 py-4">No hay partidos pendientes programados.</p>';
+                return;
+            }
+            
+            currentNextMatch = m; // Guardar para la función de calendario
+
+            const localUrl = m.localImg.startsWith('http') ? m.localImg : BASE_IMG_URL + m.localImg;
+            const visitUrl = m.visitImg.startsWith('http') ? m.visitImg : BASE_IMG_URL + m.visitImg;
+
             card.innerHTML = `
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
                 <div class="flex justify-between items-center mb-4">
@@ -307,8 +320,9 @@
                 </div>
                 <div class="flex justify-between items-center px-2">
                     <div class="flex flex-col items-center w-1/3">
+                        <span class="text-[9px] text-gray-400 font-bold tracking-widest mb-1">LOCAL</span>
                         <div class="w-14 h-14 rounded-full bg-white border border-indigo-100 p-1 shadow-md mb-2 flex items-center justify-center">
-                            <img src="${m.localImg}" class="w-full h-full object-contain">
+                            <img src="${localUrl}" class="w-full h-full object-contain">
                         </div>
                         <span class="text-[10px] font-bold text-center leading-tight text-slate-800">${m.localName}</span>
                     </div>
@@ -317,25 +331,73 @@
                         <span class="text-[10px] text-gray-400 uppercase font-bold mt-1 bg-gray-100 px-2 py-0.5 rounded-full">Jornada ${m.jornada}</span>
                     </div>
                     <div class="flex flex-col items-center w-1/3">
+                        <span class="text-[9px] text-gray-400 font-bold tracking-widest mb-1">VISITANTE</span>
                         <div class="w-14 h-14 rounded-full bg-white border border-purple-100 p-1 shadow-md mb-2 flex items-center justify-center">
-                            <img src="${m.visitImg}" class="w-full h-full object-contain">
+                            <img src="${visitUrl}" class="w-full h-full object-contain">
                         </div>
                         <span class="text-[10px] font-bold text-center leading-tight text-slate-800">${m.visitName}</span>
                     </div>
                 </div>
-                <a href="${m.direccion}" target="_blank" class="mt-4 flex items-center justify-center gap-2 w-full py-3 bg-slate-50 hover:bg-indigo-50 text-slate-600 text-xs font-bold rounded-xl transition-colors border border-slate-100">
-                    <i class="fa-solid fa-location-dot text-red-500"></i> Ver Mapa
-                </a>
+                
+                <div class="flex gap-2 mt-4">
+                    <button onclick="downloadICS()" class="flex-1 flex items-center justify-center gap-2 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-xs font-bold rounded-xl transition-colors border border-indigo-100">
+                        <i class="fa-regular fa-calendar-plus text-lg"></i> Añadir
+                    </button>
+                    <a href="${m.direccion}" target="_blank" class="flex-1 flex items-center justify-center gap-2 py-3 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-bold rounded-xl transition-colors border border-slate-100">
+                        <i class="fa-solid fa-location-dot text-red-500 text-lg"></i> Mapa
+                    </a>
+                </div>
             `;
+        }
+
+        function downloadICS() {
+            if (!currentNextMatch) return;
+            const m = currentNextMatch;
+            
+            // Formato de fecha para ICS: YYYYMMDDTHHMMSS
+            // Entrada: 29/11/25 y 11:15
+            const [day, month, year] = m.fecha.split('/');
+            const fullYear = year.length === 2 ? '20' + year : year;
+            const [hour, minute] = m.hora.split(':');
+            
+            const startDate = `${fullYear}${month}${day}T${hour}${minute}00`;
+            
+            // Calculamos fin (1 hora después)
+            let endHour = parseInt(hour) + 1;
+            const endDate = `${fullYear}${month}${day}T${endHour.toString().padStart(2,'0')}${minute}00`;
+            
+            const title = `Fútbol Sala: ${m.localName} vs ${m.visitName}`;
+            const description = `Jornada ${m.jornada} - Alevín Mixto ECMadrid`;
+            const location = 'Campo de juego (Ver Mapa)';
+
+            const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ValleSanchinarro//App//ES
+BEGIN:VEVENT
+UID:${Date.now()}@valle.app
+DTSTAMP:${startDate}Z
+DTSTART:${startDate}
+DTEND:${endDate}
+SUMMARY:${title}
+DESCRIPTION:${description}
+LOCATION:${location}
+END:VEVENT
+END:VCALENDAR`;
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', 'partido_valle.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function switchTab(tab) {
             document.getElementById('view-clasificacion').classList.toggle('hidden', tab !== 'clasificacion');
             document.getElementById('view-resultados').classList.toggle('hidden', tab !== 'resultados');
-            
             const btnClasif = document.getElementById('tab-clasif');
             const btnRes = document.getElementById('tab-res');
-            
             if(tab === 'clasificacion') {
                 btnClasif.className = 'flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-active';
                 btnRes.className = 'flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-inactive hover:bg-slate-50';
