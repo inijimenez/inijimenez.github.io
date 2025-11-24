@@ -3,44 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dashboard Alevín Mixto - G9</title>
+    <title>Dashboard Alevín Mixto - G9 (Dinámico)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 
     <style>
         body { font-family: 'Outfit', sans-serif; background-color: #f1f5f9; -webkit-tap-highlight-color: transparent; }
-        
-        /* Animaciones */
-        .fade-in { animation: fadeIn 0.3s ease-in-out forwards; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Gradiente Header */
-        .header-bg {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        }
-
-        /* Estilo Tab Activo */
-        .tab-active {
-            background-color: #1e3a8a;
-            color: white;
-            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
-        }
-        .tab-inactive {
-            background-color: white;
-            color: #64748b;
-            border: 1px solid #e2e8f0;
-        }
-
+        .header-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+        .tab-active { background-color: #1e3a8a; color: white; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2); }
+        .tab-inactive { background-color: white; color: #64748b; border: 1px solid #e2e8f0; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen pb-10">
 
-    <!-- HEADER / HERO SECTION -->
+    <!-- HEADER -->
     <header class="header-bg text-white pt-6 pb-20 px-6 rounded-b-[3rem] shadow-xl relative overflow-hidden">
-        <!-- Decoración -->
         <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full translate-x-1/4 -translate-y-1/4 blur-3xl"></div>
         <div class="absolute bottom-0 left-0 w-32 h-32 bg-blue-400 opacity-10 rounded-full -translate-x-1/4 translate-y-1/4 blur-2xl"></div>
 
@@ -50,279 +33,313 @@
                     <span class="inline-block bg-white/20 backdrop-blur-sm border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2 shadow-sm">Temporada 2025/26</span>
                     <h1 class="text-2xl font-black leading-tight">Grupo 9 <br><span class="text-blue-200 font-medium text-lg">Alevín Mixto</span></h1>
                 </div>
-                <!-- Logo ECM -->
-                <div class="bg-white p-2 rounded-2xl border border-white/20 shadow-inner backdrop-blur-md h-12 w-12 flex items-center justify-center">
-                   <img src="https://www2.ecmadrid.org/Deportesdev/Images/logo_ECM.jpg" 
-                        alt="ECM" 
-                        class="h-full w-auto object-contain"
-                        onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-solid fa-graduation-cap text-blue-600 text-xl\'></i>'">
+                <div id="status-indicator" class="bg-white p-2 rounded-2xl border border-white/20 shadow-inner backdrop-blur-md h-12 w-12 flex items-center justify-center">
+                   <div class="loader"></div>
                 </div>
             </div>
 
-            <!-- TARJETA PRÓXIMO PARTIDO (Destacada) -->
-            <div class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl shadow-blue-900/20 relative overflow-hidden transform transition-transform active:scale-[0.99]">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
-                
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded uppercase tracking-wider">Próximo Partido</span>
-                    <span class="text-xs font-bold text-gray-400"><i class="fa-regular fa-calendar mr-1"></i> Sáb 29 Nov</span>
-                </div>
-
-                <div class="flex justify-between items-center px-2">
-                    <!-- Local -->
-                    <div class="flex flex-col items-center w-1/3 group">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1 group-hover:text-indigo-600 transition-colors">Local</span>
-                        <div class="w-16 h-16 rounded-full bg-white border-2 border-indigo-100 p-1 shadow-lg shadow-indigo-100 mb-2 flex items-center justify-center overflow-hidden relative">
-                            <img src="https://www2.ecmadrid.org/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg" class="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-300" alt="Valle">
-                        </div>
-                        <span class="text-xs font-bold text-center leading-tight text-slate-800 group-hover:text-indigo-700 transition-colors">Valle<br>Sanchinarro</span>
-                    </div>
-
-                    <!-- VS / Hora -->
-                    <div class="flex flex-col items-center w-1/3">
-                        <span class="text-4xl font-black text-slate-800 tracking-tighter">11:15</span>
-                        <span class="text-[10px] text-gray-400 uppercase font-bold mt-1 bg-gray-100 px-2 py-0.5 rounded-full">Jornada 5</span>
-                    </div>
-
-                    <!-- Visitante -->
-                    <div class="flex flex-col items-center w-1/3 group">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1 group-hover:text-purple-600 transition-colors">Visitante</span>
-                        <div class="w-16 h-16 rounded-full bg-white border-2 border-purple-100 p-1 shadow-lg shadow-purple-100 mb-2 flex items-center justify-center overflow-hidden relative">
-                            <img src="https://www2.ecmadrid.org/Deportesdev//Images/WallImages/imagepath/Emblema_0118.jpg" class="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-300" alt="Asuncion">
-                        </div>
-                        <span class="text-xs font-bold text-center leading-tight text-slate-800 group-hover:text-purple-700 transition-colors">Asunción<br>Cuestablanca</span>
-                    </div>
-                </div>
-
-                <!-- Botón Mapa -->
-                <a href="https://www.google.com/maps/search/?api=1&query=Calle+de+Vicente+Blasco+Ibáñez,+S/N,+28050+Madrid" target="_blank" class="mt-5 flex items-center justify-center gap-2 w-full py-3 bg-slate-50 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 rounded-xl text-xs font-bold transition-all border border-slate-100 group">
-                    <i class="fa-solid fa-location-dot text-red-500 group-hover:animate-bounce"></i>
-                    C/ Vicente Blasco Ibáñez, S/N
-                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-50 ml-1"></i>
-                </a>
+            <!-- TARJETA PRÓXIMO PARTIDO (Se rellena dinámicamente) -->
+            <div id="next-match-card" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl shadow-blue-900/20 relative overflow-hidden transform transition-transform active:scale-[0.99] min-h-[180px] flex flex-col justify-center">
+                <p class="text-center text-gray-400 text-sm animate-pulse">Buscando próximo partido...</p>
             </div>
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
+    <!-- CONTENIDO -->
     <main class="px-4 -mt-6 relative z-20 max-w-3xl mx-auto">
         
-        <!-- Pestañas de Navegación -->
+        <!-- Tabs -->
         <div class="flex p-1 bg-white rounded-2xl shadow-lg shadow-slate-200/50 mb-6">
-            <button onclick="switchTab('clasificacion')" id="tab-clasif" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-active">
-                Clasificación
-            </button>
-            <button onclick="switchTab('resultados')" id="tab-res" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-inactive hover:bg-slate-50">
-                Resultados
-            </button>
+            <button onclick="switchTab('clasificacion')" id="tab-clasif" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-active">Clasificación</button>
+            <button onclick="switchTab('resultados')" id="tab-res" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-inactive hover:bg-slate-50">Resultados</button>
         </div>
 
-        <!-- VISTA: CLASIFICACIÓN -->
+        <!-- CLASIFICACIÓN -->
         <div id="view-clasificacion" class="fade-in space-y-4">
-            <!-- Tabla Estilo Tarjetas -->
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                <!-- Header con más columnas -->
                 <div class="grid grid-cols-12 bg-slate-50 p-3 text-[9px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 text-center items-center">
                     <div class="col-span-1">#</div>
                     <div class="col-span-4 text-left pl-1">Equipo</div>
                     <div class="col-span-1">PJ</div>
-                    <div class="col-span-1" title="Goles a Favor">GF</div>
-                    <div class="col-span-1" title="Goles en Contra">GC</div>
-                    <div class="col-span-2" title="Average">AVG</div>
+                    <div class="col-span-1">GF</div>
+                    <div class="col-span-1">GC</div>
+                    <div class="col-span-2">AVG</div>
                     <div class="col-span-2">Pts</div>
                 </div>
-                
-                <div id="standings-container">
-                    <!-- JS Render -->
+                <div id="standings-container" class="min-h-[200px]">
+                    <!-- Loading State -->
+                    <div class="p-8 text-center text-gray-400 text-xs">
+                        <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-blue-500"></i><br>
+                        Conectando con ECMadrid...
+                    </div>
                 </div>
             </div>
-
-            <!-- Leyenda -->
-            <div class="flex gap-4 justify-center text-[10px] text-gray-400 font-medium">
-                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-yellow-400"></span> Líder</span>
-                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-indigo-500"></span> Tu Equipo</span>
-            </div>
-            
             <div class="text-center text-[10px] text-gray-400 mt-2 italic">
-                *Datos oficiales actualizados según acta.
+                *Datos obtenidos en tiempo real de ecmadrid.org
             </div>
         </div>
 
-        <!-- VISTA: RESULTADOS -->
+        <!-- RESULTADOS -->
         <div id="view-resultados" class="hidden fade-in">
-            <!-- Título de Sección -->
             <div class="flex items-center justify-between mb-4 pl-1">
-                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Resultados de tu Equipo</h3>
-                <span class="bg-indigo-100 text-indigo-700 text-[10px] font-bold px-2 py-0.5 rounded-full">4 Jugados</span>
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Resultados del Grupo</h3>
             </div>
-
             <div class="space-y-4" id="matches-list">
-                <!-- Se rellena con JS -->
+               <!-- Resultados dinámicos -->
             </div>
         </div>
-
     </main>
 
     <script>
-        const baseImgUrl = "https://www2.ecmadrid.org/Deportesdev//Images/WallImages/imagepath/";
+        const TARGET_URL = 'https://www2.ecmadrid.org/Deportesdev/Clasificacion/_ShowClasif?numcom=89&depor=FUTBOL-SALA&categ=ALEVIN%20MIXTO';
+        const PROXY_URL = 'https://api.allorigins.win/get?url=';
+        const BASE_IMG_URL = 'https://www2.ecmadrid.org'; // Las imágenes vienen relativas
+        const MY_TEAM_NAME = "EL VALLE SANCHINARRO \"B\""; // Nombre exacto para resaltar
 
-        // --- DATOS CLASIFICACIÓN OFICIAL ---
-        const teams = [
-            { pos: 1, name: 'Vedruna "C"', full: 'FEC Sta. Joaquina Vedruna "C"', pj: 2, w: 2, d: 0, l: 0, pts: 4, gf: 10, gc: 3, logo: 'Emblema_0061.jpg' },
-            { pos: 2, name: 'Col. Alemán "A"', full: 'Colegio Alemán "A"', pj: 2, w: 2, d: 0, l: 0, pts: 4, gf: 10, gc: 7, logo: 'Emblema_0128.jpg' },
-            { pos: 3, name: 'La Inmaculada', full: 'La Inmaculada P. Hierro', pj: 3, w: 2, d: 0, l: 1, pts: 4, gf: 15, gc: 18, logo: 'Emblema_0144.jpg' },
-            { pos: 4, name: 'Santamarca', full: 'Santamarca Internacional', pj: 2, w: 1, d: 0, l: 1, pts: 2, gf: 12, gc: 7, logo: 'Emblema_0114.jpg' },
-            { pos: 5, name: 'Valle Sanchinarro "B"', full: 'El Valle Sanchinarro "B"', pj: 3, w: 1, d: 0, l: 2, pts: 2, gf: 20, gc: 17, myTeam: true, logo: 'Emblema_0151.jpg' },
-            { pos: 6, name: 'Sta. Maria Blanca', full: 'Santa Maria La Blanca "A"', pj: 2, w: 1, d: 0, l: 1, pts: 2, gf: 8, gc: 8, logo: 'Emblema_0143.jpg' },
-            { pos: 7, name: 'Asunción "B"', full: 'Asunción Cuestablanca "B"', pj: 2, w: 1, d: 0, l: 1, pts: 2, gf: 6, gc: 7, logo: 'Emblema_0118.jpg' },
-            { pos: 8, name: 'Corazonistas "A"', full: 'Corazonistas "A"', pj: 2, w: 0, d: 0, l: 2, pts: 0, gf: 4, gc: 8, logo: 'Emblema_0099.jpg' },
-            { pos: 9, name: 'Consolación "B"', full: 'Ntra. Sra. Consolación "B"', pj: 2, w: 0, d: 0, l: 2, pts: 0, gf: 6, gc: 16, logo: 'Emblema_0076.jpg' }
-        ];
+        document.addEventListener('DOMContentLoaded', fetchData);
 
-        // --- DATOS PARTIDOS (Historial) ---
-        const myMatches = [
-            { 
-                jornada: 4, 
-                date: '22 Nov', 
-                time: '12:00',
-                opponent: 'Consolación "B"', 
-                opponentLogo: 'Emblema_0076.jpg', 
-                score: '3 - 9', 
-                result: 'W', 
-                home: false,
-                pending: true 
-            },
-            { 
-                jornada: 3, 
-                date: '15 Nov', 
-                time: '12:30',
-                opponent: 'Santamarca', 
-                opponentLogo: 'Emblema_0114.jpg', 
-                score: '5 - 8', 
-                result: 'L', 
-                home: false 
-            },
-            { 
-                jornada: 2, 
-                date: '08 Nov', 
-                time: '10:00',
-                opponent: 'Corazonistas "A"', 
-                opponentLogo: 'Emblema_0099.jpg', 
-                score: '12 - 3', 
-                result: 'W', 
-                home: true
-            },
-            { 
-                jornada: 1, 
-                date: '25 Oct', 
-                time: '11:15',
-                opponent: 'Col. Alemán "A"', 
-                opponentLogo: 'Emblema_0128.jpg', 
-                score: '3 - 6', 
-                result: 'L', 
-                home: false
+        async function fetchData() {
+            try {
+                const response = await fetch(PROXY_URL + encodeURIComponent(TARGET_URL));
+                if (!response.ok) throw new Error('Error en red');
+                const data = await response.json();
+                
+                parseHTML(data.contents);
+                
+                // Actualizar icono de estado
+                document.getElementById('status-indicator').innerHTML = '<i class="fa-solid fa-check text-green-500 text-xl"></i>';
+            } catch (error) {
+                console.error(error);
+                document.getElementById('standings-container').innerHTML = `
+                    <div class="p-4 text-center text-red-500 text-sm">
+                        <i class="fa-solid fa-triangle-exclamation text-2xl mb-2"></i><br>
+                        No se pudieron cargar los datos.<br>Inténtalo de nuevo más tarde.
+                    </div>`;
+                document.getElementById('status-indicator').innerHTML = '<i class="fa-solid fa-xmark text-red-500 text-xl"></i>';
             }
-        ];
+        }
 
-        // --- RENDER CLASIFICACIÓN ---
-        const list = document.getElementById('standings-container');
-        
-        teams.forEach((t, i) => {
-            const isMyTeam = t.myTeam ? 'bg-indigo-50 border-l-4 border-indigo-500' : 'hover:bg-slate-50 border-l-4 border-transparent';
-            const rankStyle = i === 0 ? 'text-yellow-500 bg-yellow-100 rounded-full w-6 h-6 flex items-center justify-center font-bold' : 'text-slate-500 font-bold';
-            
-            // Calculamos el Average
-            const avg = t.gf - t.gc;
-            // Damos formato al Average (+/-)
-            const avgText = avg > 0 ? `+${avg}` : avg;
-            const avgColor = avg > 0 ? 'text-green-600' : (avg < 0 ? 'text-red-500' : 'text-slate-400');
+        function parseHTML(htmlString) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlString, 'text/html');
 
-            t.pos = i + 1;
+            // 1. ENCONTRAR EL GRUPO 9
+            // La estructura suele ser <h3>GRUPO: 9</h3> seguido de un <table>
+            const headers = Array.from(doc.querySelectorAll('h3'));
+            const groupHeader = headers.find(h => h.textContent.includes('GRUPO: 9'));
 
-            list.innerHTML += `
-                <div class="grid grid-cols-12 items-center p-3 border-b border-slate-100 text-[11px] transition-colors ${isMyTeam}">
-                    <div class="col-span-1 text-center flex justify-center">
-                        <div class="${rankStyle}">${t.pos}</div>
-                    </div>
+            if (groupHeader) {
+                // --- CLASIFICACIÓN ---
+                const table = groupHeader.nextElementSibling; // La tabla suele ir justo después
+                if (table && table.tagName === 'TABLE') {
+                    renderStandings(table);
+                }
+
+                // --- RESULTADOS ---
+                // Los resultados suelen estar en un segundo bloque con el mismo nombre de grupo o más abajo
+                // Buscamos el siguiente H3 con 'GRUPO: 9' o analizamos tablas posteriores
+                // En esta web, primero están todas las clasificaciones y luego todos los resultados.
+                // Buscamos de nuevo el header pero en la sección de resultados (más adelante en el DOM)
+                const allGroup9Headers = headers.filter(h => h.textContent.includes('GRUPO: 9'));
+                
+                // Asumimos que el segundo 'GRUPO: 9' es el de resultados
+                if (allGroup9Headers.length > 1) {
+                    const resultsTable = allGroup9Headers[1].nextElementSibling;
+                    if (resultsTable && resultsTable.tagName === 'TABLE') {
+                        renderMatches(resultsTable);
+                    }
+                }
+            }
+        }
+
+        function renderStandings(table) {
+            const container = document.getElementById('standings-container');
+            container.innerHTML = '';
+            const rows = Array.from(table.querySelectorAll('tr')).slice(1); // Ignorar header original
+
+            rows.forEach((row, index) => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 8) return;
+
+                // Extracción de datos (ajustar índices según estructura real de la web ECM)
+                // Estructura típica: [Img] [Nombre] [J] [G] [E] [P] [TF] [TC] [AVG] [Ptos]
+                const imgEl = cells[0].querySelector('img');
+                const logoSrc = imgEl ? BASE_IMG_URL + imgEl.getAttribute('src') : '';
+                const name = cells[1].innerText.trim();
+                const pj = cells[2].innerText.trim();
+                const pg = cells[3].innerText.trim();
+                const pe = cells[4].innerText.trim();
+                const pp = cells[5].innerText.trim();
+                const tf = cells[6].innerText.trim();
+                const tc = cells[7].innerText.trim();
+                const avg = cells[8].innerText.trim();
+                const pts = cells[9].innerText.trim();
+
+                const isMyTeam = name.toUpperCase().includes("SANCHINARRO") && name.includes('"B"');
+                const rowStyle = isMyTeam ? 'bg-indigo-50 border-l-4 border-indigo-500' : 'hover:bg-slate-50 border-l-4 border-transparent';
+                const rankStyle = index === 0 ? 'text-yellow-500 bg-yellow-100 rounded-full w-6 h-6 flex items-center justify-center font-bold' : 'text-slate-500 font-bold';
+                const avgColor = parseInt(avg) > 0 ? 'text-green-600' : (parseInt(avg) < 0 ? 'text-red-500' : 'text-slate-400');
+
+                const html = `
+                <div class="grid grid-cols-12 items-center p-3 border-b border-slate-100 text-[11px] transition-colors ${rowStyle}">
+                    <div class="col-span-1 text-center flex justify-center"><div class="${rankStyle}">${index + 1}</div></div>
                     <div class="col-span-4 pl-1 pr-1 flex items-center gap-1.5 overflow-hidden">
-                        <img src="${baseImgUrl + t.logo}" alt="logo" class="w-5 h-5 object-contain shrink-0">
-                        <div class="font-bold text-slate-800 truncate leading-tight">${t.name}</div>
+                        <img src="${logoSrc}" class="w-5 h-5 object-contain shrink-0" onerror="this.style.display='none'">
+                        <div class="font-bold text-slate-800 truncate leading-tight">${name}</div>
                     </div>
-                    <div class="col-span-1 text-center text-slate-500 font-medium">${t.pj}</div>
-                    <div class="col-span-1 text-center text-slate-600">${t.gf}</div>
-                    <div class="col-span-1 text-center text-slate-400">${t.gc}</div>
-                    <div class="col-span-2 text-center font-bold ${avgColor}">${avgText}</div>
-                    <div class="col-span-2 text-center font-black text-slate-900 text-sm bg-slate-200/50 rounded py-0.5 mx-1">${t.pts}</div>
-                </div>
-            `;
-        });
+                    <div class="col-span-1 text-center text-slate-500 font-medium">${pj}</div>
+                    <div class="col-span-1 text-center text-slate-600">${tf}</div>
+                    <div class="col-span-1 text-center text-slate-400">${tc}</div>
+                    <div class="col-span-2 text-center font-bold ${avgColor}">${avg}</div>
+                    <div class="col-span-2 text-center font-black text-slate-900 text-sm bg-slate-200/50 rounded py-0.5 mx-1">${pts}</div>
+                </div>`;
+                container.innerHTML += html;
+            });
+        }
 
-        // --- RENDER RESULTADOS ---
-        const matchesContainer = document.getElementById('matches-list');
-        
-        myMatches.forEach(m => {
-            let resultColor = m.result === 'W' ? 'text-green-600 bg-green-50 border-green-100' : (m.result === 'D' ? 'text-orange-600 bg-orange-50' : 'text-red-600 bg-red-50 border-red-100');
-            let homeLabel = m.home ? 'LOCAL' : 'VISITANTE';
-            let team1Name = m.home ? 'Valle<br>Sanchinarro' : m.opponent;
-            let team1Logo = m.home ? 'Emblema_0151.jpg' : m.opponentLogo;
-            let team2Name = m.home ? m.opponent : 'Valle<br>Sanchinarro';
-            let team2Logo = m.home ? m.opponentLogo : 'Emblema_0151.jpg';
+        function renderMatches(table) {
+            const container = document.getElementById('matches-list');
+            container.innerHTML = '';
+            const rows = Array.from(table.querySelectorAll('tr')).slice(1); // Ignorar header
+            let nextMatchFound = false;
+
+            // Procesamos las filas. En ECMadrid suelen venir: Jorn, Local, Res, Visitante, Res, Fecha, Hora...
+            // Puede haber filas vacías o de separación
             
-            let extraInfo = m.pending ? '<span class="block text-[8px] text-gray-400 mt-1 uppercase font-normal">(Reciente)</span>' : '';
+            const matches = [];
 
-            matchesContainer.innerHTML += `
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 5) return;
+
+                try {
+                    const jornada = cells[0].innerText.trim();
+                    // Local
+                    const localImg = cells[1].querySelector('img')?.getAttribute('src');
+                    const localName = cells[1].innerText.trim();
+                    const localScore = cells[2].innerText.trim();
+                    // Visitante
+                    const visitName = cells[3].innerText.trim();
+                    const visitScore = cells[4].innerText.trim();
+                    const visitImg = cells[3].querySelector('img')?.getAttribute('src');
+                    // Fecha Hora
+                    const fecha = cells[5].innerText.trim();
+                    const hora = cells[6].innerText.trim();
+                    const direccion = cells[7]?.querySelector('a')?.getAttribute('href') || '#';
+                    const lugar = cells[7]?.innerText.trim().replace('MAPA', '') || 'Campo';
+
+                    const isMyMatch = localName.includes("SANCHINARRO") && localName.includes('"B"') || 
+                                      visitName.includes("SANCHINARRO") && visitName.includes('"B"');
+
+                    if (!isMyMatch) return; // Solo guardamos partidos de nuestro equipo
+
+                    const match = {
+                        jornada, localName, localScore, visitName, visitScore, fecha, hora, 
+                        localImg: localImg ? BASE_IMG_URL + localImg : '', 
+                        visitImg: visitImg ? BASE_IMG_URL + visitImg : '',
+                        direccion, lugar
+                    };
+                    matches.push(match);
+
+                } catch (e) { console.log("Error parseando fila", e); }
+            });
+
+            // Ordenar partidos: Próximos primero, luego pasados (aunque la web suele darlos ordenados)
+            // Estrategia simple: Buscar el primer partido sin resultado (futuro) para la tarjeta grande
+            // e invertir el array para la lista.
+
+            const pendingMatch = matches.find(m => m.localScore === '' || m.visitScore === '');
+            
+            // Renderizar Tarjeta Hero (Próximo Partido)
+            if (pendingMatch) {
+                renderHeroCard(pendingMatch);
+            } else {
+                document.getElementById('next-match-card').innerHTML = '<p class="text-center text-gray-500">No hay partidos programados</p>';
+            }
+
+            // Renderizar Lista (Invertimos para ver recientes arriba si ya se jugaron)
+            // Ojo: si vienen ordenados por jornada 1, 2, 3... queremos ver los últimos jugados primero.
+            // Filtramos los jugados para la lista de "Resultados"
+            const playedMatches = matches.filter(m => m.localScore !== '' && m.visitScore !== '').reverse();
+
+            playedMatches.forEach(m => {
+                const isWin = (m.localName.includes("SANCHINARRO") && parseInt(m.localScore) > parseInt(m.visitScore)) ||
+                              (m.visitName.includes("SANCHINARRO") && parseInt(m.visitScore) > parseInt(m.localScore));
+                const isDraw = m.localScore == m.visitScore;
+                
+                let resultColor = isWin ? 'text-green-600 border-green-200 bg-green-50' : (isDraw ? 'text-orange-500 border-orange-200 bg-orange-50' : 'text-red-600 border-red-200 bg-red-50');
+                let sideBar = isWin ? 'bg-green-500' : (isDraw ? 'bg-orange-400' : 'bg-red-500');
+
+                const html = `
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden relative">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 ${m.result === 'W' ? 'bg-green-500' : 'bg-red-500'}"></div>
-                    
+                    <div class="absolute left-0 top-0 bottom-0 w-1 ${sideBar}"></div>
                     <div class="p-4">
-                        <div class="flex justify-between items-center mb-4 border-b border-slate-50 pb-2">
-                            <div class="flex items-center gap-2">
-                                <span class="text-[10px] font-bold text-white bg-slate-800 px-2 py-0.5 rounded">Jornada ${m.jornada}</span>
-                                <span class="text-xs text-slate-400 font-medium">${m.date} • ${m.time}</span>
-                            </div>
-                            <span class="text-[10px] font-bold tracking-wider uppercase text-slate-400">${homeLabel}</span>
+                        <div class="flex justify-between items-center mb-3 border-b border-slate-50 pb-2">
+                            <span class="text-[10px] font-bold text-white bg-slate-800 px-2 py-0.5 rounded">Jornada ${m.jornada}</span>
+                            <span class="text-xs text-slate-400">${m.fecha}</span>
                         </div>
-
                         <div class="flex items-center justify-between">
                             <div class="flex flex-col items-center w-1/3 gap-1">
-                                <img src="${baseImgUrl + team1Logo}" class="w-10 h-10 object-contain">
-                                <span class="text-[10px] font-bold text-center leading-tight text-slate-600 truncate w-full">${team1Name}</span>
+                                <img src="${m.localImg}" class="w-8 h-8 object-contain">
+                                <span class="text-[9px] font-bold text-center leading-tight text-slate-600 truncate w-full">${m.localName}</span>
                             </div>
-
-                            <div class="flex flex-col items-center w-1/3">
-                                <div class="text-2xl font-black ${resultColor} px-3 py-1 rounded-lg border bg-opacity-50">
-                                    ${m.score}
-                                </div>
-                                ${extraInfo}
+                            <div class="text-xl font-black ${resultColor} px-3 py-1 rounded-lg border">
+                                ${m.localScore} - ${m.visitScore}
                             </div>
-
                             <div class="flex flex-col items-center w-1/3 gap-1">
-                                <img src="${baseImgUrl + team2Logo}" class="w-10 h-10 object-contain">
-                                <span class="text-[10px] font-bold text-center leading-tight text-slate-600 truncate w-full">${team2Name}</span>
+                                <img src="${m.visitImg}" class="w-8 h-8 object-contain">
+                                <span class="text-[9px] font-bold text-center leading-tight text-slate-600 truncate w-full">${m.visitName}</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            `;
-        });
+                </div>`;
+                container.innerHTML += html;
+            });
+        }
 
-        // --- LÓGICA TABS ---
+        function renderHeroCard(m) {
+            const card = document.getElementById('next-match-card');
+            card.innerHTML = `
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded uppercase tracking-wider">Próximo Partido</span>
+                    <span class="text-xs font-bold text-gray-400"><i class="fa-regular fa-calendar mr-1"></i> ${m.fecha}</span>
+                </div>
+                <div class="flex justify-between items-center px-2">
+                    <div class="flex flex-col items-center w-1/3">
+                        <div class="w-14 h-14 rounded-full bg-white border border-indigo-100 p-1 shadow-md mb-2 flex items-center justify-center">
+                            <img src="${m.localImg}" class="w-full h-full object-contain">
+                        </div>
+                        <span class="text-[10px] font-bold text-center leading-tight text-slate-800">${m.localName}</span>
+                    </div>
+                    <div class="flex flex-col items-center w-1/3">
+                        <span class="text-3xl font-black text-slate-800 tracking-tighter">${m.hora}</span>
+                        <span class="text-[10px] text-gray-400 uppercase font-bold mt-1 bg-gray-100 px-2 py-0.5 rounded-full">Jornada ${m.jornada}</span>
+                    </div>
+                    <div class="flex flex-col items-center w-1/3">
+                        <div class="w-14 h-14 rounded-full bg-white border border-purple-100 p-1 shadow-md mb-2 flex items-center justify-center">
+                            <img src="${m.visitImg}" class="w-full h-full object-contain">
+                        </div>
+                        <span class="text-[10px] font-bold text-center leading-tight text-slate-800">${m.visitName}</span>
+                    </div>
+                </div>
+                <a href="${m.direccion}" target="_blank" class="mt-4 flex items-center justify-center gap-2 w-full py-3 bg-slate-50 hover:bg-indigo-50 text-slate-600 text-xs font-bold rounded-xl transition-colors border border-slate-100">
+                    <i class="fa-solid fa-location-dot text-red-500"></i> Ver Mapa
+                </a>
+            `;
+        }
+
         function switchTab(tab) {
-            const viewClasif = document.getElementById('view-clasificacion');
-            const viewRes = document.getElementById('view-resultados');
+            document.getElementById('view-clasificacion').classList.toggle('hidden', tab !== 'clasificacion');
+            document.getElementById('view-resultados').classList.toggle('hidden', tab !== 'resultados');
+            
             const btnClasif = document.getElementById('tab-clasif');
             const btnRes = document.getElementById('tab-res');
-
-            if (tab === 'clasificacion') {
-                viewClasif.classList.remove('hidden');
-                viewRes.classList.add('hidden');
-                
+            
+            if(tab === 'clasificacion') {
                 btnClasif.className = 'flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-active';
                 btnRes.className = 'flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-inactive hover:bg-slate-50';
             } else {
-                viewClasif.classList.add('hidden');
-                viewRes.classList.remove('hidden');
-
                 btnRes.className = 'flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-active';
                 btnClasif.className = 'flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-inactive hover:bg-slate-50';
             }
