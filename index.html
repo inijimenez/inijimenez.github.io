@@ -16,7 +16,7 @@
         .tab-active { background-color: #1e3a8a; color: white; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2); }
         .tab-inactive { background-color: white; color: #64748b; border: 1px solid #e2e8f0; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; }
+        .loader { border: 2px solid #f3f3f3; border-top: 2px solid #3b82f6; border-radius: 50%; width: 14px; height: 14px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -30,17 +30,35 @@
         <div class="relative z-10">
             <div class="flex justify-between items-start mb-6">
                 <div>
-                    <span class="inline-block bg-white/20 backdrop-blur-sm border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2 shadow-sm">Temporada 2025/26</span>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="inline-block bg-white/20 backdrop-blur-sm border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-sm">Temporada 2025/26</span>
+                        <!-- Indicador de Estado Discreto -->
+                        <div id="status-pill" class="hidden flex items-center gap-1 bg-black/20 px-2 py-1 rounded-full">
+                            <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                            <span class="text-[9px] font-bold uppercase opacity-90">Live</span>
+                        </div>
+                    </div>
                     <h1 class="text-2xl font-black leading-tight">Grupo 9 <br><span class="text-blue-200 font-medium text-lg">Alevín Mixto</span></h1>
                 </div>
-                <div id="status-indicator" class="bg-white p-2 rounded-2xl border border-white/20 shadow-inner backdrop-blur-md h-12 w-12 flex items-center justify-center">
-                   <div class="loader"></div>
+                <!-- Logo ECM Restaurado -->
+                <div class="bg-white p-2 rounded-2xl border border-white/20 shadow-inner backdrop-blur-md h-14 w-14 flex items-center justify-center relative group">
+                   <img src="https://www2.ecmadrid.org/Deportesdev/Images/logo_ECM.jpg" 
+                        alt="ECM" 
+                        class="h-full w-auto object-contain"
+                        onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-solid fa-trophy text-yellow-500 text-2xl\'></i>'">
+                    
+                    <!-- Loading Spinner Overlay (Solo mientras carga) -->
+                    <div id="logo-loader" class="absolute inset-0 flex items-center justify-center bg-white/80 rounded-2xl">
+                        <div class="loader"></div>
+                    </div>
                 </div>
             </div>
 
             <!-- TARJETA PRÓXIMO PARTIDO -->
             <div id="next-match-card" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl shadow-blue-900/20 relative overflow-hidden transform transition-transform active:scale-[0.99] min-h-[180px] flex flex-col justify-center">
-                <p class="text-center text-gray-400 text-sm animate-pulse">Cargando...</p>
+                <p class="text-center text-gray-400 text-sm animate-pulse">
+                    <i class="fa-regular fa-futbol mr-2"></i>Cargando partido...
+                </p>
             </div>
         </div>
     </header>
@@ -67,10 +85,9 @@
                     <div class="col-span-2">Pts</div>
                 </div>
                 <div id="standings-container" class="min-h-[200px]">
-                    <!-- Loading State -->
                     <div class="p-8 text-center text-gray-400 text-xs">
-                        <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2 text-blue-500"></i><br>
-                        Obteniendo datos...
+                        <i class="fa-solid fa-cloud-arrow-down text-2xl mb-2 text-blue-300"></i><br>
+                        Sincronizando...
                     </div>
                 </div>
             </div>
@@ -93,9 +110,9 @@
         const PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
         const BASE_IMG_URL = 'https://www2.ecmadrid.org'; 
         
-        let currentNextMatch = null; // Variable global para almacenar el próximo partido
+        let currentNextMatch = null; 
 
-        // --- DATOS DE RESPALDO (Por si falla la conexión) ---
+        // --- DATOS DE RESPALDO ---
         const BACKUP_TEAMS = [
             { pos: 1, name: 'FEC STA. JOAQUINA VEDRUNA "C"', pj: 2, gf: 10, gc: 3, avg: 7, pts: 4, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0061.jpg' },
             { pos: 2, name: 'COLEGIO ALEMAN "A"', pj: 2, gf: 10, gc: 7, avg: 3, pts: 4, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0128.jpg' },
@@ -109,17 +126,16 @@
         ];
 
         const BACKUP_MATCHES = [
-            { jornada: '4', localName: 'NTRA. SRA. CONSOLACION "B"', localScore: '3', visitName: 'EL VALLE SANCHINARRO "B"', visitScore: '9', fecha: '22/11/25', hora: '12:00', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0076.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', direccion: '#' },
-            { jornada: '3', localName: 'EL VALLE SANCHINARRO "B"', localScore: '5', visitName: 'SANTAMARCA INTERNACIONAL', visitScore: '8', fecha: '15/11/25', hora: '12:30', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0114.jpg', direccion: '#' },
-            { jornada: '2', localName: 'CORAZONISTAS "A"', localScore: '3', visitName: 'EL VALLE SANCHINARRO "B"', visitScore: '12', fecha: '08/11/25', hora: '10:00', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0099.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', direccion: '#' },
-            { jornada: '5', localName: 'EL VALLE SANCHINARRO "B"', localScore: '', visitName: 'ASUNCION CUESTABLANCA "B"', visitScore: '', fecha: '29/11/25', hora: '11:15', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0118.jpg', direccion: 'https://maps.google.com/?q=C/ Vicente Blasco Ibáñez' }
+            { jornada: '4', localName: 'NTRA. SRA. CONSOLACION "B"', localScore: '3', visitName: 'EL VALLE SANCHINARRO "B"', visitScore: '9', fecha: '22/11/25', hora: '12:00', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0076.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', direccion: '#', addressText: 'Colegio Consolación' },
+            { jornada: '3', localName: 'EL VALLE SANCHINARRO "B"', localScore: '5', visitName: 'SANTAMARCA INTERNACIONAL', visitScore: '8', fecha: '15/11/25', hora: '12:30', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0114.jpg', direccion: '#', addressText: 'Valle Sanchinarro' },
+            { jornada: '2', localName: 'CORAZONISTAS "A"', localScore: '3', visitName: 'EL VALLE SANCHINARRO "B"', visitScore: '12', fecha: '08/11/25', hora: '10:00', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0099.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', direccion: '#', addressText: 'Corazonistas' },
+            { jornada: '5', localName: 'EL VALLE SANCHINARRO "B"', localScore: '', visitName: 'ASUNCION CUESTABLANCA "B"', visitScore: '', fecha: '29/11/25', hora: '11:15', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0118.jpg', direccion: 'https://maps.google.com/?q=C/ Vicente Blasco Ibáñez', addressText: 'C/ Vicente Blasco Ibáñez, S/N' }
         ];
 
         document.addEventListener('DOMContentLoaded', fetchData);
 
         async function fetchData() {
             try {
-                console.log("Intentando conectar...");
                 const response = await fetch(PROXY_URL + encodeURIComponent(TARGET_URL));
                 if (!response.ok) throw new Error('Fallo en Proxy');
                 const data = await response.json();
@@ -129,7 +145,8 @@
                 const success = parseHTML(data.contents);
                 
                 if (success) {
-                    document.getElementById('status-indicator').innerHTML = '<i class="fa-solid fa-circle text-green-500 text-[10px] animate-pulse"></i><span class="ml-1 text-xs font-bold text-green-600">LIVE</span>';
+                    document.getElementById('status-pill').classList.remove('hidden');
+                    document.getElementById('logo-loader').classList.add('hidden');
                     document.getElementById('data-source-label').innerText = "* Datos en tiempo real de ECMadrid";
                 } else {
                     throw new Error('No se encontró el Grupo 9');
@@ -144,7 +161,10 @@
         function loadBackupData() {
             renderStandingsUI(BACKUP_TEAMS);
             renderMatchesUI(BACKUP_MATCHES);
-            document.getElementById('status-indicator').innerHTML = '<i class="fa-solid fa-database text-orange-400 text-xl"></i>';
+            document.getElementById('logo-loader').classList.add('hidden');
+            const pill = document.getElementById('status-pill');
+            pill.innerHTML = '<div class="w-2 h-2 rounded-full bg-orange-400"></div><span class="text-[9px] font-bold uppercase opacity-90">Offline</span>';
+            pill.classList.remove('hidden');
             document.getElementById('data-source-label').innerHTML = "<span class='text-orange-500 font-bold'>!</span> Modo sin conexión: Datos guardados";
         }
 
@@ -205,6 +225,11 @@
                 const visit = cells[3].innerText.trim();
                 
                 if (local.includes('VALLE SANCHINARRO "B"') || visit.includes('VALLE SANCHINARRO "B"')) {
+                    // Extraer dirección textual limpia
+                    let rawAddress = cells[7]?.innerText.trim().replace('MAPA', '').trim();
+                    // Si está vacía, intentar coger el link title o poner default
+                    if (!rawAddress || rawAddress.length < 3) rawAddress = 'Ubicación por confirmar';
+
                     matches.push({
                         jornada: cells[0].innerText.trim(),
                         localName: local,
@@ -215,7 +240,8 @@
                         hora: cells[6].innerText.trim(),
                         localImg: cells[1].querySelector('img')?.getAttribute('src'),
                         visitImg: cells[3].querySelector('img')?.getAttribute('src'),
-                        direccion: cells[7]?.querySelector('a')?.getAttribute('href') || '#'
+                        direccion: cells[7]?.querySelector('a')?.getAttribute('href') || '#',
+                        addressText: rawAddress // Guardamos la dirección real
                     });
                 }
             });
@@ -307,10 +333,11 @@
                 return;
             }
             
-            currentNextMatch = m; // Guardar para la función de calendario
+            currentNextMatch = m;
 
             const localUrl = m.localImg.startsWith('http') ? m.localImg : BASE_IMG_URL + m.localImg;
             const visitUrl = m.visitImg.startsWith('http') ? m.visitImg : BASE_IMG_URL + m.visitImg;
+            const addressDisplay = m.addressText.length > 25 ? m.addressText.substring(0, 22) + '...' : m.addressText;
 
             card.innerHTML = `
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
@@ -343,8 +370,8 @@
                     <button onclick="downloadICS()" class="flex-1 flex items-center justify-center gap-2 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-xs font-bold rounded-xl transition-colors border border-indigo-100">
                         <i class="fa-regular fa-calendar-plus text-lg"></i> Añadir
                     </button>
-                    <a href="${m.direccion}" target="_blank" class="flex-1 flex items-center justify-center gap-2 py-3 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-bold rounded-xl transition-colors border border-slate-100">
-                        <i class="fa-solid fa-location-dot text-red-500 text-lg"></i> Mapa
+                    <a href="${m.direccion}" target="_blank" class="flex-[2] flex items-center justify-center gap-2 py-3 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-bold rounded-xl transition-colors border border-slate-100 truncate px-2" title="${m.addressText}">
+                        <i class="fa-solid fa-location-dot text-red-500 text-lg shrink-0"></i> <span class="truncate">${addressDisplay}</span>
                     </a>
                 </div>
             `;
@@ -354,21 +381,20 @@
             if (!currentNextMatch) return;
             const m = currentNextMatch;
             
-            // Formato de fecha para ICS: YYYYMMDDTHHMMSS
-            // Entrada: 29/11/25 y 11:15
             const [day, month, year] = m.fecha.split('/');
             const fullYear = year.length === 2 ? '20' + year : year;
             const [hour, minute] = m.hora.split(':');
             
             const startDate = `${fullYear}${month}${day}T${hour}${minute}00`;
             
-            // Calculamos fin (1 hora después)
             let endHour = parseInt(hour) + 1;
             const endDate = `${fullYear}${month}${day}T${endHour.toString().padStart(2,'0')}${minute}00`;
             
             const title = `Fútbol Sala: ${m.localName} vs ${m.visitName}`;
             const description = `Jornada ${m.jornada} - Alevín Mixto ECMadrid`;
-            const location = 'Campo de juego (Ver Mapa)';
+            
+            // USAR LA DIRECCIÓN REAL EN EL ICS
+            const location = m.addressText || 'Campo de juego';
 
             const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
