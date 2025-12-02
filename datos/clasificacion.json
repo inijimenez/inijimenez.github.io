@@ -2,19 +2,6 @@
     "clasificacion": [
         {
             "Grupo": "GRUPO: 1",
-            "Escudo": "",
-            "Equipo": "Equipo",
-            "J": "J",
-            "G": "G",
-            "E": "E",
-            "P": "P",
-            "TF": "TF",
-            "TC": "TC",
-            "AVG": "AVG",
-            "Puntos": "Ptos"
-        },
-        {
-            "Grupo": "GRUPO: 1",
             "Escudo": "img/escudos/Emblema_0143.jpg",
             "Equipo": "SANTA MARIA LA BLANCA \"B\"",
             "J": "4",
@@ -145,19 +132,6 @@
         },
         {
             "Grupo": "GRUPO: 2",
-            "Escudo": "",
-            "Equipo": "Equipo",
-            "J": "J",
-            "G": "G",
-            "E": "E",
-            "P": "P",
-            "TF": "TF",
-            "TC": "TC",
-            "AVG": "AVG",
-            "Puntos": "Ptos"
-        },
-        {
-            "Grupo": "GRUPO: 2",
             "Escudo": "img/escudos/Emblema_0025.jpg",
             "Equipo": "MATER IMMACULATA \"A\"",
             "J": "4",
@@ -272,19 +246,6 @@
             "TC": "33",
             "AVG": "-30",
             "Puntos": "0"
-        },
-        {
-            "Grupo": "GRUPO: 3",
-            "Escudo": "",
-            "Equipo": "Equipo",
-            "J": "J",
-            "G": "G",
-            "E": "E",
-            "P": "P",
-            "TF": "TF",
-            "TC": "TC",
-            "AVG": "AVG",
-            "Puntos": "Ptos"
         },
         {
             "Grupo": "GRUPO: 3",
@@ -405,19 +366,6 @@
         },
         {
             "Grupo": "GRUPO: 4",
-            "Escudo": "",
-            "Equipo": "Equipo",
-            "J": "J",
-            "G": "G",
-            "E": "E",
-            "P": "P",
-            "TF": "TF",
-            "TC": "TC",
-            "AVG": "AVG",
-            "Puntos": "Ptos"
-        },
-        {
-            "Grupo": "GRUPO: 4",
             "Escudo": "img/escudos/Emblema_0029.jpg",
             "Equipo": "JESUS MARIA \"C\"",
             "J": "4",
@@ -532,19 +480,6 @@
             "TC": "30",
             "AVG": "-17",
             "Puntos": "0"
-        },
-        {
-            "Grupo": "GRUPO: 5",
-            "Escudo": "",
-            "Equipo": "Equipo",
-            "J": "J",
-            "G": "G",
-            "E": "E",
-            "P": "P",
-            "TF": "TF",
-            "TC": "TC",
-            "AVG": "AVG",
-            "Puntos": "Ptos"
         },
         {
             "Grupo": "GRUPO: 5",
@@ -678,19 +613,6 @@
         },
         {
             "Grupo": "GRUPO: 6",
-            "Escudo": "",
-            "Equipo": "Equipo",
-            "J": "J",
-            "G": "G",
-            "E": "E",
-            "P": "P",
-            "TF": "TF",
-            "TC": "TC",
-            "AVG": "AVG",
-            "Puntos": "Ptos"
-        },
-        {
-            "Grupo": "GRUPO: 6",
             "Escudo": "img/escudos/Emblema_0006.jpg",
             "Equipo": "AGUSTINIANO \"C\"",
             "J": "4",
@@ -805,19 +727,6 @@
             "TC": "22",
             "AVG": "-17",
             "Puntos": "0"
-        },
-        {
-            "Grupo": "GRUPO: 7",
-            "Escudo": "",
-            "Equipo": "Equipo",
-            "J": "J",
-            "G": "G",
-            "E": "E",
-            "P": "P",
-            "TF": "TF",
-            "TC": "TC",
-            "AVG": "AVG",
-            "Puntos": "Ptos"
         },
         {
             "Grupo": "GRUPO: 7",
@@ -938,19 +847,6 @@
         },
         {
             "Grupo": "GRUPO: 8",
-            "Escudo": "",
-            "Equipo": "Equipo",
-            "J": "J",
-            "G": "G",
-            "E": "E",
-            "P": "P",
-            "TF": "TF",
-            "TC": "TC",
-            "AVG": "AVG",
-            "Puntos": "Ptos"
-        },
-        {
-            "Grupo": "GRUPO: 8",
             "Escudo": "img/escudos/Emblema_0031.jpg",
             "Equipo": "MARISTAS CHAMBERI",
             "J": "4",
@@ -1065,19 +961,6 @@
             "TC": "8",
             "AVG": "-3",
             "Puntos": "0"
-        },
-        {
-            "Grupo": "GRUPO: 9",
-            "Escudo": "",
-            "Equipo": "Equipo",
-            "J": "J",
-            "G": "G",
-            "E": "E",
-            "P": "P",
-            "TF": "TF",
-            "TC": "TC",
-            "AVG": "AVG",
-            "Puntos": "Ptos"
         },
         {
             "Grupo": "GRUPO: 9",
@@ -1198,19 +1081,6 @@
         }
     ],
     "jornadas": [
-        {
-            "Grupo": "GRUPO: 1",
-            "Jornada": "Jorn.",
-            "EscudoLocal": "",
-            "Local": "LOCAL",
-            "GolesLocal": "RDO",
-            "EscudoVisitante": "",
-            "Visitante": "VISITANTE",
-            "GolesVisitante": "RDO",
-            "Fecha": "FECHA",
-            "Hora": "HORA",
-            "Direccion": "DIRECCIÓN"
-        },
         {
             "Grupo": "GRUPO: 1",
             "Jornada": "1",
@@ -1795,19 +1665,6 @@
             "Fecha": "",
             "Hora": "00:00",
             "Direccion": "INFANTA MARIA, S/N"
-        },
-        {
-            "Grupo": "GRUPO: 2",
-            "Jornada": "Jorn.",
-            "EscudoLocal": "",
-            "Local": "LOCAL",
-            "GolesLocal": "RDO",
-            "EscudoVisitante": "",
-            "Visitante": "VISITANTE",
-            "GolesVisitante": "RDO",
-            "Fecha": "FECHA",
-            "Hora": "HORA",
-            "Direccion": "DIRECCIÓN"
         },
         {
             "Grupo": "GRUPO: 2",
@@ -2396,19 +2253,6 @@
         },
         {
             "Grupo": "GRUPO: 3",
-            "Jornada": "Jorn.",
-            "EscudoLocal": "",
-            "Local": "LOCAL",
-            "GolesLocal": "RDO",
-            "EscudoVisitante": "",
-            "Visitante": "VISITANTE",
-            "GolesVisitante": "RDO",
-            "Fecha": "FECHA",
-            "Hora": "HORA",
-            "Direccion": "DIRECCIÓN"
-        },
-        {
-            "Grupo": "GRUPO: 3",
             "Jornada": "1",
             "EscudoLocal": "img/escudos/Emblema_0000.jpg",
             "Local": "D E S C A N S O",
@@ -2991,19 +2835,6 @@
             "Fecha": "",
             "Hora": "00:00",
             "Direccion": "CONDESA DE VENADITO, 27"
-        },
-        {
-            "Grupo": "GRUPO: 4",
-            "Jornada": "Jorn.",
-            "EscudoLocal": "",
-            "Local": "LOCAL",
-            "GolesLocal": "RDO",
-            "EscudoVisitante": "",
-            "Visitante": "VISITANTE",
-            "GolesVisitante": "RDO",
-            "Fecha": "FECHA",
-            "Hora": "HORA",
-            "Direccion": "DIRECCIÓN"
         },
         {
             "Grupo": "GRUPO: 4",
@@ -3592,19 +3423,6 @@
         },
         {
             "Grupo": "GRUPO: 5",
-            "Jornada": "Jorn.",
-            "EscudoLocal": "",
-            "Local": "LOCAL",
-            "GolesLocal": "RDO",
-            "EscudoVisitante": "",
-            "Visitante": "VISITANTE",
-            "GolesVisitante": "RDO",
-            "Fecha": "FECHA",
-            "Hora": "HORA",
-            "Direccion": "DIRECCIÓN"
-        },
-        {
-            "Grupo": "GRUPO: 5",
             "Jornada": "1",
             "EscudoLocal": "img/escudos/Emblema_0012.jpg",
             "Local": "NTRA. SRA. PILAR \"B\"",
@@ -4187,19 +4005,6 @@
             "Fecha": "",
             "Hora": "00:00",
             "Direccion": "GUZMAN EL BUENO, 60"
-        },
-        {
-            "Grupo": "GRUPO: 6",
-            "Jornada": "Jorn.",
-            "EscudoLocal": "",
-            "Local": "LOCAL",
-            "GolesLocal": "RDO",
-            "EscudoVisitante": "",
-            "Visitante": "VISITANTE",
-            "GolesVisitante": "RDO",
-            "Fecha": "FECHA",
-            "Hora": "HORA",
-            "Direccion": "DIRECCIÓN"
         },
         {
             "Grupo": "GRUPO: 6",
@@ -4788,19 +4593,6 @@
         },
         {
             "Grupo": "GRUPO: 7",
-            "Jornada": "Jorn.",
-            "EscudoLocal": "",
-            "Local": "LOCAL",
-            "GolesLocal": "RDO",
-            "EscudoVisitante": "",
-            "Visitante": "VISITANTE",
-            "GolesVisitante": "RDO",
-            "Fecha": "FECHA",
-            "Hora": "HORA",
-            "Direccion": "DIRECCIÓN"
-        },
-        {
-            "Grupo": "GRUPO: 7",
             "Jornada": "1",
             "EscudoLocal": "img/escudos/Emblema_0000.jpg",
             "Local": "D E S C A N S O",
@@ -5386,19 +5178,6 @@
         },
         {
             "Grupo": "GRUPO: 8",
-            "Jornada": "Jorn.",
-            "EscudoLocal": "",
-            "Local": "LOCAL",
-            "GolesLocal": "RDO",
-            "EscudoVisitante": "",
-            "Visitante": "VISITANTE",
-            "GolesVisitante": "RDO",
-            "Fecha": "FECHA",
-            "Hora": "HORA",
-            "Direccion": "DIRECCIÓN"
-        },
-        {
-            "Grupo": "GRUPO: 8",
             "Jornada": "1",
             "EscudoLocal": "img/escudos/Emblema_0000.jpg",
             "Local": "D E S C A N S O",
@@ -5981,19 +5760,6 @@
             "Fecha": "",
             "Hora": "00:00",
             "Direccion": "Pº PINTOR ROSALES, 62"
-        },
-        {
-            "Grupo": "GRUPO: 9",
-            "Jornada": "Jorn.",
-            "EscudoLocal": "",
-            "Local": "LOCAL",
-            "GolesLocal": "RDO",
-            "EscudoVisitante": "",
-            "Visitante": "VISITANTE",
-            "GolesVisitante": "RDO",
-            "Fecha": "FECHA",
-            "Hora": "HORA",
-            "Direccion": "DIRECCIÓN"
         },
         {
             "Grupo": "GRUPO: 9",
