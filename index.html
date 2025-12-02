@@ -104,34 +104,36 @@
                     PRÓXIMO ENCUENTRO
                 </div>
                 
-                <div class="flex justify-between items-center mt-6 mb-6">
+                <div class="flex justify-between items-start mt-8 mb-6"> <!-- items-start para alinear arriba si los nombres tienen distinta altura -->
                     <!-- Local -->
-                    <div class="flex flex-col items-center w-1/3">
-                        <div class="w-16 h-16 bg-white/5 rounded-full p-2 mb-2 flex items-center justify-center">
+                    <div class="flex flex-col items-center w-2/5 px-1"> <!-- w-2/5 para dar más espacio -->
+                        <div class="w-16 h-16 bg-white/5 rounded-full p-2 mb-2 flex items-center justify-center shrink-0">
                             <img id="nm-local-img" src="" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/50'">
                         </div>
-                        <span id="nm-local-name" class="text-xs text-center font-bold leading-tight text-white line-clamp-2 h-8 flex items-center">Local</span>
+                        <!-- Quitadas restricciones de altura y line-clamp -->
+                        <span id="nm-local-name" class="text-xs text-center font-bold leading-normal text-white break-words w-full">Local</span>
                     </div>
                     
                     <!-- VS -->
-                    <div class="flex flex-col items-center w-1/3">
-                        <span class="text-xs text-gray-400 mb-1" id="nm-jornada">J-</span>
+                    <div class="flex flex-col items-center w-1/5 pt-2"> <!-- w-1/5 para el centro -->
+                        <span class="text-xs text-gray-400 mb-1 whitespace-nowrap" id="nm-jornada">J-</span>
                         <div class="text-3xl font-black text-white">VS</div>
                         <div id="nm-time" class="text-sm text-blue-400 font-bold mt-1">00:00</div>
-                        <div id="nm-date" class="text-xs text-gray-500">DD/MM</div>
+                        <div id="nm-date" class="text-xs text-gray-500 whitespace-nowrap">DD/MM</div>
                     </div>
 
                     <!-- Visitante -->
-                    <div class="flex flex-col items-center w-1/3">
-                        <div class="w-16 h-16 bg-white/5 rounded-full p-2 mb-2 flex items-center justify-center">
+                    <div class="flex flex-col items-center w-2/5 px-1">
+                        <div class="w-16 h-16 bg-white/5 rounded-full p-2 mb-2 flex items-center justify-center shrink-0">
                             <img id="nm-visit-img" src="" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/50'">
                         </div>
-                        <span id="nm-visit-name" class="text-xs text-center font-bold leading-tight text-white line-clamp-2 h-8 flex items-center">Visitante</span>
+                        <!-- Quitadas restricciones de altura y line-clamp -->
+                        <span id="nm-visit-name" class="text-xs text-center font-bold leading-normal text-white break-words w-full">Visitante</span>
                     </div>
                 </div>
 
                 <!-- Actions -->
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-3 mt-4">
                     <a id="btn-map" href="#" target="_blank" class="flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-lg text-xs transition font-medium">
                         <i class="fa-solid fa-location-dot text-red-400"></i> Ver Mapa
                     </a>
@@ -154,7 +156,7 @@
                 <!-- Local -->
                 <div class="flex flex-col items-center w-1/3 gap-2">
                     <img id="lm-local-img" src="" class="w-12 h-12 object-contain" onerror="this.src='https://via.placeholder.com/40'">
-                    <span id="lm-local-name" class="text-[10px] text-center text-gray-300 font-semibold leading-tight line-clamp-2">Local</span>
+                    <span id="lm-local-name" class="text-[10px] text-center text-gray-300 font-semibold leading-tight w-full break-words">Local</span>
                 </div>
 
                 <!-- Score -->
@@ -167,7 +169,7 @@
                 <!-- Visitante -->
                 <div class="flex flex-col items-center w-1/3 gap-2">
                     <img id="lm-visit-img" src="" class="w-12 h-12 object-contain" onerror="this.src='https://via.placeholder.com/40'">
-                    <span id="lm-visit-name" class="text-[10px] text-center text-gray-300 font-semibold leading-tight line-clamp-2">Visitante</span>
+                    <span id="lm-visit-name" class="text-[10px] text-center text-gray-300 font-semibold leading-tight w-full break-words">Visitante</span>
                 </div>
             </div>
         </div>
