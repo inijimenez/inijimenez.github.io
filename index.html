@@ -2,436 +2,502 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dashboard Alevín Mixto - G9</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Valle Sanchinarro B - Fan Center</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'valle-blue': '#004aad', 
+                        'valle-accent': '#FFD700',
+                        'dark-bg': '#0f172a',
+                        'card-bg': '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Outfit', sans-serif; background-color: #f1f5f9; -webkit-tap-highlight-color: transparent; }
-        .fade-in { animation: fadeIn 0.5s ease-in-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .header-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
-        .tab-active { background-color: #1e3a8a; color: white; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2); }
-        .tab-inactive { background-color: white; color: #64748b; border: 1px solid #e2e8f0; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .loader { border: 2px solid #f3f3f3; border-top: 2px solid #3b82f6; border-radius: 50%; width: 14px; height: 14px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        body {
+            background-color: #0f172a;
+            color: white;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .team-logo-shadow {
+            filter: drop-shadow(0 0 15px rgba(0, 74, 173, 0.6));
+        }
+        /* Scrollbar personalizada para la tabla */
+        .scrollbar-hide::-webkit-scrollbar {
+            height: 4px;
+        }
+        .scrollbar-hide::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 4px;
+        }
+        .scrollbar-hide::-webkit-scrollbar-track {
+            background: transparent;
+        }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen pb-10">
+<body class="min-h-screen pb-10">
 
-    <!-- HEADER -->
-    <header class="header-bg text-white pt-6 pb-20 px-6 rounded-b-[3rem] shadow-xl relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full translate-x-1/4 -translate-y-1/4 blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 w-32 h-32 bg-blue-400 opacity-10 rounded-full -translate-x-1/4 translate-y-1/4 blur-2xl"></div>
+    <!-- Navbar Simple -->
+    <nav class="w-full p-4 flex justify-between items-center glass-panel sticky top-0 z-50">
+        <div class="font-bold text-xl tracking-wider">DEPOR<span class="text-blue-500">VALLE</span></div>
+        <div class="text-xs font-semibold bg-blue-600 px-3 py-1 rounded-full uppercase tracking-widest">Grupo 9</div>
+    </nav>
 
-        <div class="relative z-10">
-            <div class="flex justify-between items-start mb-6">
-                <div>
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="inline-block bg-white/20 backdrop-blur-sm border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-sm">Temporada 2025/26</span>
-                        <!-- Indicador de Estado Discreto -->
-                        <div id="status-pill" class="hidden flex items-center gap-1 bg-black/20 px-2 py-1 rounded-full">
-                            <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
-                            <span class="text-[9px] font-bold uppercase opacity-90">Live</span>
-                        </div>
-                    </div>
-                    <h1 class="text-2xl font-black leading-tight">Grupo 9 <br><span class="text-blue-200 font-medium text-lg">Alevín Mixto</span></h1>
+    <!-- Hero Section -->
+    <div class="relative w-full h-64 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-900 to-dark-bg opacity-90 z-10"></div>
+        <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" class="absolute inset-0 w-full h-full object-cover" alt="Futsal Background">
+        
+        <div class="absolute inset-0 z-20 flex flex-col items-center justify-center pt-8">
+            <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center p-2 mb-3 shadow-lg shadow-blue-500/50">
+                <img id="hero-logo" src="img/escudos/Emblema_0151.jpg" onerror="this.src='https://via.placeholder.com/150?text=VALLE'" class="w-full h-full object-contain rounded-full" alt="Escudo">
+            </div>
+            <h1 class="text-2xl font-extrabold text-center px-4 leading-tight">EL VALLE SANCHINARRO B</h1>
+            <p class="text-blue-300 text-sm mt-1">Alevín Mixto</p>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="container mx-auto px-4 -mt-8 relative z-30 space-y-6">
+
+        <!-- 1. Stats Summary Cards -->
+        <div class="grid grid-cols-3 gap-3" id="stats-container">
+            <div class="glass-panel p-3 rounded-xl text-center">
+                <div class="text-xs text-gray-400 uppercase">Posición</div>
+                <div class="text-2xl font-bold text-white" id="stat-pos">-</div>
+            </div>
+            <div class="glass-panel p-3 rounded-xl text-center">
+                <div class="text-xs text-gray-400 uppercase">Puntos</div>
+                <div class="text-2xl font-bold text-blue-400" id="stat-pts">-</div>
+            </div>
+            <div class="glass-panel p-3 rounded-xl text-center">
+                <div class="text-xs text-gray-400 uppercase">Racha</div>
+                <div class="text-lg font-bold text-white flex justify-center gap-1" id="stat-form">
+                    <!-- JS inyectará iconos -->
                 </div>
-                <!-- Logo ECM Restaurado -->
-                <div class="bg-white p-2 rounded-2xl border border-white/20 shadow-inner backdrop-blur-md h-14 w-14 flex items-center justify-center relative group">
-                   <img src="https://www2.ecmadrid.org/Deportesdev/Images/logo_ECM.jpg" 
-                        alt="ECM" 
-                        class="h-full w-auto object-contain"
-                        onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=\'fa-solid fa-trophy text-yellow-500 text-2xl\'></i>'">
+            </div>
+        </div>
+
+        <!-- 2. Next Match Card -->
+        <div id="next-match-card" class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-1 shadow-xl shadow-blue-900/30 hidden">
+            <div class="bg-dark-bg rounded-xl p-5 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                    PRÓXIMO ENCUENTRO
+                </div>
+                
+                <div class="flex justify-between items-center mt-6 mb-6">
+                    <!-- Local -->
+                    <div class="flex flex-col items-center w-1/3">
+                        <div class="w-16 h-16 bg-white/5 rounded-full p-2 mb-2 flex items-center justify-center">
+                            <img id="nm-local-img" src="" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/50'">
+                        </div>
+                        <span id="nm-local-name" class="text-xs text-center font-bold leading-tight text-white line-clamp-2 h-8 flex items-center">Local</span>
+                    </div>
                     
-                    <!-- Loading Spinner Overlay (Solo mientras carga) -->
-                    <div id="logo-loader" class="absolute inset-0 flex items-center justify-center bg-white/80 rounded-2xl">
-                        <div class="loader"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TARJETA PRÓXIMO PARTIDO -->
-            <div id="next-match-card" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl shadow-blue-900/20 relative overflow-hidden transform transition-transform active:scale-[0.99] min-h-[180px] flex flex-col justify-center">
-                <p class="text-center text-gray-400 text-sm animate-pulse">
-                    <i class="fa-regular fa-futbol mr-2"></i>Cargando partido...
-                </p>
-            </div>
-        </div>
-    </header>
-
-    <!-- CONTENIDO -->
-    <main class="px-4 -mt-6 relative z-20 max-w-3xl mx-auto">
-        
-        <!-- Tabs -->
-        <div class="flex p-1 bg-white rounded-2xl shadow-lg shadow-slate-200/50 mb-6">
-            <button onclick="switchTab('clasificacion')" id="tab-clasif" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-active">Clasificación</button>
-            <button onclick="switchTab('resultados')" id="tab-res" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-inactive hover:bg-slate-50">Resultados</button>
-        </div>
-
-        <!-- CLASIFICACIÓN -->
-        <div id="view-clasificacion" class="fade-in space-y-4">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="grid grid-cols-12 bg-slate-50 p-3 text-[9px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 text-center items-center">
-                    <div class="col-span-1">#</div>
-                    <div class="col-span-4 text-left pl-1">Equipo</div>
-                    <div class="col-span-1">PJ</div>
-                    <div class="col-span-1">GF</div>
-                    <div class="col-span-1">GC</div>
-                    <div class="col-span-2">AVG</div>
-                    <div class="col-span-2">Pts</div>
-                </div>
-                <div id="standings-container" class="min-h-[200px]">
-                    <div class="p-8 text-center text-gray-400 text-xs">
-                        <i class="fa-solid fa-cloud-arrow-down text-2xl mb-2 text-blue-300"></i><br>
-                        Sincronizando...
-                    </div>
-                </div>
-            </div>
-            <div id="data-source-label" class="text-center text-[10px] text-gray-400 mt-2 italic">
-                Conectando...
-            </div>
-        </div>
-
-        <!-- RESULTADOS -->
-        <div id="view-resultados" class="hidden fade-in">
-            <div class="flex items-center justify-between mb-4 pl-1">
-                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Resultados del Grupo</h3>
-            </div>
-            <div class="space-y-4" id="matches-list"></div>
-        </div>
-    </main>
-
-    <script>
-        const TARGET_URL = 'https://www2.ecmadrid.org/Deportesdev/Clasificacion/_ShowClasif?numcom=89&depor=FUTBOL-SALA&categ=ALEVIN%20MIXTO';
-        const PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
-        const BASE_IMG_URL = 'https://www2.ecmadrid.org'; 
-        
-        let currentNextMatch = null; 
-
-        // --- DATOS DE RESPALDO ---
-        const BACKUP_TEAMS = [
-            { pos: 1, name: 'FEC STA. JOAQUINA VEDRUNA "C"', pj: 2, gf: 10, gc: 3, avg: 7, pts: 4, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0061.jpg' },
-            { pos: 2, name: 'COLEGIO ALEMAN "A"', pj: 2, gf: 10, gc: 7, avg: 3, pts: 4, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0128.jpg' },
-            { pos: 3, name: 'LA INMACULADA P. HIERRO', pj: 3, gf: 15, gc: 18, avg: -3, pts: 4, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0144.jpg' },
-            { pos: 4, name: 'SANTAMARCA INTERNACIONAL', pj: 2, gf: 12, gc: 7, avg: 5, pts: 2, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0114.jpg' },
-            { pos: 5, name: 'EL VALLE SANCHINARRO "B"', pj: 3, gf: 20, gc: 17, avg: 3, pts: 2, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg' },
-            { pos: 6, name: 'SANTA MARIA LA BLANCA "A"', pj: 2, gf: 8, gc: 8, avg: 0, pts: 2, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0143.jpg' },
-            { pos: 7, name: 'ASUNCION CUESTABLANCA "B"', pj: 2, gf: 6, gc: 7, avg: -1, pts: 2, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0118.jpg' },
-            { pos: 8, name: 'CORAZONISTAS "A"', pj: 2, gf: 4, gc: 8, avg: -4, pts: 0, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0099.jpg' },
-            { pos: 9, name: 'NTRA. SRA. CONSOLACION "B"', pj: 2, gf: 6, gc: 16, avg: -10, pts: 0, logo: '/Deportesdev//Images/WallImages/imagepath/Emblema_0076.jpg' }
-        ];
-
-        const BACKUP_MATCHES = [
-            { jornada: '4', localName: 'NTRA. SRA. CONSOLACION "B"', localScore: '3', visitName: 'EL VALLE SANCHINARRO "B"', visitScore: '9', fecha: '22/11/25', hora: '12:00', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0076.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', direccion: '#', addressText: 'Colegio Consolación' },
-            { jornada: '3', localName: 'EL VALLE SANCHINARRO "B"', localScore: '5', visitName: 'SANTAMARCA INTERNACIONAL', visitScore: '8', fecha: '15/11/25', hora: '12:30', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0114.jpg', direccion: '#', addressText: 'Valle Sanchinarro' },
-            { jornada: '2', localName: 'CORAZONISTAS "A"', localScore: '3', visitName: 'EL VALLE SANCHINARRO "B"', visitScore: '12', fecha: '08/11/25', hora: '10:00', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0099.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', direccion: '#', addressText: 'Corazonistas' },
-            { jornada: '5', localName: 'EL VALLE SANCHINARRO "B"', localScore: '', visitName: 'ASUNCION CUESTABLANCA "B"', visitScore: '', fecha: '29/11/25', hora: '11:15', localImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0151.jpg', visitImg: '/Deportesdev//Images/WallImages/imagepath/Emblema_0118.jpg', direccion: 'https://maps.google.com/?q=C/ Vicente Blasco Ibáñez', addressText: 'C/ Vicente Blasco Ibáñez, S/N' }
-        ];
-
-        document.addEventListener('DOMContentLoaded', fetchData);
-
-        async function fetchData() {
-            try {
-                const response = await fetch(PROXY_URL + encodeURIComponent(TARGET_URL));
-                if (!response.ok) throw new Error('Fallo en Proxy');
-                const data = await response.json();
-                
-                if(!data.contents || data.contents.length < 100) throw new Error('Contenido vacío');
-
-                const success = parseHTML(data.contents);
-                
-                if (success) {
-                    document.getElementById('status-pill').classList.remove('hidden');
-                    document.getElementById('logo-loader').classList.add('hidden');
-                    document.getElementById('data-source-label').innerText = "* Datos en tiempo real de ECMadrid";
-                } else {
-                    throw new Error('No se encontró el Grupo 9');
-                }
-
-            } catch (error) {
-                console.warn("Fallo carga dinámica, usando backup:", error);
-                loadBackupData();
-            }
-        }
-
-        function loadBackupData() {
-            renderStandingsUI(BACKUP_TEAMS);
-            renderMatchesUI(BACKUP_MATCHES);
-            document.getElementById('logo-loader').classList.add('hidden');
-            const pill = document.getElementById('status-pill');
-            pill.innerHTML = '<div class="w-2 h-2 rounded-full bg-orange-400"></div><span class="text-[9px] font-bold uppercase opacity-90">Offline</span>';
-            pill.classList.remove('hidden');
-            document.getElementById('data-source-label').innerHTML = "<span class='text-orange-500 font-bold'>!</span> Modo sin conexión: Datos guardados";
-        }
-
-        function parseHTML(htmlString) {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(htmlString, 'text/html');
-            const headers = Array.from(doc.querySelectorAll('h3'));
-            const groupHeader = headers.find(h => h.textContent.includes('GRUPO: 9'));
-
-            if (!groupHeader) return false;
-
-            const tableClasif = groupHeader.nextElementSibling;
-            if (tableClasif && tableClasif.tagName === 'TABLE') {
-                const teams = parseStandingsTable(tableClasif);
-                renderStandingsUI(teams);
-            }
-
-            const allHeaders = headers.filter(h => h.textContent.includes('GRUPO: 9'));
-            if (allHeaders.length > 1) {
-                const tableRes = allHeaders[1].nextElementSibling;
-                if (tableRes && tableRes.tagName === 'TABLE') {
-                    const matches = parseMatchesTable(tableRes);
-                    renderMatchesUI(matches);
-                }
-            } else {
-                renderMatchesUI(BACKUP_MATCHES);
-            }
-            return true;
-        }
-
-        function parseStandingsTable(table) {
-            const rows = Array.from(table.querySelectorAll('tr')).slice(1);
-            return rows.map((row, i) => {
-                const cells = row.querySelectorAll('td');
-                if (cells.length < 8) return null;
-                const img = cells[0].querySelector('img');
-                return {
-                    pos: i + 1,
-                    logo: img ? img.getAttribute('src') : '',
-                    name: cells[1].innerText.trim(),
-                    pj: cells[2].innerText.trim(),
-                    gf: cells[6].innerText.trim(),
-                    gc: cells[7].innerText.trim(),
-                    avg: cells[8].innerText.trim(),
-                    pts: cells[9].innerText.trim()
-                };
-            }).filter(t => t);
-        }
-
-        function parseMatchesTable(table) {
-            const rows = Array.from(table.querySelectorAll('tr')).slice(1);
-            const matches = [];
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                if(cells.length < 5) return;
-                
-                const local = cells[1].innerText.trim();
-                const visit = cells[3].innerText.trim();
-                
-                if (local.includes('VALLE SANCHINARRO "B"') || visit.includes('VALLE SANCHINARRO "B"')) {
-                    // Extraer dirección textual limpia
-                    let rawAddress = cells[7]?.innerText.trim().replace('MAPA', '').trim();
-                    // Si está vacía, intentar coger el link title o poner default
-                    if (!rawAddress || rawAddress.length < 3) rawAddress = 'Ubicación por confirmar';
-
-                    matches.push({
-                        jornada: cells[0].innerText.trim(),
-                        localName: local,
-                        localScore: cells[2].innerText.trim(),
-                        visitName: visit,
-                        visitScore: cells[4].innerText.trim(),
-                        fecha: cells[5].innerText.trim(),
-                        hora: cells[6].innerText.trim(),
-                        localImg: cells[1].querySelector('img')?.getAttribute('src'),
-                        visitImg: cells[3].querySelector('img')?.getAttribute('src'),
-                        direccion: cells[7]?.querySelector('a')?.getAttribute('href') || '#',
-                        addressText: rawAddress // Guardamos la dirección real
-                    });
-                }
-            });
-            const played = matches.filter(m => m.localScore !== '').reverse();
-            const pending = matches.filter(m => m.localScore === '');
-            return [...pending, ...played];
-        }
-
-        function renderStandingsUI(teams) {
-            const container = document.getElementById('standings-container');
-            container.innerHTML = '';
-            
-            teams.forEach(t => {
-                const isMyTeam = t.name.toUpperCase().includes("SANCHINARRO") && t.name.includes('"B"');
-                const rowStyle = isMyTeam ? 'bg-indigo-50 border-l-4 border-indigo-500' : 'hover:bg-slate-50 border-l-4 border-transparent';
-                const rankStyle = t.pos === 1 ? 'text-yellow-500 bg-yellow-100 rounded-full w-6 h-6 flex items-center justify-center font-bold' : 'text-slate-500 font-bold';
-                const avgVal = parseInt(t.avg);
-                const avgColor = avgVal > 0 ? 'text-green-600' : (avgVal < 0 ? 'text-red-500' : 'text-slate-400');
-                const logoUrl = t.logo.startsWith('http') ? t.logo : BASE_IMG_URL + t.logo;
-
-                container.innerHTML += `
-                <div class="grid grid-cols-12 items-center p-3 border-b border-slate-100 text-[11px] transition-colors ${rowStyle}">
-                    <div class="col-span-1 text-center flex justify-center"><div class="${rankStyle}">${t.pos}</div></div>
-                    <div class="col-span-4 pl-1 pr-1 flex items-center gap-1.5 overflow-hidden">
-                        <img src="${logoUrl}" class="w-5 h-5 object-contain shrink-0" onerror="this.style.display='none'">
-                        <div class="font-bold text-slate-800 truncate leading-tight">${t.name}</div>
-                    </div>
-                    <div class="col-span-1 text-center text-slate-500 font-medium">${t.pj}</div>
-                    <div class="col-span-1 text-center text-slate-600">${t.gf}</div>
-                    <div class="col-span-1 text-center text-slate-400">${t.gc}</div>
-                    <div class="col-span-2 text-center font-bold ${avgColor}">${t.avg}</div>
-                    <div class="col-span-2 text-center font-black text-slate-900 text-sm bg-slate-200/50 rounded py-0.5 mx-1">${t.pts}</div>
-                </div>`;
-            });
-        }
-
-        function renderMatchesUI(matches) {
-            const container = document.getElementById('matches-list');
-            container.innerHTML = '';
-            
-            const nextMatch = matches.find(m => m.localScore === '');
-            renderHeroCard(nextMatch);
-
-            matches.forEach(m => {
-                if(m.localScore === '') return;
-
-                const isMyTeamLocal = m.localName.toUpperCase().includes("SANCHINARRO");
-                const myScore = parseInt(isMyTeamLocal ? m.localScore : m.visitScore);
-                const rivalScore = parseInt(isMyTeamLocal ? m.visitScore : m.localScore);
-                
-                let resColor, barColor;
-                if (myScore > rivalScore) { resColor = 'text-green-600 bg-green-50 border-green-200'; barColor = 'bg-green-500'; }
-                else if (myScore < rivalScore) { resColor = 'text-red-600 bg-red-50 border-red-200'; barColor = 'bg-red-500'; }
-                else { resColor = 'text-orange-600 bg-orange-50 border-orange-200'; barColor = 'bg-orange-400'; }
-
-                const localUrl = m.localImg.startsWith('http') ? m.localImg : BASE_IMG_URL + m.localImg;
-                const visitUrl = m.visitImg.startsWith('http') ? m.visitImg : BASE_IMG_URL + m.visitImg;
-
-                container.innerHTML += `
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden relative">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 ${barColor}"></div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-center mb-3 border-b border-slate-50 pb-2">
-                            <span class="text-[10px] font-bold text-white bg-slate-800 px-2 py-0.5 rounded">Jornada ${m.jornada}</span>
-                            <span class="text-xs text-slate-400">${m.fecha}</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex flex-col items-center w-1/3 gap-1">
-                                <img src="${localUrl}" class="w-8 h-8 object-contain">
-                                <span class="text-[9px] font-bold text-center leading-tight text-slate-600 truncate w-full">${m.localName}</span>
-                            </div>
-                            <div class="text-xl font-black ${resColor} px-3 py-1 rounded-lg border">
-                                ${m.localScore} - ${m.visitScore}
-                            </div>
-                            <div class="flex flex-col items-center w-1/3 gap-1">
-                                <img src="${visitUrl}" class="w-8 h-8 object-contain">
-                                <span class="text-[9px] font-bold text-center leading-tight text-slate-600 truncate w-full">${m.visitName}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-            });
-        }
-
-        function renderHeroCard(m) {
-            const card = document.getElementById('next-match-card');
-            if (!m) {
-                card.innerHTML = '<p class="text-center text-gray-400 py-4">No hay partidos pendientes programados.</p>';
-                return;
-            }
-            
-            currentNextMatch = m;
-
-            const localUrl = m.localImg.startsWith('http') ? m.localImg : BASE_IMG_URL + m.localImg;
-            const visitUrl = m.visitImg.startsWith('http') ? m.visitImg : BASE_IMG_URL + m.visitImg;
-            const addressDisplay = m.addressText.length > 25 ? m.addressText.substring(0, 22) + '...' : m.addressText;
-
-            card.innerHTML = `
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded uppercase tracking-wider">Próximo Partido</span>
-                    <span class="text-xs font-bold text-gray-400"><i class="fa-regular fa-calendar mr-1"></i> ${m.fecha}</span>
-                </div>
-                <div class="flex justify-between items-center px-2">
+                    <!-- VS -->
                     <div class="flex flex-col items-center w-1/3">
-                        <span class="text-[9px] text-gray-400 font-bold tracking-widest mb-1">LOCAL</span>
-                        <div class="w-14 h-14 rounded-full bg-white border border-indigo-100 p-1 shadow-md mb-2 flex items-center justify-center">
-                            <img src="${localUrl}" class="w-full h-full object-contain">
-                        </div>
-                        <span class="text-[10px] font-bold text-center leading-tight text-slate-800">${m.localName}</span>
+                        <span class="text-xs text-gray-400 mb-1" id="nm-jornada">J-</span>
+                        <div class="text-3xl font-black text-white">VS</div>
+                        <div id="nm-time" class="text-sm text-blue-400 font-bold mt-1">00:00</div>
+                        <div id="nm-date" class="text-xs text-gray-500">DD/MM</div>
                     </div>
+
+                    <!-- Visitante -->
                     <div class="flex flex-col items-center w-1/3">
-                        <span class="text-3xl font-black text-slate-800 tracking-tighter">${m.hora}</span>
-                        <span class="text-[10px] text-gray-400 uppercase font-bold mt-1 bg-gray-100 px-2 py-0.5 rounded-full">Jornada ${m.jornada}</span>
-                    </div>
-                    <div class="flex flex-col items-center w-1/3">
-                        <span class="text-[9px] text-gray-400 font-bold tracking-widest mb-1">VISITANTE</span>
-                        <div class="w-14 h-14 rounded-full bg-white border border-purple-100 p-1 shadow-md mb-2 flex items-center justify-center">
-                            <img src="${visitUrl}" class="w-full h-full object-contain">
+                        <div class="w-16 h-16 bg-white/5 rounded-full p-2 mb-2 flex items-center justify-center">
+                            <img id="nm-visit-img" src="" class="w-full h-full object-contain" onerror="this.src='https://via.placeholder.com/50'">
                         </div>
-                        <span class="text-[10px] font-bold text-center leading-tight text-slate-800">${m.visitName}</span>
+                        <span id="nm-visit-name" class="text-xs text-center font-bold leading-tight text-white line-clamp-2 h-8 flex items-center">Visitante</span>
                     </div>
                 </div>
-                
-                <div class="flex gap-2 mt-4">
-                    <button onclick="downloadICS()" class="flex-1 flex items-center justify-center gap-2 py-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-xs font-bold rounded-xl transition-colors border border-indigo-100">
-                        <i class="fa-regular fa-calendar-plus text-lg"></i> Añadir
-                    </button>
-                    <a href="${m.direccion}" target="_blank" class="flex-[2] flex items-center justify-center gap-2 py-3 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-bold rounded-xl transition-colors border border-slate-100 truncate px-2" title="${m.addressText}">
-                        <i class="fa-solid fa-location-dot text-red-500 text-lg shrink-0"></i> <span class="truncate">${addressDisplay}</span>
+
+                <!-- Actions -->
+                <div class="grid grid-cols-2 gap-3">
+                    <a id="btn-map" href="#" target="_blank" class="flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-lg text-xs transition font-medium">
+                        <i class="fa-solid fa-location-dot text-red-400"></i> Ver Mapa
+                    </a>
+                    <a id="btn-cal" href="#" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white py-2 rounded-lg text-xs transition font-medium">
+                        <i class="fa-solid fa-calendar-plus"></i> Agendar
                     </a>
                 </div>
-            `;
-        }
+                <div id="nm-location-text" class="text-center text-[10px] text-gray-500 mt-3 truncate px-2"></div>
+            </div>
+        </div>
 
-        function downloadICS() {
-            if (!currentNextMatch) return;
-            const m = currentNextMatch;
+        <!-- 3. Last Match Result -->
+        <div id="last-match-card" class="glass-panel rounded-2xl p-0 overflow-hidden hidden">
+            <div class="bg-slate-800/50 p-2 text-center border-b border-white/5 flex justify-between px-4 items-center">
+                <span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Último Resultado</span>
+                <span class="text-[10px] bg-slate-700 text-white px-2 py-0.5 rounded" id="lm-jornada">Jornada -</span>
+            </div>
             
-            const [day, month, year] = m.fecha.split('/');
+            <div class="flex items-center justify-between p-5">
+                <!-- Local -->
+                <div class="flex flex-col items-center w-1/3 gap-2">
+                    <img id="lm-local-img" src="" class="w-12 h-12 object-contain" onerror="this.src='https://via.placeholder.com/40'">
+                    <span id="lm-local-name" class="text-[10px] text-center text-gray-300 font-semibold leading-tight line-clamp-2">Local</span>
+                </div>
+
+                <!-- Score -->
+                <div class="flex items-center gap-3 w-1/3 justify-center">
+                    <span id="lm-local-score" class="text-3xl font-bold text-white">0</span>
+                    <span class="text-gray-600">-</span>
+                    <span id="lm-visit-score" class="text-3xl font-bold text-white">0</span>
+                </div>
+
+                <!-- Visitante -->
+                <div class="flex flex-col items-center w-1/3 gap-2">
+                    <img id="lm-visit-img" src="" class="w-12 h-12 object-contain" onerror="this.src='https://via.placeholder.com/40'">
+                    <span id="lm-visit-name" class="text-[10px] text-center text-gray-300 font-semibold leading-tight line-clamp-2">Visitante</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Classification Table -->
+        <div class="glass-panel rounded-2xl overflow-hidden">
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-slate-900/50">
+                <h3 class="text-white font-bold text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-ranking-star text-yellow-500"></i> Clasificación
+                </h3>
+                <span class="text-[10px] text-blue-400 bg-blue-900/30 px-2 py-1 rounded border border-blue-900">Grupo 9</span>
+            </div>
+            
+            <div class="overflow-x-auto scrollbar-hide pb-2">
+                <table class="w-full text-sm text-left text-gray-300 min-w-[600px]"> <!-- min-w para forzar scroll en móvil -->
+                    <thead class="text-xs text-gray-400 uppercase bg-slate-800/80 sticky top-0">
+                        <tr>
+                            <th scope="col" class="px-3 py-3 text-center w-10">#</th>
+                            <th scope="col" class="px-3 py-3 w-48">Equipo</th>
+                            <th scope="col" class="px-2 py-3 text-center font-semibold text-white" title="Puntos">PTS</th>
+                            <th scope="col" class="px-2 py-3 text-center" title="Jugados">J</th>
+                            <th scope="col" class="px-2 py-3 text-center" title="Ganados">G</th>
+                            <th scope="col" class="px-2 py-3 text-center" title="Empatados">E</th>
+                            <th scope="col" class="px-2 py-3 text-center" title="Perdidos">P</th>
+                            <th scope="col" class="px-2 py-3 text-center text-gray-500" title="Goles Favor">TF</th>
+                            <th scope="col" class="px-2 py-3 text-center text-gray-500" title="Goles Contra">TC</th>
+                            <th scope="col" class="px-2 py-3 text-center text-gray-500" title="Average">AVG</th>
+                        </tr>
+                    </thead>
+                    <tbody id="classification-body" class="divide-y divide-gray-800">
+                        <!-- Rows will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center text-[10px] text-gray-600 py-2 italic sm:hidden">
+                <i class="fa-solid fa-arrows-left-right mr-1"></i> Desliza para ver más datos
+            </div>
+        </div>
+
+        <!-- 5. Season Timeline (History) -->
+        <div class="glass-panel rounded-2xl p-5">
+            <h3 class="text-white font-bold text-lg mb-6 flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-blue-400"></i> Historial
+            </h3>
+            <div class="relative border-l-2 border-gray-700 ml-3 space-y-8" id="history-container">
+                <!-- Timeline items will be injected here -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const MY_TEAM = "EL VALLE SANCHINARRO \"B\"";
+        const DATA_URL = "datos/clasificacion.json"; 
+
+        let mockData = {
+            "clasificacion": [
+                {"Grupo": "GRUPO: 9", "Equipo": "SANTAMARCA INTERNACIONAL", "J": "4", "G": "3", "E": "0", "P": "1", "TF": "27", "TC": "13", "AVG": "14", "Puntos": "6", "Escudo": "img/escudos/Emblema_0114.jpg"},
+                {"Grupo": "GRUPO: 9", "Equipo": "EL VALLE SANCHINARRO \"B\"", "J": "4", "G": "1", "E": "0", "P": "3", "TF": "27", "TC": "26", "AVG": "1", "Puntos": "2", "Escudo": "img/escudos/Emblema_0151.jpg"},
+                {"Grupo": "GRUPO: 9", "Equipo": "COLEGIO ALEMAN \"A\"", "J": "3", "G": "3", "E": "0", "P": "0", "TF": "14", "TC": "7", "AVG": "7", "Puntos": "6", "Escudo": "img/escudos/Emblema_0128.jpg"}
+            ],
+            "jornadas": [
+                {
+                    "Grupo": "GRUPO: 9", "Jornada": "1", "Local": "COLEGIO ALEMAN \"A\"", "GolesLocal": "6", "Visitante": "EL VALLE SANCHINARRO \"B\"", "GolesVisitante": "5", "Fecha": "08/11/25", "Hora": "11:30", "Direccion": "MONASTERIO DE GUADALUPE, 7",
+                    "EscudoLocal": "img/escudos/Emblema_0128.jpg", "EscudoVisitante": "img/escudos/Emblema_0151.jpg"
+                },
+                {
+                    "Grupo": "GRUPO: 9", "Jornada": "2", "Local": "EL VALLE SANCHINARRO \"B\"", "GolesLocal": "10", "Visitante": "ASUNCION CUESTABLANCA \"B\"", "GolesVisitante": "2", "Fecha": "24/11/25", "Hora": "18:00", "Direccion": "VICENTE BLASCO",
+                    "EscudoLocal": "img/escudos/Emblema_0151.jpg", "EscudoVisitante": "img/escudos/Emblema_0118.jpg"
+                },
+                {
+                    "Grupo": "GRUPO: 9", "Jornada": "3", "Local": "EL VALLE SANCHINARRO \"B\"", "GolesLocal": "", "Visitante": "ASUNCION CUESTABLANCA \"B\"", "GolesVisitante": "", "Fecha": "29/11/25", "Hora": "11:15", "Direccion": "VICENTE BLASCO IBAÑEZ, S/N",
+                    "EscudoLocal": "img/escudos/Emblema_0151.jpg", "EscudoVisitante": "img/escudos/Emblema_0118.jpg"
+                }
+            ]
+        };
+
+        function parseDate(dateStr, timeStr) {
+            const [day, month, year] = dateStr.split('/');
+            const [hour, minute] = timeStr.split(':');
             const fullYear = year.length === 2 ? '20' + year : year;
-            const [hour, minute] = m.hora.split(':');
-            
-            const startDate = `${fullYear}${month}${day}T${hour}${minute}00`;
-            
-            let endHour = parseInt(hour) + 1;
-            const endDate = `${fullYear}${month}${day}T${endHour.toString().padStart(2,'0')}${minute}00`;
-            
-            const title = `Fútbol Sala: ${m.localName} vs ${m.visitName}`;
-            const description = `Jornada ${m.jornada} - Alevín Mixto ECMadrid`;
-            
-            // USAR LA DIRECCIÓN REAL EN EL ICS
-            const location = m.addressText || 'Campo de juego';
-
-            const icsContent = `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//ValleSanchinarro//App//ES
-BEGIN:VEVENT
-UID:${Date.now()}@valle.app
-DTSTAMP:${startDate}Z
-DTSTART:${startDate}
-DTEND:${endDate}
-SUMMARY:${title}
-DESCRIPTION:${description}
-LOCATION:${location}
-END:VEVENT
-END:VCALENDAR`;
-
-            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.setAttribute('download', 'partido_valle.ics');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            return new Date(fullYear, month - 1, day, hour, minute);
         }
 
-        function switchTab(tab) {
-            document.getElementById('view-clasificacion').classList.toggle('hidden', tab !== 'clasificacion');
-            document.getElementById('view-resultados').classList.toggle('hidden', tab !== 'resultados');
-            const btnClasif = document.getElementById('tab-clasif');
-            const btnRes = document.getElementById('tab-res');
-            if(tab === 'clasificacion') {
-                btnClasif.className = 'flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-active';
-                btnRes.className = 'flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-inactive hover:bg-slate-50';
-            } else {
-                btnRes.className = 'flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-active';
-                btnClasif.className = 'flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 tab-inactive hover:bg-slate-50';
+        function createCalendarLink(match) {
+            const startDate = parseDate(match.Fecha, match.Hora);
+            const endDate = new Date(startDate.getTime() + (90 * 60000));
+            const format = (d) => d.toISOString().replace(/-|:|\.\d+/g, '');
+            const title = encodeURIComponent(`Partido: ${match.Local} vs ${match.Visitante}`);
+            const details = encodeURIComponent(`Jornada ${match.Jornada} - Grupo 9`);
+            const location = encodeURIComponent(match.Direccion);
+            return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${format(startDate)}/${format(endDate)}&details=${details}&location=${location}&sf=true&output=xml`;
+        }
+
+        function createMapLink(address) {
+            return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+        }
+
+        async function init() {
+            let data = mockData;
+            try {
+                const response = await fetch(DATA_URL);
+                if (response.ok) {
+                    data = await response.json();
+                }
+            } catch (e) {
+                console.log("Usando datos mock");
             }
+            renderApp(data);
         }
+
+        function renderApp(data) {
+            const myTeamClean = MY_TEAM.replace(/['"]+/g, '').toUpperCase();
+            
+            // --- 1. CLASIFICACIÓN ---
+            const groupTable = data.clasificacion.filter(row => row.Grupo.includes("9"));
+            groupTable.sort((a, b) => {
+                const ptsA = parseInt(a.Puntos) || 0;
+                const ptsB = parseInt(b.Puntos) || 0;
+                const dgA = (parseInt(a.TF) - parseInt(a.TC)) || 0;
+                const dgB = (parseInt(b.TF) - parseInt(b.TC)) || 0;
+                
+                if (ptsB !== ptsA) return ptsB - ptsA;
+                return dgB - dgA; 
+            });
+
+            const tableBody = document.getElementById('classification-body');
+            let myTeamRank = 0;
+            let myTeamStats = null;
+
+            groupTable.forEach((team, index) => {
+                const teamNameClean = team.Equipo.replace(/['"]+/g, '').toUpperCase();
+                const isMyTeam = teamNameClean === myTeamClean;
+                
+                if (isMyTeam) {
+                    myTeamRank = index + 1;
+                    myTeamStats = team;
+                }
+
+                const row = document.createElement('tr');
+                row.className = isMyTeam ? "bg-blue-900/40 border-l-4 border-blue-500" : "hover:bg-slate-800/30";
+                row.innerHTML = `
+                    <td class="px-3 py-3 text-center font-medium ${isMyTeam ? 'text-white' : 'text-gray-500'}">${index + 1}</td>
+                    <td class="px-3 py-3 flex items-center gap-3">
+                        <div class="w-8 h-8 flex-shrink-0 bg-white/5 rounded-full p-1 flex items-center justify-center">
+                            <img src="${team.Escudo}" onerror="this.src='https://via.placeholder.com/30'" class="w-full h-full object-contain">
+                        </div>
+                        <span class="${isMyTeam ? 'font-bold text-white' : 'text-gray-300'} truncate font-medium text-xs sm:text-sm">${team.Equipo}</span>
+                    </td>
+                    <td class="px-2 py-3 text-center font-bold text-base ${isMyTeam ? 'text-blue-400' : 'text-white'} bg-slate-800/20">${team.Puntos}</td>
+                    <td class="px-2 py-3 text-center">${team.J}</td>
+                    <td class="px-2 py-3 text-center text-gray-400">${team.G}</td>
+                    <td class="px-2 py-3 text-center text-gray-400">${team.E}</td>
+                    <td class="px-2 py-3 text-center text-gray-400">${team.P}</td>
+                    <td class="px-2 py-3 text-center text-gray-500 text-xs">${team.TF}</td>
+                    <td class="px-2 py-3 text-center text-gray-500 text-xs">${team.TC}</td>
+                    <td class="px-2 py-3 text-center text-gray-500 text-xs">${team.AVG}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Stats Header
+            if (myTeamStats) {
+                document.getElementById('stat-pos').textContent = myTeamRank + "º";
+                document.getElementById('stat-pts').textContent = myTeamStats.Puntos;
+                
+                // Generar Racha visual basada en últimos partidos
+                const allMyMatches = data.jornadas.filter(m => {
+                    const local = m.Local.replace(/['"]+/g, '').toUpperCase();
+                    const visit = m.Visitante.replace(/['"]+/g, '').toUpperCase();
+                    return m.Grupo.includes("9") && (local === myTeamClean || visit === myTeamClean) && m.GolesLocal.trim() !== "";
+                });
+                
+                // Ordenar por fecha (reciente al final) para calcular racha
+                allMyMatches.forEach(m => m.dateObj = parseDate(m.Fecha, m.Hora));
+                allMyMatches.sort((a, b) => a.dateObj - b.dateObj);
+                
+                let formHTML = '';
+                // Coger los ultimos 5
+                const last5 = allMyMatches.slice(-5);
+                
+                last5.forEach(match => {
+                    const isLocal = match.Local.replace(/['"]+/g, '').toUpperCase() === myTeamClean;
+                    const gl = parseInt(match.GolesLocal);
+                    const gv = parseInt(match.GolesVisitante);
+                    let color = 'bg-gray-500';
+                    if ((isLocal && gl > gv) || (!isLocal && gv > gl)) color = 'bg-green-500';
+                    else if ((isLocal && gl < gv) || (!isLocal && gv < gl)) color = 'bg-red-500';
+                    
+                    formHTML += `<span class="w-2 h-2 rounded-full ${color} block ring-1 ring-dark-bg"></span>`;
+                });
+                document.getElementById('stat-form').innerHTML = formHTML || '<span class="text-xs text-gray-500">Sin datos</span>';
+            }
+
+            // --- 2. PARTIDOS ---
+            const now = new Date();
+            const myMatches = data.jornadas.filter(m => {
+                const local = m.Local.replace(/['"]+/g, '').toUpperCase();
+                const visit = m.Visitante.replace(/['"]+/g, '').toUpperCase();
+                return m.Grupo.includes("9") && (local === myTeamClean || visit === myTeamClean);
+            });
+
+            myMatches.forEach(m => m.dateObj = parseDate(m.Fecha, m.Hora));
+            myMatches.sort((a, b) => a.dateObj - b.dateObj);
+
+            let lastMatch = null;
+            let nextMatch = null;
+
+            for (let match of myMatches) {
+                const hasScore = match.GolesLocal.trim() !== "" && match.GolesVisitante.trim() !== "";
+                const isPast = match.dateObj < now;
+
+                if (hasScore || (isPast && hasScore)) {
+                    lastMatch = match;
+                } else if (!nextMatch && match.dateObj > now) {
+                    nextMatch = match;
+                }
+            }
+
+            // Render Próximo
+            if (nextMatch) {
+                document.getElementById('next-match-card').classList.remove('hidden');
+                document.getElementById('nm-local-name').textContent = nextMatch.Local;
+                document.getElementById('nm-visit-name').textContent = nextMatch.Visitante;
+                document.getElementById('nm-local-img').src = nextMatch.EscudoLocal;
+                document.getElementById('nm-visit-img').src = nextMatch.EscudoVisitante;
+                document.getElementById('nm-jornada').textContent = `JORNADA ${nextMatch.Jornada}`;
+                
+                document.getElementById('nm-time').textContent = nextMatch.Hora;
+                document.getElementById('nm-date').textContent = nextMatch.Fecha;
+                document.getElementById('nm-location-text').textContent = nextMatch.Direccion;
+
+                document.getElementById('btn-cal').href = createCalendarLink(nextMatch);
+                document.getElementById('btn-map').href = createMapLink(nextMatch.Direccion);
+            } else {
+                document.getElementById('next-match-card').innerHTML = `<div class="p-5 text-center text-gray-400 text-xs">No hay próximos partidos</div>`;
+                document.getElementById('next-match-card').classList.remove('hidden');
+            }
+
+            // Render Último
+            if (lastMatch) {
+                document.getElementById('last-match-card').classList.remove('hidden');
+                document.getElementById('lm-jornada').textContent = `JORNADA ${lastMatch.Jornada}`;
+                
+                document.getElementById('lm-local-name').textContent = lastMatch.Local;
+                document.getElementById('lm-visit-name').textContent = lastMatch.Visitante;
+                
+                // Imágenes
+                document.getElementById('lm-local-img').src = lastMatch.EscudoLocal;
+                document.getElementById('lm-visit-img').src = lastMatch.EscudoVisitante;
+
+                document.getElementById('lm-local-score').textContent = lastMatch.GolesLocal;
+                document.getElementById('lm-visit-score').textContent = lastMatch.GolesVisitante;
+                
+                const isLocalMe = lastMatch.Local.replace(/['"]+/g, '').toUpperCase() === myTeamClean;
+                const gl = parseInt(lastMatch.GolesLocal);
+                const gv = parseInt(lastMatch.GolesVisitante);
+                
+                let resultColor = 'text-white';
+                if ((isLocalMe && gl > gv) || (!isLocalMe && gv > gl)) resultColor = 'text-green-400';
+                else if (gl === gv) resultColor = 'text-gray-300';
+                else resultColor = 'text-red-400';
+
+                if(isLocalMe) document.getElementById('lm-local-score').className += ` ${resultColor}`;
+                else document.getElementById('lm-visit-score').className += ` ${resultColor}`;
+            }
+
+            // Render Historial
+            const historyContainer = document.getElementById('history-container');
+            const pastMatches = myMatches.filter(m => m.dateObj < now && m.GolesLocal !== "").reverse();
+
+            if (pastMatches.length === 0) {
+                historyContainer.innerHTML = '<div class="ml-4 text-gray-500 text-xs italic">Sin partidos anteriores</div>';
+            }
+
+            pastMatches.forEach(match => {
+                const isLocalMe = match.Local.replace(/['"]+/g, '').toUpperCase() === myTeamClean;
+                const gl = parseInt(match.GolesLocal);
+                const gv = parseInt(match.GolesVisitante);
+                
+                let resultClass = 'bg-gray-600 border-gray-500'; 
+                let resultLetter = 'E';
+                
+                if ((isLocalMe && gl > gv) || (!isLocalMe && gv > gl)) {
+                    resultClass = 'bg-green-500 border-green-400';
+                    resultLetter = 'V';
+                } else if ((isLocalMe && gl < gv) || (!isLocalMe && gv < gl)) {
+                    resultClass = 'bg-red-500 border-red-400';
+                    resultLetter = 'D';
+                }
+
+                const item = document.createElement('div');
+                item.className = "mb-8 ml-6 relative";
+                item.innerHTML = `
+                    <span class="absolute -left-[35px] top-0 flex items-center justify-center w-8 h-8 ${resultClass} border-2 rounded-full shadow-lg text-xs font-bold text-white z-10">
+                        ${resultLetter}
+                    </span>
+                    
+                    <div class="bg-card-bg/50 p-3 rounded-lg border border-white/5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] text-blue-400 font-bold bg-blue-900/20 px-2 rounded">JORNADA ${match.Jornada}</span>
+                            <time class="text-[10px] text-gray-500">${match.Fecha}</time>
+                        </div>
+
+                        <div class="flex items-center justify-between gap-2">
+                            <!-- Local -->
+                            <div class="flex flex-col items-center flex-1">
+                                <img src="${match.EscudoLocal}" class="w-8 h-8 object-contain mb-1 opacity-80">
+                                <span class="text-[10px] text-gray-400 text-center leading-none line-clamp-1 w-full">${match.Local}</span>
+                            </div>
+
+                            <div class="text-xl font-bold text-white whitespace-nowrap bg-dark-bg px-3 py-1 rounded">
+                                ${match.GolesLocal} - ${match.GolesVisitante}
+                            </div>
+
+                            <!-- Visit -->
+                            <div class="flex flex-col items-center flex-1">
+                                <img src="${match.EscudoVisitante}" class="w-8 h-8 object-contain mb-1 opacity-80">
+                                <span class="text-[10px] text-gray-400 text-center leading-none line-clamp-1 w-full">${match.Visitante}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                historyContainer.appendChild(item);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+
     </script>
 </body>
 </html>
