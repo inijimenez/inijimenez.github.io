@@ -13,7 +13,7 @@ URL_OBJETIVO = f"{URL_BASE}/Deportesdev/Clasificacion/_ShowClasif?numcom=89&depo
 
 # 2. Configuración de GitHub
 # IMPORTANTE: Usa un Personal Access Token (PAT).
-GITHUB_TOKEN = "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" 
+GITHUB_TOKEN = "" 
 REPO_NAME = "inijimenez/inijimenez.github.io" 
 RUTA_ARCHIVO_JSON_REPO = "datos/clasificacion.json" 
 CARPETA_IMAGENES_REPO = "img/escudos" # Carpeta en GitHub donde irán las imágenes
