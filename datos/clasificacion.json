@@ -2,15 +2,28 @@
     "clasificacion": [
         {
             "Grupo": "GRUPO: 1",
-            "Escudo": "img/escudos/Emblema_0143.jpg",
-            "Equipo": "SANTA MARIA LA BLANCA B",
-            "J": "4",
-            "G": "4",
+            "Escudo": "img/escudos/Emblema_0039.jpg",
+            "Equipo": "BVM IRLANDESAS",
+            "J": "5",
+            "G": "5",
             "E": "0",
             "P": "0",
-            "TF": "43",
-            "TC": "7",
-            "AVG": "36",
+            "TF": "46",
+            "TC": "11",
+            "AVG": "35",
+            "Puntos": "10"
+        },
+        {
+            "Grupo": "GRUPO: 1",
+            "Escudo": "img/escudos/Emblema_0143.jpg",
+            "Equipo": "SANTA MARIA LA BLANCA B",
+            "J": "5",
+            "G": "4",
+            "E": "0",
+            "P": "1",
+            "TF": "49",
+            "TC": "18",
+            "AVG": "31",
             "Puntos": "8"
         },
         {
@@ -38,19 +51,6 @@
             "TC": "16",
             "AVG": "16",
             "Puntos": "8"
-        },
-        {
-            "Grupo": "GRUPO: 1",
-            "Escudo": "img/escudos/Emblema_0039.jpg",
-            "Equipo": "BVM IRLANDESAS",
-            "J": "3",
-            "G": "3",
-            "E": "0",
-            "P": "0",
-            "TF": "27",
-            "TC": "5",
-            "AVG": "22",
-            "Puntos": "6"
         },
         {
             "Grupo": "GRUPO: 1",
@@ -106,19 +106,6 @@
         },
         {
             "Grupo": "GRUPO: 1",
-            "Escudo": "img/escudos/Emblema_0154.jpg",
-            "Equipo": "WISDOM SCHOOL",
-            "J": "4",
-            "G": "0",
-            "E": "0",
-            "P": "4",
-            "TF": "2",
-            "TC": "35",
-            "AVG": "-33",
-            "Puntos": "0"
-        },
-        {
-            "Grupo": "GRUPO: 1",
             "Escudo": "img/escudos/Emblema_0150.jpg",
             "Equipo": "EL VALLE LAS TABLAS F",
             "J": "5",
@@ -128,6 +115,19 @@
             "TF": "5",
             "TC": "40",
             "AVG": "-35",
+            "Puntos": "0"
+        },
+        {
+            "Grupo": "GRUPO: 1",
+            "Escudo": "img/escudos/Emblema_0154.jpg",
+            "Equipo": "WISDOM SCHOOL",
+            "J": "5",
+            "G": "0",
+            "E": "0",
+            "P": "5",
+            "TF": "2",
+            "TC": "43",
+            "AVG": "-41",
             "Puntos": "0"
         },
         {
@@ -249,6 +249,19 @@
         },
         {
             "Grupo": "GRUPO: 3",
+            "Escudo": "img/escudos/Emblema_0006.jpg",
+            "Equipo": "AGUSTINIANO A",
+            "J": "5",
+            "G": "4",
+            "E": "0",
+            "P": "1",
+            "TF": "34",
+            "TC": "12",
+            "AVG": "22",
+            "Puntos": "8"
+        },
+        {
+            "Grupo": "GRUPO: 3",
             "Escudo": "img/escudos/Emblema_0152.jpg",
             "Equipo": "EL VALLE VALDEBERNARDO D",
             "J": "4",
@@ -288,28 +301,15 @@
         },
         {
             "Grupo": "GRUPO: 3",
-            "Escudo": "img/escudos/Emblema_0006.jpg",
-            "Equipo": "AGUSTINIANO A",
-            "J": "4",
-            "G": "3",
-            "E": "0",
-            "P": "1",
-            "TF": "30",
-            "TC": "10",
-            "AVG": "20",
-            "Puntos": "6"
-        },
-        {
-            "Grupo": "GRUPO: 3",
             "Escudo": "img/escudos/Emblema_0058.jpg",
             "Equipo": "SAGRADA FAMILIA JORGE JUAN B",
-            "J": "4",
+            "J": "5",
             "G": "1",
             "E": "1",
-            "P": "2",
-            "TF": "7",
-            "TC": "10",
-            "AVG": "-3",
+            "P": "3",
+            "TF": "9",
+            "TC": "14",
+            "AVG": "-5",
             "Puntos": "3"
         },
         {
@@ -379,6 +379,32 @@
         },
         {
             "Grupo": "GRUPO: 4",
+            "Escudo": "img/escudos/Emblema_0076.jpg",
+            "Equipo": "NTRA. SRA. CONSOLACION A",
+            "J": "5",
+            "G": "3",
+            "E": "1",
+            "P": "1",
+            "TF": "32",
+            "TC": "6",
+            "AVG": "26",
+            "Puntos": "7"
+        },
+        {
+            "Grupo": "GRUPO: 4",
+            "Escudo": "img/escudos/Emblema_0001.jpg",
+            "Equipo": "SANTA ANA Y SAN RAFAEL B",
+            "J": "5",
+            "G": "3",
+            "E": "1",
+            "P": "1",
+            "TF": "27",
+            "TC": "17",
+            "AVG": "10",
+            "Puntos": "7"
+        },
+        {
+            "Grupo": "GRUPO: 4",
             "Escudo": "img/escudos/Emblema_0023.jpg",
             "Equipo": "CALASANCIO A",
             "J": "5",
@@ -389,32 +415,6 @@
             "TC": "25",
             "AVG": "10",
             "Puntos": "6"
-        },
-        {
-            "Grupo": "GRUPO: 4",
-            "Escudo": "img/escudos/Emblema_0076.jpg",
-            "Equipo": "NTRA. SRA. CONSOLACION A",
-            "J": "4",
-            "G": "2",
-            "E": "1",
-            "P": "1",
-            "TF": "22",
-            "TC": "6",
-            "AVG": "16",
-            "Puntos": "5"
-        },
-        {
-            "Grupo": "GRUPO: 4",
-            "Escudo": "img/escudos/Emblema_0001.jpg",
-            "Equipo": "SANTA ANA Y SAN RAFAEL B",
-            "J": "4",
-            "G": "2",
-            "E": "1",
-            "P": "1",
-            "TF": "22",
-            "TC": "13",
-            "AVG": "9",
-            "Puntos": "5"
         },
         {
             "Grupo": "GRUPO: 4",
@@ -433,26 +433,26 @@
             "Grupo": "GRUPO: 4",
             "Escudo": "img/escudos/Emblema_0083.jpg",
             "Equipo": "INMACULADA CONCEPCION B",
-            "J": "3",
+            "J": "4",
             "G": "1",
             "E": "0",
-            "P": "2",
-            "TF": "17",
-            "TC": "20",
-            "AVG": "-3",
+            "P": "3",
+            "TF": "21",
+            "TC": "25",
+            "AVG": "-4",
             "Puntos": "2"
         },
         {
             "Grupo": "GRUPO: 4",
             "Escudo": "img/escudos/Emblema_0058.jpg",
             "Equipo": "SAGRADA FAMILIA JORGE JUAN A",
-            "J": "3",
+            "J": "4",
             "G": "1",
             "E": "0",
-            "P": "2",
+            "P": "3",
             "TF": "17",
-            "TC": "26",
-            "AVG": "-9",
+            "TC": "36",
+            "AVG": "-19",
             "Puntos": "2"
         },
         {
@@ -862,14 +862,40 @@
             "Grupo": "GRUPO: 8",
             "Escudo": "img/escudos/Emblema_0136.jpg",
             "Equipo": "CONCEPCIONISTAS",
-            "J": "4",
+            "J": "5",
             "G": "3",
             "E": "0",
-            "P": "1",
+            "P": "2",
             "TF": "28",
-            "TC": "19",
-            "AVG": "9",
+            "TC": "29",
+            "AVG": "-1",
             "Puntos": "6"
+        },
+        {
+            "Grupo": "GRUPO: 8",
+            "Escudo": "img/escudos/Emblema_0002.jpg",
+            "Equipo": "FRAY LUIS DE LEON",
+            "J": "4",
+            "G": "2",
+            "E": "1",
+            "P": "1",
+            "TF": "19",
+            "TC": "10",
+            "AVG": "9",
+            "Puntos": "5"
+        },
+        {
+            "Grupo": "GRUPO: 8",
+            "Escudo": "img/escudos/Emblema_0075.jpg",
+            "Equipo": "S. CORAZON ROSALES ROJO",
+            "J": "3",
+            "G": "2",
+            "E": "0",
+            "P": "1",
+            "TF": "19",
+            "TC": "9",
+            "AVG": "10",
+            "Puntos": "4"
         },
         {
             "Grupo": "GRUPO: 8",
@@ -896,32 +922,6 @@
             "TC": "24",
             "AVG": "-13",
             "Puntos": "4"
-        },
-        {
-            "Grupo": "GRUPO: 8",
-            "Escudo": "img/escudos/Emblema_0002.jpg",
-            "Equipo": "FRAY LUIS DE LEON",
-            "J": "3",
-            "G": "1",
-            "E": "1",
-            "P": "1",
-            "TF": "9",
-            "TC": "10",
-            "AVG": "-1",
-            "Puntos": "3"
-        },
-        {
-            "Grupo": "GRUPO: 8",
-            "Escudo": "img/escudos/Emblema_0075.jpg",
-            "Equipo": "S. CORAZON ROSALES ROJO",
-            "J": "2",
-            "G": "1",
-            "E": "0",
-            "P": "1",
-            "TF": "11",
-            "TC": "8",
-            "AVG": "3",
-            "Puntos": "2"
         },
         {
             "Grupo": "GRUPO: 8",
@@ -953,13 +953,13 @@
             "Grupo": "GRUPO: 8",
             "Escudo": "img/escudos/Emblema_0041.jpg",
             "Equipo": "LA SALLE SAN RAFAEL",
-            "J": "4",
+            "J": "5",
             "G": "0",
             "E": "1",
-            "P": "3",
-            "TF": "10",
-            "TC": "34",
-            "AVG": "-24",
+            "P": "4",
+            "TF": "11",
+            "TC": "42",
+            "AVG": "-31",
             "Puntos": "1"
         },
         {
@@ -1097,19 +1097,6 @@
         {
             "Grupo": "GRUPO: 1",
             "Jornada": "1",
-            "EscudoLocal": "img/escudos/Emblema_0151.jpg",
-            "Local": "EL VALLE SANCHINARRO E",
-            "GolesLocal": "4",
-            "EscudoVisitante": "img/escudos/Emblema_0118.jpg",
-            "Visitante": "ASUNCION CUESTABLANCA A",
-            "GolesVisitante": "2",
-            "Fecha": "08/11/25",
-            "Hora": "11:15",
-            "Direccion": "VICENTE BLASCO IBAÑEZ, S/N"
-        },
-        {
-            "Grupo": "GRUPO: 1",
-            "Jornada": "1",
             "EscudoLocal": "img/escudos/Emblema_0150.jpg",
             "Local": "EL VALLE LAS TABLAS F",
             "GolesLocal": "1",
@@ -1119,6 +1106,19 @@
             "Fecha": "08/11/25",
             "Hora": "11:15",
             "Direccion": "PALAS DEL REY, 4"
+        },
+        {
+            "Grupo": "GRUPO: 1",
+            "Jornada": "1",
+            "EscudoLocal": "img/escudos/Emblema_0151.jpg",
+            "Local": "EL VALLE SANCHINARRO E",
+            "GolesLocal": "4",
+            "EscudoVisitante": "img/escudos/Emblema_0118.jpg",
+            "Visitante": "ASUNCION CUESTABLANCA A",
+            "GolesVisitante": "2",
+            "Fecha": "08/11/25",
+            "Hora": "11:15",
+            "Direccion": "VICENTE BLASCO IBAÑEZ, S/N"
         },
         {
             "Grupo": "GRUPO: 1",
@@ -1203,7 +1203,7 @@
             "Jornada": "2",
             "EscudoLocal": "img/escudos/Emblema_0039.jpg",
             "Local": "BVM IRLANDESAS",
-            "GolesLocal": "0",
+            "GolesLocal": "8",
             "EscudoVisitante": "img/escudos/Emblema_0154.jpg",
             "Visitante": "WISDOM SCHOOL",
             "GolesVisitante": "0",
@@ -1398,39 +1398,13 @@
             "Jornada": "5",
             "EscudoLocal": "img/escudos/Emblema_0143.jpg",
             "Local": "SANTA MARIA LA BLANCA B",
-            "GolesLocal": "",
+            "GolesLocal": "6",
             "EscudoVisitante": "img/escudos/Emblema_0039.jpg",
             "Visitante": "BVM IRLANDESAS",
-            "GolesVisitante": "",
+            "GolesVisitante": "11",
             "Fecha": "17/12/25",
             "Hora": "18:00",
             "Direccion": "MONASTERIO DE OSEIRA, 17"
-        },
-        {
-            "Grupo": "GRUPO: 1",
-            "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0039.jpg",
-            "Local": "BVM IRLANDESAS",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0151.jpg",
-            "Visitante": "EL VALLE SANCHINARRO E",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "BEGONIA, 275 (SOTO DE LA MORALEJA)"
-        },
-        {
-            "Grupo": "GRUPO: 1",
-            "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0150.jpg",
-            "Local": "EL VALLE LAS TABLAS F",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0154.jpg",
-            "Visitante": "WISDOM SCHOOL",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "PALAS DEL REY, 4"
         },
         {
             "Grupo": "GRUPO: 1",
@@ -1442,8 +1416,34 @@
             "Visitante": "FEC STA. JOAQUINA VEDRUNA B",
             "GolesVisitante": "",
             "Fecha": "17/01/26",
-            "Hora": "00:00",
+            "Hora": "09:00",
             "Direccion": "ASUNCION CUESTABLANCA, 11"
+        },
+        {
+            "Grupo": "GRUPO: 1",
+            "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0150.jpg",
+            "Local": "EL VALLE LAS TABLAS F",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0154.jpg",
+            "Visitante": "WISDOM SCHOOL",
+            "GolesVisitante": "",
+            "Fecha": "17/01/26",
+            "Hora": "10:00",
+            "Direccion": "PALAS DEL REY, 4"
+        },
+        {
+            "Grupo": "GRUPO: 1",
+            "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0039.jpg",
+            "Local": "BVM IRLANDESAS",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0151.jpg",
+            "Visitante": "EL VALLE SANCHINARRO E",
+            "GolesVisitante": "",
+            "Fecha": "17/01/26",
+            "Hora": "10:15",
+            "Direccion": "BEGONIA, 275 (SOTO DE LA MORALEJA)"
         },
         {
             "Grupo": "GRUPO: 1",
@@ -1474,40 +1474,14 @@
         {
             "Grupo": "GRUPO: 1",
             "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0151.jpg",
-            "Local": "EL VALLE SANCHINARRO E",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0154.jpg",
-            "Visitante": "WISDOM SCHOOL",
-            "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "VICENTE BLASCO IBAÑEZ, S/N"
-        },
-        {
-            "Grupo": "GRUPO: 1",
-            "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0099.jpg",
-            "Local": "CORAZONISTAS B",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0150.jpg",
-            "Visitante": "EL VALLE LAS TABLAS F",
-            "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "DE GUATEMALA, 15"
-        },
-        {
-            "Grupo": "GRUPO: 1",
-            "Jornada": "7",
             "EscudoLocal": "img/escudos/Emblema_0061.jpg",
             "Local": "FEC STA. JOAQUINA VEDRUNA B",
             "GolesLocal": "",
             "EscudoVisitante": "img/escudos/Emblema_0128.jpg",
             "Visitante": "COLEGIO ALEMAN B",
             "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Fecha": "23/01/26",
+            "Hora": "18:30",
             "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
         },
         {
@@ -1520,8 +1494,21 @@
             "Visitante": "ASUNCION CUESTABLANCA A",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "10:15",
             "Direccion": "MONASTERIO DE OSEIRA, 17"
+        },
+        {
+            "Grupo": "GRUPO: 1",
+            "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0151.jpg",
+            "Local": "EL VALLE SANCHINARRO E",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0154.jpg",
+            "Visitante": "WISDOM SCHOOL",
+            "GolesVisitante": "",
+            "Fecha": "24/01/26",
+            "Hora": "11:15",
+            "Direccion": "VICENTE BLASCO IBAÑEZ, S/N"
         },
         {
             "Grupo": "GRUPO: 1",
@@ -1533,8 +1520,21 @@
             "Visitante": "VALDEFUENTES",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "13:00",
             "Direccion": "BEGONIA, 275 (SOTO DE LA MORALEJA)"
+        },
+        {
+            "Grupo": "GRUPO: 1",
+            "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0099.jpg",
+            "Local": "CORAZONISTAS B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0150.jpg",
+            "Visitante": "EL VALLE LAS TABLAS F",
+            "GolesVisitante": "",
+            "Fecha": "24/01/26",
+            "Hora": "17:15",
+            "Direccion": "DE GUATEMALA, 15"
         },
         {
             "Grupo": "GRUPO: 1",
@@ -1546,7 +1546,7 @@
             "Visitante": "VALDEFUENTES",
             "GolesVisitante": "",
             "Fecha": "31/01/26",
-            "Hora": "00:00",
+            "Hora": "10:00",
             "Direccion": "VICENTE BLASCO IBAÑEZ, S/N"
         },
         {
@@ -1559,7 +1559,7 @@
             "Visitante": "BVM IRLANDESAS",
             "GolesVisitante": "",
             "Fecha": "31/01/26",
-            "Hora": "00:00",
+            "Hora": "10:10",
             "Direccion": "ASUNCION CUESTABLANCA, 11"
         },
         {
@@ -1572,21 +1572,8 @@
             "Visitante": "FEC STA. JOAQUINA VEDRUNA B",
             "GolesVisitante": "",
             "Fecha": "31/01/26",
-            "Hora": "00:00",
+            "Hora": "10:30",
             "Direccion": "PALAS DEL REY, 4"
-        },
-        {
-            "Grupo": "GRUPO: 1",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0154.jpg",
-            "Local": "WISDOM SCHOOL",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0099.jpg",
-            "Visitante": "CORAZONISTAS B",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "DE GUATEMALA, 15"
         },
         {
             "Grupo": "GRUPO: 1",
@@ -1603,42 +1590,16 @@
         },
         {
             "Grupo": "GRUPO: 1",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0099.jpg",
-            "Local": "CORAZONISTAS B",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0154.jpg",
+            "Local": "WISDOM SCHOOL",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0151.jpg",
-            "Visitante": "EL VALLE SANCHINARRO E",
+            "EscudoVisitante": "img/escudos/Emblema_0099.jpg",
+            "Visitante": "CORAZONISTAS B",
             "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
+            "Fecha": "31/01/26",
+            "Hora": "17:15",
             "Direccion": "DE GUATEMALA, 15"
-        },
-        {
-            "Grupo": "GRUPO: 1",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0061.jpg",
-            "Local": "FEC STA. JOAQUINA VEDRUNA B",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0154.jpg",
-            "Visitante": "WISDOM SCHOOL",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
-        },
-        {
-            "Grupo": "GRUPO: 1",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0143.jpg",
-            "Local": "SANTA MARIA LA BLANCA B",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0150.jpg",
-            "Visitante": "EL VALLE LAS TABLAS F",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "MONASTERIO DE OSEIRA, 17"
         },
         {
             "Grupo": "GRUPO: 1",
@@ -1649,9 +1610,48 @@
             "EscudoVisitante": "img/escudos/Emblema_0128.jpg",
             "Visitante": "COLEGIO ALEMAN B",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "BEGONIA, 275 (SOTO DE LA MORALEJA)"
+        },
+        {
+            "Grupo": "GRUPO: 1",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0099.jpg",
+            "Local": "CORAZONISTAS B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0151.jpg",
+            "Visitante": "EL VALLE SANCHINARRO E",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "DE GUATEMALA, 15"
+        },
+        {
+            "Grupo": "GRUPO: 1",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0143.jpg",
+            "Local": "SANTA MARIA LA BLANCA B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0150.jpg",
+            "Visitante": "EL VALLE LAS TABLAS F",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "MONASTERIO DE OSEIRA, 17"
+        },
+        {
+            "Grupo": "GRUPO: 1",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0061.jpg",
+            "Local": "FEC STA. JOAQUINA VEDRUNA B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0154.jpg",
+            "Visitante": "WISDOM SCHOOL",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
         },
         {
             "Grupo": "GRUPO: 1",
@@ -1662,7 +1662,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0118.jpg",
             "Visitante": "ASUNCION CUESTABLANCA A",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "INFANTA MARIA, S/N"
         },
@@ -2007,19 +2007,6 @@
         {
             "Grupo": "GRUPO: 2",
             "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0023.jpg",
-            "Local": "CALASANCIO C",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0025.jpg",
-            "Visitante": "MATER IMMACULATA A",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "GENERAL DIAZ PORLIER, 56"
-        },
-        {
-            "Grupo": "GRUPO: 2",
-            "Jornada": "6",
             "EscudoLocal": "img/escudos/Emblema_0078.jpg",
             "Local": "STELLA MARIS FESD B",
             "GolesLocal": "",
@@ -2040,8 +2027,21 @@
             "Visitante": "AMOR DE DIOS",
             "GolesVisitante": "",
             "Fecha": "17/01/26",
-            "Hora": "12:00",
+            "Hora": "09:00",
             "Direccion": "PZA. VALVANERA, 5"
+        },
+        {
+            "Grupo": "GRUPO: 2",
+            "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0023.jpg",
+            "Local": "CALASANCIO C",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0025.jpg",
+            "Visitante": "MATER IMMACULATA A",
+            "GolesVisitante": "",
+            "Fecha": "17/01/26",
+            "Hora": "10:15",
+            "Direccion": "GENERAL DIAZ PORLIER, 56"
         },
         {
             "Grupo": "GRUPO: 2",
@@ -2079,21 +2079,8 @@
             "Visitante": "CORAZON DE MARIA",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "10:45",
             "Direccion": "VIRGEN DEL SAGRARIO, 22"
-        },
-        {
-            "Grupo": "GRUPO: 2",
-            "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0011.jpg",
-            "Local": "AMOR DE DIOS",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0078.jpg",
-            "Visitante": "STELLA MARIS FESD B",
-            "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "ESPARTA, 14"
         },
         {
             "Grupo": "GRUPO: 2",
@@ -2105,7 +2092,7 @@
             "Visitante": "NTRA. SRA. BUEN CONSEJO",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "12:00",
             "Direccion": "SICELIDAS, S/N"
         },
         {
@@ -2123,6 +2110,19 @@
         },
         {
             "Grupo": "GRUPO: 2",
+            "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0011.jpg",
+            "Local": "AMOR DE DIOS",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0078.jpg",
+            "Visitante": "STELLA MARIS FESD B",
+            "GolesVisitante": "",
+            "Fecha": "25/01/26",
+            "Hora": "12:00",
+            "Direccion": "ESPARTA, 14"
+        },
+        {
+            "Grupo": "GRUPO: 2",
             "Jornada": "8",
             "EscudoLocal": "img/escudos/Emblema_0000.jpg",
             "Local": "D E S C A N S O",
@@ -2133,32 +2133,6 @@
             "Fecha": "31/01/26",
             "Hora": "00:00",
             "Direccion": ""
-        },
-        {
-            "Grupo": "GRUPO: 2",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0023.jpg",
-            "Local": "CALASANCIO C",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0026.jpg",
-            "Visitante": "OBISPO PERELLO B",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "GENERAL DIAZ PORLIER, 56"
-        },
-        {
-            "Grupo": "GRUPO: 2",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0025.jpg",
-            "Local": "MATER IMMACULATA A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0018.jpg",
-            "Visitante": "ESPIRITU SANTO",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "CONDESA DE VENADITO, 27"
         },
         {
             "Grupo": "GRUPO: 2",
@@ -2188,16 +2162,29 @@
         },
         {
             "Grupo": "GRUPO: 2",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0018.jpg",
-            "Local": "ESPIRITU SANTO",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0023.jpg",
+            "Local": "CALASANCIO C",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
-            "Visitante": "D E S C A N S O",
+            "EscudoVisitante": "img/escudos/Emblema_0026.jpg",
+            "Visitante": "OBISPO PERELLO B",
             "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": ""
+            "Fecha": "31/01/26",
+            "Hora": "13:00",
+            "Direccion": "GENERAL DIAZ PORLIER, 56"
+        },
+        {
+            "Grupo": "GRUPO: 2",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0025.jpg",
+            "Local": "MATER IMMACULATA A",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0018.jpg",
+            "Visitante": "ESPIRITU SANTO",
+            "GolesVisitante": "",
+            "Fecha": "31/01/26",
+            "Hora": "13:45",
+            "Direccion": "CONDESA DE VENADITO, 27"
         },
         {
             "Grupo": "GRUPO: 2",
@@ -2208,22 +2195,9 @@
             "EscudoVisitante": "img/escudos/Emblema_0025.jpg",
             "Visitante": "MATER IMMACULATA A",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "VIRGEN DEL SAGRARIO, 22"
-        },
-        {
-            "Grupo": "GRUPO: 2",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0011.jpg",
-            "Local": "AMOR DE DIOS",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0023.jpg",
-            "Visitante": "CALASANCIO C",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "ESPARTA, 14"
         },
         {
             "Grupo": "GRUPO: 2",
@@ -2234,9 +2208,35 @@
             "EscudoVisitante": "img/escudos/Emblema_0017.jpg",
             "Visitante": "CORAZON DE MARIA",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "SICELIDAS, S/N"
+        },
+        {
+            "Grupo": "GRUPO: 2",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0011.jpg",
+            "Local": "AMOR DE DIOS",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0023.jpg",
+            "Visitante": "CALASANCIO C",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "ESPARTA, 14"
+        },
+        {
+            "Grupo": "GRUPO: 2",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0018.jpg",
+            "Local": "ESPIRITU SANTO",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
+            "Visitante": "D E S C A N S O",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": ""
         },
         {
             "Grupo": "GRUPO: 2",
@@ -2247,8 +2247,8 @@
             "EscudoVisitante": "img/escudos/Emblema_0078.jpg",
             "Visitante": "STELLA MARIS FESD B",
             "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
+            "Fecha": "07/02/26",
+            "Hora": "12:15",
             "Direccion": "PZA. VALVANERA, 5"
         },
         {
@@ -2373,10 +2373,10 @@
             "Jornada": "2",
             "EscudoLocal": "img/escudos/Emblema_0058.jpg",
             "Local": "SAGRADA FAMILIA JORGE JUAN B",
-            "GolesLocal": "",
+            "GolesLocal": "2",
             "EscudoVisitante": "img/escudos/Emblema_0006.jpg",
             "Visitante": "AGUSTINIANO A",
-            "GolesVisitante": "",
+            "GolesVisitante": "4",
             "Fecha": "11/01/26",
             "Hora": "11:00",
             "Direccion": "PEZ AUSTRAL, 13 BIS"
@@ -2592,15 +2592,15 @@
         {
             "Grupo": "GRUPO: 3",
             "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0025.jpg",
-            "Local": "MATER IMMACULATA B",
+            "EscudoLocal": "img/escudos/Emblema_0078.jpg",
+            "Local": "STELLA MARIS FESD A",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0012.jpg",
-            "Visitante": "NTRA. SRA. PILAR A",
+            "EscudoVisitante": "img/escudos/Emblema_0026.jpg",
+            "Visitante": "OBISPO PERELLO A",
             "GolesVisitante": "",
             "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "CONDESA DE VENADITO, 27"
+            "Hora": "12:45",
+            "Direccion": "JUAN PEREZ ZUÑIGA, 47"
         },
         {
             "Grupo": "GRUPO: 3",
@@ -2612,21 +2612,21 @@
             "Visitante": "AGUSTINIANO A",
             "GolesVisitante": "",
             "Fecha": "17/01/26",
-            "Hora": "00:00",
+            "Hora": "13:15",
             "Direccion": "FAISANES, 2"
         },
         {
             "Grupo": "GRUPO: 3",
             "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0078.jpg",
-            "Local": "STELLA MARIS FESD A",
+            "EscudoLocal": "img/escudos/Emblema_0025.jpg",
+            "Local": "MATER IMMACULATA B",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0026.jpg",
-            "Visitante": "OBISPO PERELLO A",
+            "EscudoVisitante": "img/escudos/Emblema_0012.jpg",
+            "Visitante": "NTRA. SRA. PILAR A",
             "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "12:45",
-            "Direccion": "JUAN PEREZ ZUÑIGA, 47"
+            "Fecha": "18/01/26",
+            "Hora": "11:30",
+            "Direccion": "CONDESA DE VENADITO, 27"
         },
         {
             "Grupo": "GRUPO: 3",
@@ -2657,19 +2657,6 @@
         {
             "Grupo": "GRUPO: 3",
             "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0001.jpg",
-            "Local": "SANTA ANA Y SAN RAFAEL A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0152.jpg",
-            "Visitante": "EL VALLE VALDEBERNARDO D",
-            "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "CONDES DE TORREANAZ, 5"
-        },
-        {
-            "Grupo": "GRUPO: 3",
-            "Jornada": "7",
             "EscudoLocal": "img/escudos/Emblema_0026.jpg",
             "Local": "OBISPO PERELLO A",
             "GolesLocal": "",
@@ -2677,21 +2664,8 @@
             "Visitante": "PUREZA DE MARIA D",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "09:30",
             "Direccion": "VIRGEN DEL SAGRARIO, 22"
-        },
-        {
-            "Grupo": "GRUPO: 3",
-            "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0012.jpg",
-            "Local": "NTRA. SRA. PILAR A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0078.jpg",
-            "Visitante": "STELLA MARIS FESD A",
-            "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "CASTELLO, 56"
         },
         {
             "Grupo": "GRUPO: 3",
@@ -2703,8 +2677,34 @@
             "Visitante": "MATER IMMACULATA B",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "11:15",
             "Direccion": "JORGE JUAN, 165"
+        },
+        {
+            "Grupo": "GRUPO: 3",
+            "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0001.jpg",
+            "Local": "SANTA ANA Y SAN RAFAEL A",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0152.jpg",
+            "Visitante": "EL VALLE VALDEBERNARDO D",
+            "GolesVisitante": "",
+            "Fecha": "24/01/26",
+            "Hora": "14:00",
+            "Direccion": "CONDES DE TORREANAZ, 5"
+        },
+        {
+            "Grupo": "GRUPO: 3",
+            "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0012.jpg",
+            "Local": "NTRA. SRA. PILAR A",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0078.jpg",
+            "Visitante": "STELLA MARIS FESD A",
+            "GolesVisitante": "",
+            "Fecha": "25/01/26",
+            "Hora": "09:30",
+            "Direccion": "CASTELLO, 56"
         },
         {
             "Grupo": "GRUPO: 3",
@@ -2729,21 +2729,8 @@
             "Visitante": "OBISPO PERELLO A",
             "GolesVisitante": "",
             "Fecha": "31/01/26",
-            "Hora": "00:00",
+            "Hora": "10:30",
             "Direccion": "FAISANES, 2"
-        },
-        {
-            "Grupo": "GRUPO: 3",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
-            "Local": "AGUSTINIANO A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0001.jpg",
-            "Visitante": "SANTA ANA Y SAN RAFAEL A",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "PEZ AUSTRAL, 13 BIS"
         },
         {
             "Grupo": "GRUPO: 3",
@@ -2757,6 +2744,19 @@
             "Fecha": "31/01/26",
             "Hora": "12:45",
             "Direccion": "JUAN PEREZ ZUÑIGA, 47"
+        },
+        {
+            "Grupo": "GRUPO: 3",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
+            "Local": "AGUSTINIANO A",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0001.jpg",
+            "Visitante": "SANTA ANA Y SAN RAFAEL A",
+            "GolesVisitante": "",
+            "Fecha": "01/02/26",
+            "Hora": "10:15",
+            "Direccion": "PEZ AUSTRAL, 13 BIS"
         },
         {
             "Grupo": "GRUPO: 3",
@@ -2780,22 +2780,9 @@
             "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
             "Visitante": "D E S C A N S O",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": ""
-        },
-        {
-            "Grupo": "GRUPO: 3",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0026.jpg",
-            "Local": "OBISPO PERELLO A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0006.jpg",
-            "Visitante": "AGUSTINIANO A",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "VIRGEN DEL SAGRARIO, 22"
         },
         {
             "Grupo": "GRUPO: 3",
@@ -2806,7 +2793,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0152.jpg",
             "Visitante": "EL VALLE VALDEBERNARDO D",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "CASTELLO, 56"
         },
@@ -2819,9 +2806,22 @@
             "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
             "Visitante": "PUREZA DE MARIA D",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "JORGE JUAN, 165"
+        },
+        {
+            "Grupo": "GRUPO: 3",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0026.jpg",
+            "Local": "OBISPO PERELLO A",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0006.jpg",
+            "Visitante": "AGUSTINIANO A",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "VIRGEN DEL SAGRARIO, 22"
         },
         {
             "Grupo": "GRUPO: 3",
@@ -2832,7 +2832,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0078.jpg",
             "Visitante": "STELLA MARIS FESD A",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "CONDESA DE VENADITO, 27"
         },
@@ -2958,10 +2958,10 @@
             "Jornada": "2",
             "EscudoLocal": "img/escudos/Emblema_0076.jpg",
             "Local": "NTRA. SRA. CONSOLACION A",
-            "GolesLocal": "",
+            "GolesLocal": "10",
             "EscudoVisitante": "img/escudos/Emblema_0058.jpg",
             "Visitante": "SAGRADA FAMILIA JORGE JUAN A",
-            "GolesVisitante": "",
+            "GolesVisitante": "0",
             "Fecha": "15/12/25",
             "Hora": "18:30",
             "Direccion": "PZA. MADRE MOLAS, 1"
@@ -3164,6 +3164,19 @@
         {
             "Grupo": "GRUPO: 4",
             "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0061.jpg",
+            "Local": "FEC STA. JOAQUINA VEDRUNA A",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0001.jpg",
+            "Visitante": "SANTA ANA Y SAN RAFAEL B",
+            "GolesVisitante": "",
+            "Fecha": "16/01/26",
+            "Hora": "18:30",
+            "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
+        },
+        {
+            "Grupo": "GRUPO: 4",
+            "Jornada": "6",
             "EscudoLocal": "img/escudos/Emblema_0029.jpg",
             "Local": "JESUS MARIA C",
             "GolesLocal": "",
@@ -3197,7 +3210,7 @@
             "Visitante": "CLARET D",
             "GolesVisitante": "",
             "Fecha": "17/01/26",
-            "Hora": "00:00",
+            "Hora": "11:30",
             "Direccion": "GENERAL DIAZ PORLIER, 56"
         },
         {
@@ -3210,21 +3223,8 @@
             "Visitante": "OBISPO PERELLO C",
             "GolesVisitante": "",
             "Fecha": "17/01/26",
-            "Hora": "00:00",
+            "Hora": "12:15",
             "Direccion": "GENERAL DIAZ PORLIER, 25"
-        },
-        {
-            "Grupo": "GRUPO: 4",
-            "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0061.jpg",
-            "Local": "FEC STA. JOAQUINA VEDRUNA A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0001.jpg",
-            "Visitante": "SANTA ANA Y SAN RAFAEL B",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
         },
         {
             "Grupo": "GRUPO: 4",
@@ -3255,15 +3255,15 @@
         {
             "Grupo": "GRUPO: 4",
             "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0001.jpg",
-            "Local": "SANTA ANA Y SAN RAFAEL B",
+            "EscudoLocal": "img/escudos/Emblema_0048.jpg",
+            "Local": "CLARET D",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0029.jpg",
-            "Visitante": "JESUS MARIA C",
+            "EscudoVisitante": "img/escudos/Emblema_0083.jpg",
+            "Visitante": "INMACULADA CONCEPCION B",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "CONDES DE TORREANAZ, 5"
+            "Hora": "10:15",
+            "Direccion": "CORAZON DE MARIA, 1B (CAMPO C)"
         },
         {
             "Grupo": "GRUPO: 4",
@@ -3275,21 +3275,34 @@
             "Visitante": "FEC STA. JOAQUINA VEDRUNA A",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "10:45",
             "Direccion": "VIRGEN DEL SAGRARIO, 22"
         },
         {
             "Grupo": "GRUPO: 4",
             "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0048.jpg",
-            "Local": "CLARET D",
+            "EscudoLocal": "img/escudos/Emblema_0001.jpg",
+            "Local": "SANTA ANA Y SAN RAFAEL B",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0083.jpg",
-            "Visitante": "INMACULADA CONCEPCION B",
+            "EscudoVisitante": "img/escudos/Emblema_0029.jpg",
+            "Visitante": "JESUS MARIA C",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "10:15",
-            "Direccion": "CORAZON DE MARIA, 1B (CAMPO C)"
+            "Hora": "11:30",
+            "Direccion": "CONDES DE TORREANAZ, 5"
+        },
+        {
+            "Grupo": "GRUPO: 4",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0061.jpg",
+            "Local": "FEC STA. JOAQUINA VEDRUNA A",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0048.jpg",
+            "Visitante": "CLARET D",
+            "GolesVisitante": "",
+            "Fecha": "30/01/26",
+            "Hora": "18:30",
+            "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
         },
         {
             "Grupo": "GRUPO: 4",
@@ -3307,32 +3320,6 @@
         {
             "Grupo": "GRUPO: 4",
             "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0083.jpg",
-            "Local": "INMACULADA CONCEPCION B",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0076.jpg",
-            "Visitante": "NTRA. SRA. CONSOLACION A",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "GENERAL DIAZ PORLIER, 25"
-        },
-        {
-            "Grupo": "GRUPO: 4",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0061.jpg",
-            "Local": "FEC STA. JOAQUINA VEDRUNA A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0048.jpg",
-            "Visitante": "CLARET D",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
-        },
-        {
-            "Grupo": "GRUPO: 4",
-            "Jornada": "8",
             "EscudoLocal": "img/escudos/Emblema_0058.jpg",
             "Local": "SAGRADA FAMILIA JORGE JUAN A",
             "GolesLocal": "",
@@ -3340,7 +3327,7 @@
             "Visitante": "SANTA ANA Y SAN RAFAEL B",
             "GolesVisitante": "",
             "Fecha": "31/01/26",
-            "Hora": "00:00",
+            "Hora": "09:30",
             "Direccion": "JORGE JUAN, 165"
         },
         {
@@ -3358,16 +3345,16 @@
         },
         {
             "Grupo": "GRUPO: 4",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0001.jpg",
-            "Local": "SANTA ANA Y SAN RAFAEL B",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0083.jpg",
+            "Local": "INMACULADA CONCEPCION B",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
-            "Visitante": "D E S C A N S O",
+            "EscudoVisitante": "img/escudos/Emblema_0076.jpg",
+            "Visitante": "NTRA. SRA. CONSOLACION A",
             "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": ""
+            "Fecha": "31/01/26",
+            "Hora": "12:30",
+            "Direccion": "GENERAL DIAZ PORLIER, 25"
         },
         {
             "Grupo": "GRUPO: 4",
@@ -3378,22 +3365,9 @@
             "EscudoVisitante": "img/escudos/Emblema_0058.jpg",
             "Visitante": "SAGRADA FAMILIA JORGE JUAN A",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "VIRGEN DEL SAGRARIO, 22"
-        },
-        {
-            "Grupo": "GRUPO: 4",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0048.jpg",
-            "Local": "CLARET D",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0029.jpg",
-            "Visitante": "JESUS MARIA C",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "CORAZON DE MARIA, 1B (CAMPO A)"
         },
         {
             "Grupo": "GRUPO: 4",
@@ -3404,9 +3378,35 @@
             "EscudoVisitante": "img/escudos/Emblema_0061.jpg",
             "Visitante": "FEC STA. JOAQUINA VEDRUNA A",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "PZA. MADRE MOLAS, 1"
+        },
+        {
+            "Grupo": "GRUPO: 4",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0001.jpg",
+            "Local": "SANTA ANA Y SAN RAFAEL B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
+            "Visitante": "D E S C A N S O",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": ""
+        },
+        {
+            "Grupo": "GRUPO: 4",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0048.jpg",
+            "Local": "CLARET D",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0029.jpg",
+            "Visitante": "JESUS MARIA C",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "CORAZON DE MARIA, 1B (CAMPO A)"
         },
         {
             "Grupo": "GRUPO: 4",
@@ -3417,7 +3417,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0083.jpg",
             "Visitante": "INMACULADA CONCEPCION B",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "GENERAL DIAZ PORLIER, 56"
         },
@@ -3768,22 +3768,9 @@
             "EscudoVisitante": "img/escudos/Emblema_0023.jpg",
             "Visitante": "CALASANCIO D",
             "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
+            "Fecha": "16/01/26",
+            "Hora": "18:30",
             "Direccion": "PEZ AUSTRAL, 13 BIS"
-        },
-        {
-            "Grupo": "GRUPO: 5",
-            "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0024.jpg",
-            "Local": "DECROLY C",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0072.jpg",
-            "Visitante": "JESUS MAESTRO AZUL",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "GUZMAN EL BUENO, 60"
         },
         {
             "Grupo": "GRUPO: 5",
@@ -3801,6 +3788,19 @@
         {
             "Grupo": "GRUPO: 5",
             "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0024.jpg",
+            "Local": "DECROLY C",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0072.jpg",
+            "Visitante": "JESUS MAESTRO AZUL",
+            "GolesVisitante": "",
+            "Fecha": "17/01/26",
+            "Hora": "10:10",
+            "Direccion": "GUZMAN EL BUENO, 60"
+        },
+        {
+            "Grupo": "GRUPO: 5",
+            "Jornada": "6",
             "EscudoLocal": "img/escudos/Emblema_0004.jpg",
             "Local": "PUREZA DE MARIA C",
             "GolesLocal": "",
@@ -3814,6 +3814,19 @@
         {
             "Grupo": "GRUPO: 5",
             "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
+            "Local": "AGUSTINIANO B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0024.jpg",
+            "Visitante": "DECROLY C",
+            "GolesVisitante": "",
+            "Fecha": "23/01/26",
+            "Hora": "18:30",
+            "Direccion": "PEZ AUSTRAL, 13 BIS"
+        },
+        {
+            "Grupo": "GRUPO: 5",
+            "Jornada": "7",
             "EscudoLocal": "img/escudos/Emblema_0023.jpg",
             "Local": "CALASANCIO D",
             "GolesLocal": "",
@@ -3821,47 +3834,8 @@
             "Visitante": "NTRA. SRA. PILAR B",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "10:15",
             "Direccion": "GENERAL DIAZ PORLIER, 56"
-        },
-        {
-            "Grupo": "GRUPO: 5",
-            "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0083.jpg",
-            "Local": "INMACULADA CONCEPCION A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0048.jpg",
-            "Visitante": "CLARET B",
-            "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "GENERAL DIAZ PORLIER, 25"
-        },
-        {
-            "Grupo": "GRUPO: 5",
-            "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0015.jpg",
-            "Local": "PATROCINIO SAN JOSE AZUL",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
-            "Visitante": "PUREZA DE MARIA C",
-            "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "BASILICA, 14"
-        },
-        {
-            "Grupo": "GRUPO: 5",
-            "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
-            "Local": "AGUSTINIANO B",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0024.jpg",
-            "Visitante": "DECROLY C",
-            "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "PEZ AUSTRAL, 13 BIS"
         },
         {
             "Grupo": "GRUPO: 5",
@@ -3878,29 +3852,29 @@
         },
         {
             "Grupo": "GRUPO: 5",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0023.jpg",
-            "Local": "CALASANCIO D",
+            "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0083.jpg",
+            "Local": "INMACULADA CONCEPCION A",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0024.jpg",
-            "Visitante": "DECROLY C",
+            "EscudoVisitante": "img/escudos/Emblema_0048.jpg",
+            "Visitante": "CLARET B",
             "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "GENERAL DIAZ PORLIER, 56"
+            "Fecha": "24/01/26",
+            "Hora": "12:15",
+            "Direccion": "GENERAL DIAZ PORLIER, 25"
         },
         {
             "Grupo": "GRUPO: 5",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0048.jpg",
-            "Local": "CLARET B",
+            "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0015.jpg",
+            "Local": "PATROCINIO SAN JOSE AZUL",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0015.jpg",
-            "Visitante": "PATROCINIO SAN JOSE AZUL",
+            "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
+            "Visitante": "PUREZA DE MARIA C",
             "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "CORAZON DE MARIA, 1B (CAMPO A)"
+            "Fecha": "25/01/26",
+            "Hora": "10:10",
+            "Direccion": "BASILICA, 14"
         },
         {
             "Grupo": "GRUPO: 5",
@@ -3912,8 +3886,21 @@
             "Visitante": "INMACULADA CONCEPCION A",
             "GolesVisitante": "",
             "Fecha": "31/01/26",
-            "Hora": "00:00",
+            "Hora": "10:45",
             "Direccion": "CASTELLO, 56"
+        },
+        {
+            "Grupo": "GRUPO: 5",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0048.jpg",
+            "Local": "CLARET B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0015.jpg",
+            "Visitante": "PATROCINIO SAN JOSE AZUL",
+            "GolesVisitante": "",
+            "Fecha": "31/01/26",
+            "Hora": "10:45",
+            "Direccion": "CORAZON DE MARIA, 1B (CAMPO B)"
         },
         {
             "Grupo": "GRUPO: 5",
@@ -3927,6 +3914,19 @@
             "Fecha": "31/01/26",
             "Hora": "11:30",
             "Direccion": "NUÑEZ DE BALBOA, 90"
+        },
+        {
+            "Grupo": "GRUPO: 5",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0023.jpg",
+            "Local": "CALASANCIO D",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0024.jpg",
+            "Visitante": "DECROLY C",
+            "GolesVisitante": "",
+            "Fecha": "31/01/26",
+            "Hora": "13:00",
+            "Direccion": "GENERAL DIAZ PORLIER, 56"
         },
         {
             "Grupo": "GRUPO: 5",
@@ -3950,7 +3950,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0023.jpg",
             "Visitante": "CALASANCIO D",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "GENERAL DIAZ PORLIER, 25"
         },
@@ -3963,35 +3963,9 @@
             "EscudoVisitante": "img/escudos/Emblema_0012.jpg",
             "Visitante": "NTRA. SRA. PILAR B",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "BASILICA, 14"
-        },
-        {
-            "Grupo": "GRUPO: 5",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0072.jpg",
-            "Local": "JESUS MAESTRO AZUL",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0048.jpg",
-            "Visitante": "CLARET B",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "MELQUIADES ALVAREZ, 8"
-        },
-        {
-            "Grupo": "GRUPO: 5",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
-            "Local": "AGUSTINIANO B",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
-            "Visitante": "PUREZA DE MARIA C",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "PEZ AUSTRAL, 13 BIS"
         },
         {
             "Grupo": "GRUPO: 5",
@@ -4002,9 +3976,35 @@
             "EscudoVisitante": "img/escudos/Emblema_0029.jpg",
             "Visitante": "JESUS MARIA A",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "GUZMAN EL BUENO, 60"
+        },
+        {
+            "Grupo": "GRUPO: 5",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
+            "Local": "AGUSTINIANO B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
+            "Visitante": "PUREZA DE MARIA C",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "PEZ AUSTRAL, 13 BIS"
+        },
+        {
+            "Grupo": "GRUPO: 5",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0072.jpg",
+            "Local": "JESUS MAESTRO AZUL",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0048.jpg",
+            "Visitante": "CLARET B",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "14:00",
+            "Direccion": "MELQUIADES ALVAREZ, 8"
         },
         {
             "Grupo": "GRUPO: 6",
@@ -4347,32 +4347,6 @@
         {
             "Grupo": "GRUPO: 6",
             "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0050.jpg",
-            "Local": "SALESIANOS ATOCHA",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
-            "Visitante": "PUREZA DE MARIA B",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "RONDA DE ATOCHA, 27"
-        },
-        {
-            "Grupo": "GRUPO: 6",
-            "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
-            "Local": "AGUSTINIANO C",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0148.jpg",
-            "Visitante": "AMOR DE DIOS ALCORCON",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "PEZ AUSTRAL, 13 BIS"
-        },
-        {
-            "Grupo": "GRUPO: 6",
-            "Jornada": "6",
             "EscudoLocal": "img/escudos/Emblema_0156.jpg",
             "Local": "SANTA RITA",
             "GolesLocal": "",
@@ -4386,6 +4360,19 @@
         {
             "Grupo": "GRUPO: 6",
             "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0050.jpg",
+            "Local": "SALESIANOS ATOCHA",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
+            "Visitante": "PUREZA DE MARIA B",
+            "GolesVisitante": "",
+            "Fecha": "17/01/26",
+            "Hora": "10:45",
+            "Direccion": "RONDA DE ATOCHA, 27"
+        },
+        {
+            "Grupo": "GRUPO: 6",
+            "Jornada": "6",
             "EscudoLocal": "img/escudos/Emblema_0049.jpg",
             "Local": "RAFAELA YBARRA",
             "GolesLocal": "",
@@ -4395,6 +4382,19 @@
             "Fecha": "17/01/26",
             "Hora": "11:15",
             "Direccion": "AV. RAFAELA YBARRA, 73"
+        },
+        {
+            "Grupo": "GRUPO: 6",
+            "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
+            "Local": "AGUSTINIANO C",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0148.jpg",
+            "Visitante": "AMOR DE DIOS ALCORCON",
+            "GolesVisitante": "",
+            "Fecha": "18/01/26",
+            "Hora": "09:00",
+            "Direccion": "PEZ AUSTRAL, 13 BIS"
         },
         {
             "Grupo": "GRUPO: 6",
@@ -4425,19 +4425,6 @@
         {
             "Grupo": "GRUPO: 6",
             "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0020.jpg",
-            "Local": "VIRGEN DE ATOCHA",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0049.jpg",
-            "Visitante": "RAFAELA YBARRA",
-            "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "11:00",
-            "Direccion": "Pº REINA CRISTINA, 2"
-        },
-        {
-            "Grupo": "GRUPO: 6",
-            "Jornada": "7",
             "EscudoLocal": "img/escudos/Emblema_0029.jpg",
             "Local": "JESUS MARIA B",
             "GolesLocal": "",
@@ -4451,6 +4438,19 @@
         {
             "Grupo": "GRUPO: 6",
             "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0020.jpg",
+            "Local": "VIRGEN DE ATOCHA",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0049.jpg",
+            "Visitante": "RAFAELA YBARRA",
+            "GolesVisitante": "",
+            "Fecha": "24/01/26",
+            "Hora": "13:00",
+            "Direccion": "Pº REINA CRISTINA, 2"
+        },
+        {
+            "Grupo": "GRUPO: 6",
+            "Jornada": "7",
             "EscudoLocal": "img/escudos/Emblema_0004.jpg",
             "Local": "PUREZA DE MARIA B",
             "GolesLocal": "",
@@ -4460,6 +4460,19 @@
             "Fecha": "25/01/26",
             "Hora": "12:10",
             "Direccion": "LEO, 4"
+        },
+        {
+            "Grupo": "GRUPO: 6",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0148.jpg",
+            "Local": "AMOR DE DIOS ALCORCON",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0048.jpg",
+            "Visitante": "CLARET A",
+            "GolesVisitante": "",
+            "Fecha": "30/01/26",
+            "Hora": "18:30",
+            "Direccion": "PZA. SANTIAGO COMPOSTELA, 1 (ALCORCON)"
         },
         {
             "Grupo": "GRUPO: 6",
@@ -4484,34 +4497,8 @@
             "Visitante": "VIRGEN DE ATOCHA",
             "GolesVisitante": "",
             "Fecha": "31/01/26",
-            "Hora": "00:00",
+            "Hora": "09:30",
             "Direccion": "RONDA DE ATOCHA, 27"
-        },
-        {
-            "Grupo": "GRUPO: 6",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
-            "Local": "AGUSTINIANO C",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
-            "Visitante": "PUREZA DE MARIA B",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "PEZ AUSTRAL, 13 BIS"
-        },
-        {
-            "Grupo": "GRUPO: 6",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0148.jpg",
-            "Local": "AMOR DE DIOS ALCORCON",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0048.jpg",
-            "Visitante": "CLARET A",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "PZA. SANTIAGO COMPOSTELA, 1 (ALCORCON)"
         },
         {
             "Grupo": "GRUPO: 6",
@@ -4528,6 +4515,19 @@
         },
         {
             "Grupo": "GRUPO: 6",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
+            "Local": "AGUSTINIANO C",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
+            "Visitante": "PUREZA DE MARIA B",
+            "GolesVisitante": "",
+            "Fecha": "01/02/26",
+            "Hora": "11:30",
+            "Direccion": "PEZ AUSTRAL, 13 BIS"
+        },
+        {
+            "Grupo": "GRUPO: 6",
             "Jornada": "9",
             "EscudoLocal": "img/escudos/Emblema_0048.jpg",
             "Local": "CLARET A",
@@ -4535,7 +4535,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
             "Visitante": "D E S C A N S O",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": ""
         },
@@ -4548,7 +4548,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0148.jpg",
             "Visitante": "AMOR DE DIOS ALCORCON",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "LEO, 4"
         },
@@ -4561,22 +4561,9 @@
             "EscudoVisitante": "img/escudos/Emblema_0006.jpg",
             "Visitante": "AGUSTINIANO C",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "NUÑEZ DE BALBOA, 90"
-        },
-        {
-            "Grupo": "GRUPO: 6",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0020.jpg",
-            "Local": "VIRGEN DE ATOCHA",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0156.jpg",
-            "Visitante": "SANTA RITA",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "Pº REINA CRISTINA, 2"
         },
         {
             "Grupo": "GRUPO: 6",
@@ -4587,9 +4574,22 @@
             "EscudoVisitante": "img/escudos/Emblema_0050.jpg",
             "Visitante": "SALESIANOS ATOCHA",
             "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
+            "Fecha": "07/02/26",
+            "Hora": "10:00",
             "Direccion": "AV. RAFAELA YBARRA, 73"
+        },
+        {
+            "Grupo": "GRUPO: 6",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0020.jpg",
+            "Local": "VIRGEN DE ATOCHA",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0156.jpg",
+            "Visitante": "SANTA RITA",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "15:00",
+            "Direccion": "Pº REINA CRISTINA, 2"
         },
         {
             "Grupo": "GRUPO: 7",
@@ -4932,32 +4932,6 @@
         {
             "Grupo": "GRUPO: 7",
             "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
-            "Local": "AGUSTINIANO D",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0023.jpg",
-            "Visitante": "CALASANCIO B",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "PEZ AUSTRAL, 13 BIS"
-        },
-        {
-            "Grupo": "GRUPO: 7",
-            "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0012.jpg",
-            "Local": "NTRA. SRA. PILAR C",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0029.jpg",
-            "Visitante": "JESUS MARIA D",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "CASTELLO, 56"
-        },
-        {
-            "Grupo": "GRUPO: 7",
-            "Jornada": "6",
             "EscudoLocal": "img/escudos/Emblema_0024.jpg",
             "Local": "DECROLY B",
             "GolesLocal": "",
@@ -4965,7 +4939,7 @@
             "Visitante": "JESUS MAESTRO VERDE",
             "GolesVisitante": "",
             "Fecha": "17/01/26",
-            "Hora": "00:00",
+            "Hora": "09:00",
             "Direccion": "GUZMAN EL BUENO, 60"
         },
         {
@@ -4980,6 +4954,32 @@
             "Fecha": "17/01/26",
             "Hora": "10:15",
             "Direccion": "CORAZON DE MARIA, 1B (CAMPO C)"
+        },
+        {
+            "Grupo": "GRUPO: 7",
+            "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
+            "Local": "AGUSTINIANO D",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0023.jpg",
+            "Visitante": "CALASANCIO B",
+            "GolesVisitante": "",
+            "Fecha": "17/01/26",
+            "Hora": "11:00",
+            "Direccion": "PEZ AUSTRAL, 13 BIS"
+        },
+        {
+            "Grupo": "GRUPO: 7",
+            "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0012.jpg",
+            "Local": "NTRA. SRA. PILAR C",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0029.jpg",
+            "Visitante": "JESUS MARIA D",
+            "GolesVisitante": "",
+            "Fecha": "17/01/26",
+            "Hora": "12:00",
+            "Direccion": "CASTELLO, 56"
         },
         {
             "Grupo": "GRUPO: 7",
@@ -5004,7 +5004,7 @@
             "Visitante": "CLARET C",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "10:15",
             "Direccion": "GENERAL DIAZ PORLIER, 56"
         },
         {
@@ -5017,7 +5017,7 @@
             "Visitante": "AGUSTINIANO D",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "11:50",
             "Direccion": "Pº PINTOR ROSALES, 62"
         },
         {
@@ -5062,15 +5062,15 @@
         {
             "Grupo": "GRUPO: 7",
             "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0048.jpg",
-            "Local": "CLARET C",
+            "EscudoLocal": "img/escudos/Emblema_0024.jpg",
+            "Local": "DECROLY B",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0075.jpg",
-            "Visitante": "S. CORAZON ROSALES BLANCO",
+            "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
+            "Visitante": "PUREZA DE MARIA A",
             "GolesVisitante": "",
             "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "CORAZON DE MARIA, 1B (CAMPO A)"
+            "Hora": "09:00",
+            "Direccion": "GUZMAN EL BUENO, 60"
         },
         {
             "Grupo": "GRUPO: 7",
@@ -5082,21 +5082,21 @@
             "Visitante": "CALASANCIO B",
             "GolesVisitante": "",
             "Fecha": "31/01/26",
-            "Hora": "00:00",
+            "Hora": "09:30",
             "Direccion": "CASTELLO, 56"
         },
         {
             "Grupo": "GRUPO: 7",
             "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0024.jpg",
-            "Local": "DECROLY B",
+            "EscudoLocal": "img/escudos/Emblema_0048.jpg",
+            "Local": "CLARET C",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0004.jpg",
-            "Visitante": "PUREZA DE MARIA A",
+            "EscudoVisitante": "img/escudos/Emblema_0075.jpg",
+            "Visitante": "S. CORAZON ROSALES BLANCO",
             "GolesVisitante": "",
             "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "GUZMAN EL BUENO, 60"
+            "Hora": "09:30",
+            "Direccion": "CORAZON DE MARIA, 1B (CAMPO B)"
         },
         {
             "Grupo": "GRUPO: 7",
@@ -5114,13 +5114,52 @@
         {
             "Grupo": "GRUPO: 7",
             "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0075.jpg",
+            "Local": "S. CORAZON ROSALES BLANCO",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0012.jpg",
+            "Visitante": "NTRA. SRA. PILAR C",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "Pº PINTOR ROSALES, 62"
+        },
+        {
+            "Grupo": "GRUPO: 7",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0023.jpg",
+            "Local": "CALASANCIO B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0024.jpg",
+            "Visitante": "DECROLY B",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "GENERAL DIAZ PORLIER, 56"
+        },
+        {
+            "Grupo": "GRUPO: 7",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
+            "Local": "AGUSTINIANO D",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0048.jpg",
+            "Visitante": "CLARET C",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "PEZ AUSTRAL, 13 BIS"
+        },
+        {
+            "Grupo": "GRUPO: 7",
+            "Jornada": "9",
             "EscudoLocal": "img/escudos/Emblema_0029.jpg",
             "Local": "JESUS MARIA D",
             "GolesLocal": "",
             "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
             "Visitante": "D E S C A N S O",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": ""
         },
@@ -5133,48 +5172,9 @@
             "EscudoVisitante": "img/escudos/Emblema_0072.jpg",
             "Visitante": "JESUS MAESTRO VERDE",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "LEO, 4"
-        },
-        {
-            "Grupo": "GRUPO: 7",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0023.jpg",
-            "Local": "CALASANCIO B",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0024.jpg",
-            "Visitante": "DECROLY B",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "GENERAL DIAZ PORLIER, 56"
-        },
-        {
-            "Grupo": "GRUPO: 7",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0075.jpg",
-            "Local": "S. CORAZON ROSALES BLANCO",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0012.jpg",
-            "Visitante": "NTRA. SRA. PILAR C",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "Pº PINTOR ROSALES, 62"
-        },
-        {
-            "Grupo": "GRUPO: 7",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0006.jpg",
-            "Local": "AGUSTINIANO D",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0048.jpg",
-            "Visitante": "CLARET C",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "PEZ AUSTRAL, 13 BIS"
         },
         {
             "Grupo": "GRUPO: 8",
@@ -5302,7 +5302,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0015.jpg",
             "Visitante": "PATROCINIO SAN JOSE ROJO",
             "GolesVisitante": "",
-            "Fecha": "17/12/25",
+            "Fecha": "21/01/26",
             "Hora": "19:30",
             "Direccion": "Pº PINTOR ROSALES, 62"
         },
@@ -5452,19 +5452,6 @@
         {
             "Grupo": "GRUPO: 8",
             "Jornada": "5",
-            "EscudoLocal": "img/escudos/Emblema_0041.jpg",
-            "Local": "LA SALLE SAN RAFAEL",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0075.jpg",
-            "Visitante": "S. CORAZON ROSALES ROJO",
-            "GolesVisitante": "",
-            "Fecha": "12/12/25",
-            "Hora": "19:45",
-            "Direccion": "FERNANDO EL CATOLICO, 49"
-        },
-        {
-            "Grupo": "GRUPO: 8",
-            "Jornada": "5",
             "EscudoLocal": "img/escudos/Emblema_0000.jpg",
             "Local": "D E S C A N S O",
             "GolesLocal": "",
@@ -5480,7 +5467,7 @@
             "Jornada": "5",
             "EscudoLocal": "img/escudos/Emblema_0002.jpg",
             "Local": "FRAY LUIS DE LEON",
-            "GolesLocal": "0",
+            "GolesLocal": "10",
             "EscudoVisitante": "img/escudos/Emblema_0136.jpg",
             "Visitante": "CONCEPCIONISTAS",
             "GolesVisitante": "0",
@@ -5503,16 +5490,16 @@
         },
         {
             "Grupo": "GRUPO: 8",
-            "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0072.jpg",
-            "Local": "JESUS MAESTRO BLANCO",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
-            "Visitante": "D E S C A N S O",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": ""
+            "Jornada": "5",
+            "EscudoLocal": "img/escudos/Emblema_0041.jpg",
+            "Local": "LA SALLE SAN RAFAEL",
+            "GolesLocal": "1",
+            "EscudoVisitante": "img/escudos/Emblema_0075.jpg",
+            "Visitante": "S. CORAZON ROSALES ROJO",
+            "GolesVisitante": "8",
+            "Fecha": "10/01/26",
+            "Hora": "14:00",
+            "Direccion": "FERNANDO EL CATOLICO, 49"
         },
         {
             "Grupo": "GRUPO: 8",
@@ -5523,8 +5510,8 @@
             "EscudoVisitante": "img/escudos/Emblema_0024.jpg",
             "Visitante": "DECROLY A",
             "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
+            "Fecha": "16/01/26",
+            "Hora": "18:30",
             "Direccion": "GUZMAN EL BUENO, 60"
         },
         {
@@ -5536,22 +5523,22 @@
             "EscudoVisitante": "img/escudos/Emblema_0002.jpg",
             "Visitante": "FRAY LUIS DE LEON",
             "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
+            "Fecha": "16/01/26",
+            "Hora": "18:50",
             "Direccion": "Pº PINTOR ROSALES, 62"
         },
         {
             "Grupo": "GRUPO: 8",
             "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0015.jpg",
-            "Local": "PATROCINIO SAN JOSE ROJO",
+            "EscudoLocal": "img/escudos/Emblema_0072.jpg",
+            "Local": "JESUS MAESTRO BLANCO",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0041.jpg",
-            "Visitante": "LA SALLE SAN RAFAEL",
+            "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
+            "Visitante": "D E S C A N S O",
             "GolesVisitante": "",
             "Fecha": "17/01/26",
             "Hora": "00:00",
-            "Direccion": "BASILICA, 14"
+            "Direccion": ""
         },
         {
             "Grupo": "GRUPO: 8",
@@ -5568,16 +5555,16 @@
         },
         {
             "Grupo": "GRUPO: 8",
-            "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0000.jpg",
-            "Local": "D E S C A N S O",
+            "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0015.jpg",
+            "Local": "PATROCINIO SAN JOSE ROJO",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0031.jpg",
-            "Visitante": "MARISTAS CHAMBERI",
+            "EscudoVisitante": "img/escudos/Emblema_0041.jpg",
+            "Visitante": "LA SALLE SAN RAFAEL",
             "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": ""
+            "Fecha": "18/01/26",
+            "Hora": "10:10",
+            "Direccion": "BASILICA, 14"
         },
         {
             "Grupo": "GRUPO: 8",
@@ -5588,8 +5575,8 @@
             "EscudoVisitante": "img/escudos/Emblema_0053.jpg",
             "Visitante": "SAGRADOS CORAZONES",
             "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Fecha": "23/01/26",
+            "Hora": "18:30",
             "Direccion": "FERNANDO EL CATOLICO, 49"
         },
         {
@@ -5601,9 +5588,22 @@
             "EscudoVisitante": "img/escudos/Emblema_0075.jpg",
             "Visitante": "S. CORAZON ROSALES ROJO",
             "GolesVisitante": "",
+            "Fecha": "23/01/26",
+            "Hora": "18:30",
+            "Direccion": "GUZMAN EL BUENO, 60"
+        },
+        {
+            "Grupo": "GRUPO: 8",
+            "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0000.jpg",
+            "Local": "D E S C A N S O",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0031.jpg",
+            "Visitante": "MARISTAS CHAMBERI",
+            "GolesVisitante": "",
             "Fecha": "24/01/26",
             "Hora": "00:00",
-            "Direccion": "GUZMAN EL BUENO, 60"
+            "Direccion": ""
         },
         {
             "Grupo": "GRUPO: 8",
@@ -5634,6 +5634,19 @@
         {
             "Grupo": "GRUPO: 8",
             "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0075.jpg",
+            "Local": "S. CORAZON ROSALES ROJO",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0072.jpg",
+            "Visitante": "JESUS MAESTRO BLANCO",
+            "GolesVisitante": "",
+            "Fecha": "30/01/26",
+            "Hora": "18:50",
+            "Direccion": "Pº PINTOR ROSALES, 62"
+        },
+        {
+            "Grupo": "GRUPO: 8",
+            "Jornada": "8",
             "EscudoLocal": "img/escudos/Emblema_0000.jpg",
             "Local": "D E S C A N S O",
             "GolesLocal": "",
@@ -5643,32 +5656,6 @@
             "Fecha": "31/01/26",
             "Hora": "00:00",
             "Direccion": ""
-        },
-        {
-            "Grupo": "GRUPO: 8",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0075.jpg",
-            "Local": "S. CORAZON ROSALES ROJO",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0072.jpg",
-            "Visitante": "JESUS MAESTRO BLANCO",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "Pº PINTOR ROSALES, 62"
-        },
-        {
-            "Grupo": "GRUPO: 8",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0015.jpg",
-            "Local": "PATROCINIO SAN JOSE ROJO",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0024.jpg",
-            "Visitante": "DECROLY A",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "BASILICA, 14"
         },
         {
             "Grupo": "GRUPO: 8",
@@ -5698,29 +5685,16 @@
         },
         {
             "Grupo": "GRUPO: 8",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0041.jpg",
-            "Local": "LA SALLE SAN RAFAEL",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0015.jpg",
+            "Local": "PATROCINIO SAN JOSE ROJO",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
-            "Visitante": "D E S C A N S O",
+            "EscudoVisitante": "img/escudos/Emblema_0024.jpg",
+            "Visitante": "DECROLY A",
             "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": ""
-        },
-        {
-            "Grupo": "GRUPO: 8",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0002.jpg",
-            "Local": "FRAY LUIS DE LEON",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0031.jpg",
-            "Visitante": "MARISTAS CHAMBERI",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "AV. MADRID, 55 (VILLAVICIOSA ODON) P1"
+            "Fecha": "01/02/26",
+            "Hora": "11:20",
+            "Direccion": "BASILICA, 14"
         },
         {
             "Grupo": "GRUPO: 8",
@@ -5731,22 +5705,22 @@
             "EscudoVisitante": "img/escudos/Emblema_0053.jpg",
             "Visitante": "SAGRADOS CORAZONES",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "GUZMAN EL BUENO, 60"
         },
         {
             "Grupo": "GRUPO: 8",
             "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0072.jpg",
-            "Local": "JESUS MAESTRO BLANCO",
+            "EscudoLocal": "img/escudos/Emblema_0041.jpg",
+            "Local": "LA SALLE SAN RAFAEL",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0015.jpg",
-            "Visitante": "PATROCINIO SAN JOSE ROJO",
+            "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
+            "Visitante": "D E S C A N S O",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
-            "Direccion": "MELQUIADES ALVAREZ, 8"
+            "Direccion": ""
         },
         {
             "Grupo": "GRUPO: 8",
@@ -5757,9 +5731,35 @@
             "EscudoVisitante": "img/escudos/Emblema_0075.jpg",
             "Visitante": "S. CORAZON ROSALES ROJO",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "Pº PINTOR ROSALES, 62"
+        },
+        {
+            "Grupo": "GRUPO: 8",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0072.jpg",
+            "Local": "JESUS MAESTRO BLANCO",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0015.jpg",
+            "Visitante": "PATROCINIO SAN JOSE ROJO",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "10:15",
+            "Direccion": "MELQUIADES ALVAREZ, 8"
+        },
+        {
+            "Grupo": "GRUPO: 8",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0002.jpg",
+            "Local": "FRAY LUIS DE LEON",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0031.jpg",
+            "Visitante": "MARISTAS CHAMBERI",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "11:10",
+            "Direccion": "AV. MADRID, 55 (VILLAVICIOSA ODON) P2"
         },
         {
             "Grupo": "GRUPO: 9",
@@ -6102,32 +6102,6 @@
         {
             "Grupo": "GRUPO: 9",
             "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0151.jpg",
-            "Local": "EL VALLE SANCHINARRO B",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0143.jpg",
-            "Visitante": "SANTA MARIA LA BLANCA A",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "VICENTE BLASCO IBAÑEZ, S/N"
-        },
-        {
-            "Grupo": "GRUPO: 9",
-            "Jornada": "6",
-            "EscudoLocal": "img/escudos/Emblema_0099.jpg",
-            "Local": "CORAZONISTAS A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0061.jpg",
-            "Visitante": "FEC STA. JOAQUINA VEDRUNA C",
-            "GolesVisitante": "",
-            "Fecha": "17/01/26",
-            "Hora": "00:00",
-            "Direccion": "DE GUATEMALA, 15"
-        },
-        {
-            "Grupo": "GRUPO: 9",
-            "Jornada": "6",
             "EscudoLocal": "img/escudos/Emblema_0144.jpg",
             "Local": "LA INMACULADA P. HIERRO",
             "GolesLocal": "",
@@ -6137,6 +6111,19 @@
             "Fecha": "17/01/26",
             "Hora": "10:40",
             "Direccion": "PZA. MADRE MOLAS, 1"
+        },
+        {
+            "Grupo": "GRUPO: 9",
+            "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0151.jpg",
+            "Local": "EL VALLE SANCHINARRO B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0143.jpg",
+            "Visitante": "SANTA MARIA LA BLANCA A",
+            "GolesVisitante": "",
+            "Fecha": "17/01/26",
+            "Hora": "11:15",
+            "Direccion": "VICENTE BLASCO IBAÑEZ, S/N"
         },
         {
             "Grupo": "GRUPO: 9",
@@ -6153,6 +6140,19 @@
         },
         {
             "Grupo": "GRUPO: 9",
+            "Jornada": "6",
+            "EscudoLocal": "img/escudos/Emblema_0099.jpg",
+            "Local": "CORAZONISTAS A",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0061.jpg",
+            "Visitante": "FEC STA. JOAQUINA VEDRUNA C",
+            "GolesVisitante": "",
+            "Fecha": "18/01/26",
+            "Hora": "13:30",
+            "Direccion": "DE GUATEMALA, 15"
+        },
+        {
+            "Grupo": "GRUPO: 9",
             "Jornada": "7",
             "EscudoLocal": "img/escudos/Emblema_0000.jpg",
             "Local": "D E S C A N S O",
@@ -6167,15 +6167,15 @@
         {
             "Grupo": "GRUPO: 9",
             "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0118.jpg",
-            "Local": "ASUNCION CUESTABLANCA B",
+            "EscudoLocal": "img/escudos/Emblema_0143.jpg",
+            "Local": "SANTA MARIA LA BLANCA A",
             "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0144.jpg",
-            "Visitante": "LA INMACULADA P. HIERRO",
+            "EscudoVisitante": "img/escudos/Emblema_0099.jpg",
+            "Visitante": "CORAZONISTAS A",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "ASUNCION CUESTABLANCA, 11"
+            "Hora": "11:30",
+            "Direccion": "MONASTERIO DE OSEIRA, 17"
         },
         {
             "Grupo": "GRUPO: 9",
@@ -6187,21 +6187,8 @@
             "Visitante": "COLEGIO ALEMAN A",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "12:00",
             "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
-        },
-        {
-            "Grupo": "GRUPO: 9",
-            "Jornada": "7",
-            "EscudoLocal": "img/escudos/Emblema_0143.jpg",
-            "Local": "SANTA MARIA LA BLANCA A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0099.jpg",
-            "Visitante": "CORAZONISTAS A",
-            "GolesVisitante": "",
-            "Fecha": "24/01/26",
-            "Hora": "00:00",
-            "Direccion": "MONASTERIO DE OSEIRA, 17"
         },
         {
             "Grupo": "GRUPO: 9",
@@ -6213,8 +6200,34 @@
             "Visitante": "EL VALLE SANCHINARRO B",
             "GolesVisitante": "",
             "Fecha": "24/01/26",
-            "Hora": "00:00",
+            "Hora": "12:15",
             "Direccion": "MARCENADO, 50"
+        },
+        {
+            "Grupo": "GRUPO: 9",
+            "Jornada": "7",
+            "EscudoLocal": "img/escudos/Emblema_0118.jpg",
+            "Local": "ASUNCION CUESTABLANCA B",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0144.jpg",
+            "Visitante": "LA INMACULADA P. HIERRO",
+            "GolesVisitante": "",
+            "Fecha": "24/01/26",
+            "Hora": "12:30",
+            "Direccion": "ASUNCION CUESTABLANCA, 11"
+        },
+        {
+            "Grupo": "GRUPO: 9",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0144.jpg",
+            "Local": "LA INMACULADA P. HIERRO",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0061.jpg",
+            "Visitante": "FEC STA. JOAQUINA VEDRUNA C",
+            "GolesVisitante": "",
+            "Fecha": "30/01/26",
+            "Hora": "19:45",
+            "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
         },
         {
             "Grupo": "GRUPO: 9",
@@ -6228,32 +6241,6 @@
             "Fecha": "31/01/26",
             "Hora": "00:00",
             "Direccion": ""
-        },
-        {
-            "Grupo": "GRUPO: 9",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0099.jpg",
-            "Local": "CORAZONISTAS A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0114.jpg",
-            "Visitante": "SANTAMARCA INTERNACIONAL",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "DE GUATEMALA, 15"
-        },
-        {
-            "Grupo": "GRUPO: 9",
-            "Jornada": "8",
-            "EscudoLocal": "img/escudos/Emblema_0144.jpg",
-            "Local": "LA INMACULADA P. HIERRO",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0061.jpg",
-            "Visitante": "FEC STA. JOAQUINA VEDRUNA C",
-            "GolesVisitante": "",
-            "Fecha": "31/01/26",
-            "Hora": "00:00",
-            "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
         },
         {
             "Grupo": "GRUPO: 9",
@@ -6283,6 +6270,32 @@
         },
         {
             "Grupo": "GRUPO: 9",
+            "Jornada": "8",
+            "EscudoLocal": "img/escudos/Emblema_0099.jpg",
+            "Local": "CORAZONISTAS A",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0114.jpg",
+            "Visitante": "SANTAMARCA INTERNACIONAL",
+            "GolesVisitante": "",
+            "Fecha": "01/02/26",
+            "Hora": "13:30",
+            "Direccion": "DE GUATEMALA, 15"
+        },
+        {
+            "Grupo": "GRUPO: 9",
+            "Jornada": "9",
+            "EscudoLocal": "img/escudos/Emblema_0143.jpg",
+            "Local": "SANTA MARIA LA BLANCA A",
+            "GolesLocal": "",
+            "EscudoVisitante": "img/escudos/Emblema_0144.jpg",
+            "Visitante": "LA INMACULADA P. HIERRO",
+            "GolesVisitante": "",
+            "Fecha": "07/02/26",
+            "Hora": "00:00",
+            "Direccion": "MONASTERIO DE OSEIRA, 17"
+        },
+        {
+            "Grupo": "GRUPO: 9",
             "Jornada": "9",
             "EscudoLocal": "img/escudos/Emblema_0118.jpg",
             "Local": "ASUNCION CUESTABLANCA B",
@@ -6290,7 +6303,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0000.jpg",
             "Visitante": "D E S C A N S O",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": ""
         },
@@ -6303,22 +6316,9 @@
             "EscudoVisitante": "img/escudos/Emblema_0076.jpg",
             "Visitante": "NTRA. SRA. CONSOLACION B",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "TRAVESIA DE COSTA BRAVA, 3"
-        },
-        {
-            "Grupo": "GRUPO: 9",
-            "Jornada": "9",
-            "EscudoLocal": "img/escudos/Emblema_0143.jpg",
-            "Local": "SANTA MARIA LA BLANCA A",
-            "GolesLocal": "",
-            "EscudoVisitante": "img/escudos/Emblema_0144.jpg",
-            "Visitante": "LA INMACULADA P. HIERRO",
-            "GolesVisitante": "",
-            "Fecha": "",
-            "Hora": "00:00",
-            "Direccion": "MONASTERIO DE OSEIRA, 17"
         },
         {
             "Grupo": "GRUPO: 9",
@@ -6329,7 +6329,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0128.jpg",
             "Visitante": "COLEGIO ALEMAN A",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "MARCENADO, 50"
         },
@@ -6342,7 +6342,7 @@
             "EscudoVisitante": "img/escudos/Emblema_0099.jpg",
             "Visitante": "CORAZONISTAS A",
             "GolesVisitante": "",
-            "Fecha": "",
+            "Fecha": "07/02/26",
             "Hora": "00:00",
             "Direccion": "VICENTE BLASCO IBAÑEZ, S/N"
         }
