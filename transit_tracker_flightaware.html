@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transit Tracker - FlightAware</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sun-gold: #FFB800; --sun-orange: #FF6B00; --moon-silver: #C0C0C0; --moon-blue: #B4C5E4;
+            --deep-space: #0A0A12; --star-white: #F8F8FF; --transit-cyan: #00FFE0;
+            --glass: rgba(255,255,255,0.05); --glass-border: rgba(255,255,255,0.1);
+            --high-conf: #00FF88; --med-conf: #FFB800; --low-conf: #888;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Space Mono', monospace; background: var(--deep-space); color: var(--star-white); min-height: 100vh; }
+        .starfield { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+        .star { position: absolute; background: white; border-radius: 50%; animation: twinkle 3s infinite ease-in-out; }
+        @keyframes twinkle { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .container { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
+        header { text-align: center; margin-bottom: 2rem; }
+        .target-toggle { cursor: pointer; transition: transform 0.3s; display: inline-block; }
+        .target-toggle:hover { transform: scale(1.1); }
+        .sun-icon, .moon-icon { width: 70px; height: 70px; border-radius: 50%; margin-bottom: 0.5rem; }
+        .sun-icon { background: radial-gradient(circle, var(--sun-gold), var(--sun-orange)); box-shadow: 0 0 50px var(--sun-orange); }
+        .moon-icon { background: radial-gradient(circle at 30% 30%, #E8EEF7, var(--moon-silver), var(--moon-blue)); box-shadow: 0 0 40px rgba(184,197,228,0.5); }
+        .hidden { display: none !important; }
+        h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: 800; }
+        h1.sun-mode { background: linear-gradient(135deg, var(--sun-gold), var(--sun-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h1.moon-mode { background: linear-gradient(135deg, #E8EEF7, var(--moon-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .data-source { font-size: 0.7rem; color: var(--transit-cyan); margin-top: 0.3rem; }
+        .glass-panel { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 18px; padding: 1.25rem; margin-bottom: 1.25rem; }
+        .config-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; align-items: end; }
+        .input-group { display: flex; flex-direction: column; gap: 0.3rem; }
+        label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); }
+        input { background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 10px; padding: 0.7rem 0.9rem; color: var(--star-white); font-family: inherit; font-size: 0.85rem; }
+        input:focus { outline: none; border-color: var(--sun-gold); box-shadow: 0 0 15px rgba(255,184,0,0.2); }
+        .btn { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.8rem; padding: 0.7rem 1.1rem; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.05em; }
+        .btn-primary { background: linear-gradient(135deg, var(--sun-gold), var(--sun-orange)); color: var(--deep-space); }
+        .btn-primary.moon-mode { background: linear-gradient(135deg, var(--moon-silver), var(--moon-blue)); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,184,0,0.4); }
+        .btn-secondary { background: transparent; border: 1px solid var(--transit-cyan); color: var(--transit-cyan); }
+        .btn-secondary:hover { background: rgba(0,255,224,0.1); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .button-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+        .api-config { margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 12px; }
+        .api-config label { display: block; margin-bottom: 0.3rem; }
+        .api-config input { width: 100%; }
+        .api-status { font-size: 0.75rem; margin-top: 0.5rem; padding: 0.5rem; border-radius: 8px; }
+        .api-status.ok { background: rgba(0,255,136,0.1); color: var(--high-conf); }
+        .api-status.error { background: rgba(255,100,100,0.1); color: #FF6B6B; }
+        .auto-row { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; padding: 0.8rem; background: rgba(0,0,0,0.2); border-radius: 10px; flex-wrap: wrap; }
+        .auto-toggle { width: 50px; height: 26px; background: rgba(255,255,255,0.1); border-radius: 13px; cursor: pointer; position: relative; transition: all 0.3s; }
+        .auto-toggle.active { background: var(--transit-cyan); }
+        .auto-toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: all 0.3s; }
+        .auto-toggle.active::after { left: 27px; }
+        .auto-label { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+        .auto-interval { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; }
+        .auto-interval input { width: 50px; padding: 0.4rem; text-align: center; }
+        .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 12px; margin-top: 1rem; }
+        .status-item { display: flex; flex-direction: column; gap: 0.15rem; }
+        .status-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+        .status-value { font-size: 0.85rem; font-weight: 700; }
+        .status-value.sun { color: var(--sun-gold); }
+        .status-value.moon { color: var(--moon-blue); }
+        .status-value.cyan { color: var(--transit-cyan); }
+        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.6rem; }
+        .results-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; }
+        .results-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .badge { padding: 0.35rem 0.7rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+        .badge.count { background: var(--transit-cyan); color: var(--deep-space); }
+        .badge.window { background: rgba(255,184,0,0.2); color: var(--sun-gold); }
+        .legend { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1rem; padding: 0.7rem; background: rgba(0,0,0,0.2); border-radius: 10px; font-size: 0.7rem; }
+        .legend .high { color: var(--high-conf); }
+        .legend .med { color: var(--med-conf); }
+        .legend .low { color: var(--low-conf); }
+        .transit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+        .transit-card { background: linear-gradient(135deg, rgba(0,255,224,0.06), rgba(255,184,0,0.03)); border: 1px solid rgba(0,255,224,0.15); border-radius: 14px; padding: 1.1rem; transition: all 0.3s; position: relative; overflow: hidden; }
+        .transit-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; }
+        .transit-card.conf-high::before { background: linear-gradient(90deg, var(--high-conf), #00FFAA); }
+        .transit-card.conf-medium::before { background: linear-gradient(90deg, var(--med-conf), var(--sun-orange)); }
+        .transit-card.conf-low::before { background: linear-gradient(90deg, var(--low-conf), #555); }
+        .transit-card.conf-low { opacity: 0.7; }
+        .transit-card:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0,255,224,0.12); border-color: var(--transit-cyan); opacity: 1; }
+        .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .conf-badge { font-size: 0.6rem; text-transform: uppercase; padding: 0.25rem 0.5rem; border-radius: 10px; font-weight: 600; }
+        .conf-badge.high { background: rgba(0,255,136,0.15); color: var(--high-conf); }
+        .conf-badge.medium { background: rgba(255,184,0,0.15); color: var(--med-conf); }
+        .conf-badge.low { background: rgba(255,255,255,0.08); color: var(--low-conf); }
+        .time-eta { font-size: 0.7rem; color: rgba(255,255,255,0.5); font-style: italic; }
+        .transit-time { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--transit-cyan); }
+        .transit-date { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 0.7rem; }
+        .flight-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+        .info-item { display: flex; flex-direction: column; gap: 0.1rem; }
+        .info-label { font-size: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.4); }
+        .info-value { font-size: 0.8rem; }
+        .info-value.callsign { font-weight: 700; color: var(--sun-gold); }
+        .altaz-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px solid rgba(255,255,255,0.08); }
+        .altaz-box { text-align: center; padding: 0.5rem; background: rgba(0,0,0,0.15); border-radius: 8px; }
+        .altaz-label { font-size: 0.55rem; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+        .altaz-val { font-size: 0.95rem; font-weight: 700; }
+        .altaz-val.good { color: var(--high-conf); }
+        .altaz-val.ok { color: var(--med-conf); }
+        .altaz-val.bad { color: var(--low-conf); }
+        .ang-dist { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px solid rgba(255,255,255,0.08); }
+        .ang-label { font-size: 0.55rem; text-transform: uppercase; color: rgba(255,255,255,0.4); white-space: nowrap; }
+        .ang-bar { flex: 1; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+        .ang-fill { height: 100%; background: linear-gradient(90deg, var(--transit-cyan), var(--sun-gold)); border-radius: 2px; }
+        .ang-val { font-size: 0.75rem; font-weight: 700; color: var(--transit-cyan); min-width: 40px; text-align: right; }
+        .state-box { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; text-align: center; }
+        .state-box svg { width: 50px; height: 50px; margin-bottom: 0.8rem; opacity: 0.3; }
+        .state-box h3 { font-family: 'Syne', sans-serif; font-size: 1rem; margin-bottom: 0.3rem; }
+        .state-box p { color: rgba(255,255,255,0.5); font-size: 0.8rem; max-width: 320px; }
+        .loader { width: 45px; height: 45px; border: 3px solid rgba(255,184,0,0.2); border-top-color: var(--sun-gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .error-box { background: rgba(255,60,60,0.1); border: 1px solid rgba(255,60,60,0.3); border-radius: 10px; padding: 1rem; color: #FF6B6B; text-align: center; }
+        .info-panel { background: rgba(0,255,224,0.04); border: 1px solid rgba(0,255,224,0.15); border-radius: 12px; padding: 1rem; margin-top: 1.25rem; }
+        .info-panel h4 { font-family: 'Syne', sans-serif; color: var(--transit-cyan); margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .info-panel p { font-size: 0.75rem; color: rgba(255,255,255,0.65); line-height: 1.5; margin-bottom: 0.5rem; }
+        .alert-popup { position: fixed; top: 1rem; right: 1rem; background: var(--transit-cyan); color: var(--deep-space); padding: 0.7rem 1rem; border-radius: 10px; font-weight: 700; font-size: 0.85rem; z-index: 1000; display: none; animation: pulse 1s infinite; }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        footer { text-align: center; padding: 1.25rem; color: rgba(255,255,255,0.35); font-size: 0.7rem; }
+        footer a { color: var(--transit-cyan); text-decoration: none; }
+        @media (max-width: 600px) { .container { padding: 1rem; } .transit-grid { grid-template-columns: 1fr; } .flight-info { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="starfield" id="starfield"></div>
+    <div class="alert-popup" id="alertPopup">🔔 ¡Tránsito probable!</div>
+
+    <div class="container">
+        <header>
+            <div class="target-toggle" id="targetToggle" title="Cambiar Sol/Luna">
+                <div class="sun-icon" id="sunIcon"></div>
+                <div class="moon-icon hidden" id="moonIcon"></div>
+            </div>
+            <h1 id="mainTitle" class="sun-mode">Transit Tracker</h1>
+            <p class="subtitle">Tránsitos de aviones sobre el <span id="targetName">Sol</span></p>
+            <p class="data-source">✈️ FlightAware AeroAPI</p>
+        </header>
+
+        <section class="glass-panel">
+            <div class="config-grid">
+                <div class="input-group">
+                    <label>Latitud</label>
+                    <input type="number" id="lat" step="0.0001" placeholder="40.4168">
+                </div>
+                <div class="input-group">
+                    <label>Longitud</label>
+                    <input type="number" id="lon" step="0.0001" placeholder="-3.7038">
+                </div>
+                <div class="input-group">
+                    <label>Radio (millas)</label>
+                    <input type="number" id="radius" value="100" min="25" max="250">
+                </div>
+                <div class="input-group">
+                    <label>Predicción (h)</label>
+                    <input type="number" id="hours" value="3" min="0.5" max="6" step="0.5">
+                </div>
+                <div class="button-row">
+                    <button class="btn btn-secondary" id="geoBtn">📍 GPS</button>
+                    <button class="btn btn-primary" id="searchBtn">🔍 Buscar</button>
+                </div>
+            </div>
+
+            <div class="api-config">
+                <label>API Key de FlightAware</label>
+                <input type="password" id="apiKey" placeholder="Tu API Key de AeroAPI" value="S05GBpAhZMRreZhgThTaGWdkGx0RSSPj">
+                <div class="api-status" id="apiStatus"></div>
+            </div>
+
+            <div class="auto-row">
+                <div class="auto-toggle" id="autoToggle"></div>
+                <span class="auto-label">Auto</span>
+                <div class="auto-interval">
+                    cada <input type="number" id="autoMin" value="2" min="1" max="10"> min
+                </div>
+            </div>
+
+            <div class="status-grid" id="statusGrid" style="display:none;">
+                <div class="status-item"><span class="status-label">Posición</span><span class="status-value cyan" id="sPos">--</span></div>
+                <div class="status-item"><span class="status-label" id="sAltLbl">Alt. Solar</span><span class="status-value sun" id="sAlt">--</span></div>
+                <div class="status-item"><span class="status-label" id="sAzLbl">Az. Solar</span><span class="status-value sun" id="sAz">--</span></div>
+                <div class="status-item" id="moonBox" style="display:none;"><span class="status-label">Fase</span><span class="status-value moon" id="sPhase">--</span></div>
+                <div class="status-item"><span class="status-label">Aviones</span><span class="status-value cyan" id="sCount">--</span></div>
+                <div class="status-item"><span class="status-label">Hora</span><span class="status-value cyan" id="sTime">--</span></div>
+            </div>
+        </section>
+
+        <section class="glass-panel">
+            <div id="results">
+                <div class="state-box">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    <h3>Configura tu ubicación</h3>
+                    <p>Introduce tus coordenadas y tu API Key de FlightAware. Clic en el icono para cambiar entre Sol y Luna.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="info-panel">
+            <h4>ℹ️ Cómo funciona</h4>
+            <p>Usa <strong>FlightAware AeroAPI</strong> para obtener vuelos en tiempo real. Calcula posición del Sol/Luna y predice tránsitos hasta 6h.</p>
+            <p><strong>Nota:</strong> FlightAware no permite CORS, así que usamos un proxy (corsproxy.io). Tu API Key se envía al proxy.</p>
+            <p><strong>Colores:</strong> 🟢 Alt/Az diff &lt;1° (muy probable) · 🟡 1-2° (posible) · ⚪ &gt;2° (improbable)</p>
+        </div>
+
+        <footer>
+            <a href="https://flightaware.com/aeroapi/" target="_blank">FlightAware AeroAPI</a> · 
+            Inspirado en <a href="https://github.com/dbetm/flymoon" target="_blank">FlyMoon</a>
+        </footer>
+    </div>
+
+<script>
+// ===================== ASTRO =====================
+const Astro = (function() {
+    const PI = Math.PI, sin = Math.sin, cos = Math.cos, tan = Math.tan, asin = Math.asin, atan2 = Math.atan2, acos = Math.acos, rad = PI/180;
+    const dayMs = 864e5, J1970 = 2440588, J2000 = 2451545, e = rad * 23.4397;
+    const toJulian = d => d.valueOf()/dayMs - 0.5 + J1970, toDays = d => toJulian(d) - J2000;
+    const ra = (l,b) => atan2(sin(l)*cos(e)-tan(b)*sin(e), cos(l));
+    const dec = (l,b) => asin(sin(b)*cos(e)+cos(b)*sin(e)*sin(l));
+    const az = (H,phi,d) => atan2(sin(H), cos(H)*sin(phi)-tan(d)*cos(phi));
+    const alt = (H,phi,d) => asin(sin(phi)*sin(d)+cos(phi)*cos(d)*cos(H));
+    const sidereal = (d,lw) => rad*(280.16+360.9856235*d)-lw;
+    const sunM = d => rad*(357.5291+0.98560028*d);
+    const sunL = M => M + rad*(1.9148*sin(M)+0.02*sin(2*M)+0.0003*sin(3*M)) + rad*102.9372 + PI;
+    const sunC = d => { const M=sunM(d),L=sunL(M); return {dec:dec(L,0),ra:ra(L,0)}; };
+    const moonC = d => {
+        const L=rad*(218.316+13.176396*d), M=rad*(134.963+13.064993*d), F=rad*(93.272+13.22935*d);
+        const l=L+rad*6.289*sin(M), b=rad*5.128*sin(F), dist=385001-20905*cos(M);
+        return {ra:ra(l,b),dec:dec(l,b),dist};
+    };
+    const moonIllum = date => {
+        const d=toDays(date),s=sunC(d),m=moonC(d),sd=149598000;
+        const phi=acos(sin(s.dec)*sin(m.dec)+cos(s.dec)*cos(m.dec)*cos(s.ra-m.ra));
+        const inc=atan2(sd*sin(phi),m.dist-sd*cos(phi));
+        const ang=atan2(cos(s.dec)*sin(s.ra-m.ra),sin(s.dec)*cos(m.dec)-cos(s.dec)*sin(m.dec)*cos(s.ra-m.ra));
+        return {frac:(1+cos(inc))/2, phase:0.5+0.5*inc*(ang<0?-1:1)/PI};
+    };
+    const phaseName = p => p<0.03||p>0.97?'🌑Nueva':p<0.22?'🌒Creciente':p<0.28?'🌓C.Crec':p<0.47?'🌔Gibosa+':p<0.53?'🌕Llena':p<0.72?'🌖Gibosa-':p<0.78?'🌗C.Meng':'🌘Meng';
+    return {
+        sun(date,lat,lng) {
+            const lw=rad*-lng,phi=rad*lat,d=toDays(date),c=sunC(d),H=sidereal(d,lw)-c.ra;
+            return {alt:alt(H,phi,c.dec)*180/PI, az:(az(H,phi,c.dec)*180/PI+180)%360};
+        },
+        moon(date,lat,lng) {
+            const lw=rad*-lng,phi=rad*lat,d=toDays(date),c=moonC(d),H=sidereal(d,lw)-c.ra;
+            const h=alt(H,phi,c.dec), hCorr=h-rad*0.95*cos(h)*(385001/c.dist);
+            return {alt:hCorr*180/PI, az:(az(H,phi,c.dec)*180/PI+180)%360};
+        },
+        moonIllum, phaseName
+    };
+})();
+
+// ===================== STATE =====================
+const R = 6371, THRESH = 2.5;
+let S = { target:'sun', lat:null, lon:null, radius:100, hours:3, auto:false, interval:2, timer:null, last:[] };
+
+// ===================== DOM =====================
+const $=id=>document.getElementById(id);
+const el = {
+    toggle:$('targetToggle'), sunIcon:$('sunIcon'), moonIcon:$('moonIcon'), title:$('mainTitle'), tName:$('targetName'),
+    lat:$('lat'), lon:$('lon'), radius:$('radius'), hours:$('hours'), apiKey:$('apiKey'), apiStatus:$('apiStatus'),
+    geoBtn:$('geoBtn'), searchBtn:$('searchBtn'), autoToggle:$('autoToggle'), autoMin:$('autoMin'),
+    statusGrid:$('statusGrid'), sPos:$('sPos'), sAlt:$('sAlt'), sAz:$('sAz'), sAltLbl:$('sAltLbl'), sAzLbl:$('sAzLbl'),
+    moonBox:$('moonBox'), sPhase:$('sPhase'), sCount:$('sCount'), sTime:$('sTime'),
+    results:$('results'), alert:$('alertPopup')
+};
+
+// ===================== INIT =====================
+function init() {
+    // Stars
+    const sf=$('starfield'); for(let i=0;i<100;i++){const s=document.createElement('div');s.className='star';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${Math.random()*2+1}px;height:${s.style.width};animation-delay:${Math.random()*3}s`;sf.appendChild(s);}
+    // Load saved
+    try{const sv=JSON.parse(localStorage.getItem('transitFA'));if(sv){el.lat.value=sv.lat||'';el.lon.value=sv.lon||'';el.radius.value=sv.radius||100;el.hours.value=sv.hours||3;if(sv.apiKey)el.apiKey.value=sv.apiKey;}}catch(e){}
+    if(!el.lat.value){el.lat.value='40.4168';el.lon.value='-3.7038';}
+    // Events
+    el.toggle.onclick=toggleTarget;
+    el.autoToggle.onclick=toggleAuto;
+    el.geoBtn.onclick=geolocate;
+    el.searchBtn.onclick=startSearch;
+}
+
+function toggleTarget() {
+    S.target = S.target==='sun'?'moon':'sun';
+    const sun = S.target==='sun';
+    el.sunIcon.classList.toggle('hidden',!sun);
+    el.moonIcon.classList.toggle('hidden',sun);
+    el.title.className = sun?'sun-mode':'moon-mode';
+    el.tName.textContent = sun?'Sol':'Luna';
+    el.sAltLbl.textContent = sun?'Alt. Solar':'Alt. Lunar';
+    el.sAzLbl.textContent = sun?'Az. Solar':'Az. Lunar';
+    el.sAlt.className = 'status-value '+(sun?'sun':'moon');
+    el.sAz.className = 'status-value '+(sun?'sun':'moon');
+    el.moonBox.style.display = sun?'none':'block';
+    el.searchBtn.classList.toggle('moon-mode',!sun);
+}
+
+function toggleAuto() {
+    S.auto = !S.auto;
+    el.autoToggle.classList.toggle('active',S.auto);
+    if(S.auto && S.lat) startAuto(); else stopAuto();
+}
+function startAuto() { stopAuto(); S.timer=setInterval(doSearch, S.interval*60000); doSearch(); }
+function stopAuto() { if(S.timer){clearInterval(S.timer);S.timer=null;} }
+
+function geolocate() {
+    if(!navigator.geolocation) return alert('GPS no disponible');
+    el.geoBtn.disabled=true; el.geoBtn.textContent='⏳';
+    navigator.geolocation.getCurrentPosition(p=>{
+        el.lat.value=p.coords.latitude.toFixed(4);
+        el.lon.value=p.coords.longitude.toFixed(4);
+        el.geoBtn.disabled=false; el.geoBtn.textContent='📍 GPS';
+    },e=>{alert('Error: '+e.message);el.geoBtn.disabled=false;el.geoBtn.textContent='📍 GPS';});
+}
+
+function startSearch() {
+    S.lat=parseFloat(el.lat.value); S.lon=parseFloat(el.lon.value);
+    S.radius=parseFloat(el.radius.value)||100; S.hours=parseFloat(el.hours.value)||3;
+    S.interval=parseInt(el.autoMin.value)||2;
+    if(isNaN(S.lat)||isNaN(S.lon)) return alert('Coordenadas inválidas');
+    localStorage.setItem('transitFA',JSON.stringify({lat:S.lat,lon:S.lon,radius:S.radius,hours:S.hours,apiKey:el.apiKey.value}));
+    el.statusGrid.style.display='grid';
+    if(S.auto) startAuto(); else doSearch();
+}
+
+// ===================== API =====================
+async function fetchFlights() {
+    const key = el.apiKey.value.trim();
+    if(!key) throw new Error('API Key requerida');
+    
+    // FlightAware query: circle search
+    const query = encodeURIComponent(`{circle ${S.lat} ${S.lon} ${S.radius}} {inAir 1}`);
+    const url = `https://aeroapi.flightaware.com/aeroapi/flights/search/positions?query=${query}&max_pages=2`;
+    
+    // Use CORS proxy
+    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+    
+    const res = await fetch(proxyUrl, {
+        headers: { 'x-apikey': key }
+    });
+    
+    if(!res.ok) {
+        const txt = await res.text();
+        if(res.status === 401) throw new Error('API Key inválida');
+        if(res.status === 403) throw new Error('Acceso denegado - verifica tu API Key');
+        throw new Error(`Error ${res.status}: ${txt.substring(0,100)}`);
+    }
+    
+    const data = await res.json();
+    el.apiStatus.className='api-status ok';
+    el.apiStatus.textContent='✓ API conectada';
+    
+    const positions = data.positions || [];
+    const flights = [];
+    const seen = new Set();
+    
+    for(const p of positions) {
+        const id = p.fa_flight_id || '';
+        if(seen.has(id)) continue;
+        seen.add(id);
+        
+        const lastPos = p.last_position || p;
+        const lat = lastPos.latitude;
+        const lon = lastPos.longitude;
+        if(!lat || !lon) continue;
+        
+        const altFt = lastPos.altitude || p.altitude || 30000;
+        const gsKnots = lastPos.groundspeed || p.groundspeed || 450;
+        const hdg = lastPos.heading || p.heading || 0;
+        
+        flights.push({
+            id, ident: p.ident || 'N/A', type: p.aircraft_type || 'N/A',
+            origin: typeof p.origin==='object' ? p.origin?.code : p.origin || '?',
+            dest: typeof p.destination==='object' ? p.destination?.code : p.destination || '?',
+            lat, lon,
+            altM: altFt * 0.3048,
+            velMs: gsKnots * 0.514444,
+            hdg
+        });
+    }
+    return flights;
+}
+
+// ===================== CALC =====================
+function targetPos(lat,lon,date=new Date()) { return S.target==='sun' ? Astro.sun(date,lat,lon) : Astro.moon(date,lat,lon); }
+
+function angDist(az1,alt1,az2,alt2) {
+    const [a1,e1,a2,e2]=[az1,alt1,az2,alt2].map(x=>x*Math.PI/180);
+    return Math.acos(Math.max(-1,Math.min(1,Math.sin(e1)*Math.sin(e2)+Math.cos(e1)*Math.cos(e2)*Math.cos(a1-a2))))*180/Math.PI;
+}
+
+function skyPos(oLat,oLon,aLat,aLon,aAlt) {
+    const [lat1,lon1,lat2,lon2]=[oLat,oLon,aLat,aLon].map(x=>x*Math.PI/180), dLon=lon2-lon1;
+    const az=(Math.atan2(Math.sin(dLon)*Math.cos(lat2),Math.cos(lat1)*Math.sin(lat2)-Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon))*180/Math.PI+360)%360;
+    const a=Math.sin((lat2-lat1)/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;
+    const dist=R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+    const alt=Math.atan2(aAlt/1000,dist)*180/Math.PI;
+    return {az,alt,dist};
+}
+
+function predict(f, tgt, maxH) {
+    if(!f.lat||!f.lon) return null;
+    const sky = skyPos(S.lat,S.lon,f.lat,f.lon,f.altM);
+    const altD=Math.abs(sky.alt-tgt.alt), azD=Math.min(Math.abs(sky.az-tgt.az),360-Math.abs(sky.az-tgt.az));
+    const ang=angDist(tgt.az,tgt.alt,sky.az,sky.alt);
+    if(ang<THRESH) return mkResult(f,sky,0,ang,altD,azD);
+    if(!f.velMs||!f.hdg) return null;
+    
+    const vKmH=f.velMs*3.6, hdgR=f.hdg*Math.PI/180, totalMin=maxH*60;
+    let best={ang,time:null,sky,altD,azD,h:0};
+    
+    for(let m=2;m<=totalMin;m+=2) {
+        const h=m/60, d=vKmH*h;
+        if(d>1500) break;
+        const lat1=f.lat*Math.PI/180, lon1=f.lon*Math.PI/180, dR=d/R;
+        const lat2=Math.asin(Math.sin(lat1)*Math.cos(dR)+Math.cos(lat1)*Math.sin(dR)*Math.cos(hdgR));
+        const lon2=lon1+Math.atan2(Math.sin(hdgR)*Math.sin(dR)*Math.cos(lat1),Math.cos(dR)-Math.sin(lat1)*Math.sin(lat2));
+        const [nLat,nLon]=[lat2*180/Math.PI,lon2*180/Math.PI];
+        const fTgt=targetPos(S.lat,S.lon,new Date(Date.now()+m*60000));
+        if(fTgt.alt<=0) continue;
+        const nSky=skyPos(S.lat,S.lon,nLat,nLon,f.altM);
+        const nAng=angDist(fTgt.az,fTgt.alt,nSky.az,nSky.alt);
+        const nAltD=Math.abs(nSky.alt-fTgt.alt), nAzD=Math.min(Math.abs(nSky.az-fTgt.az),360-Math.abs(nSky.az-fTgt.az));
+        if(nAng<best.ang) best={ang:nAng,time:new Date(Date.now()+m*60000),sky:nSky,altD:nAltD,azD:nAzD,h};
+    }
+    return best.ang<THRESH && best.time ? mkResult(f,best.sky,best.h,best.ang,best.altD,best.azD,best.time) : null;
+}
+
+function mkResult(f,sky,h,ang,altD,azD,time=null) {
+    return {f,time:time||new Date(),ang,altD,azD,sky,conf:h<0.5?'high':h<1.5?'medium':'low',h,pred:h>0};
+}
+
+// ===================== RENDER =====================
+async function doSearch() {
+    el.searchBtn.disabled=true; el.searchBtn.textContent='⏳';
+    el.results.innerHTML='<div class="state-box"><div class="loader"></div><p>Consultando FlightAware...</p></div>';
+    
+    try {
+        const tgt = targetPos(S.lat,S.lon);
+        el.sPos.textContent=`${S.lat.toFixed(4)}°, ${S.lon.toFixed(4)}°`;
+        el.sAlt.textContent=tgt.alt>0?`${tgt.alt.toFixed(1)}°`:'Bajo horizonte';
+        el.sAz.textContent=`${tgt.az.toFixed(1)}°`;
+        el.sTime.textContent=new Date().toLocaleTimeString('es-ES');
+        if(S.target==='moon'){const ill=Astro.moonIllum(new Date());el.sPhase.textContent=`${Astro.phaseName(ill.phase)} ${(ill.frac*100).toFixed(0)}%`;}
+        
+        const flights = await fetchFlights();
+        el.sCount.textContent=flights.length;
+        
+        const transits = flights.map(f=>predict(f,tgt,S.hours)).filter(Boolean);
+        transits.sort((a,b)=>a.time-b.time);
+        
+        // Alert
+        const good=transits.filter(t=>t.conf==='high'||t.conf==='medium');
+        if(S.auto && good.length && good.some(t=>!S.last.find(l=>l.f.id===t.f.id))){
+            el.alert.style.display='block';
+            try{const ctx=new AudioContext(),o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=880;g.gain.setValueAtTime(0.3,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.5);o.start();o.stop(ctx.currentTime+0.5);}catch(e){}
+            setTimeout(()=>el.alert.style.display='none',3000);
+        }
+        S.last=transits;
+        
+        render(tgt,flights,transits);
+        
+    } catch(e) {
+        el.apiStatus.className='api-status error';
+        el.apiStatus.textContent='✗ '+e.message;
+        el.results.innerHTML=`<div class="error-box"><h3>⚠️ Error</h3><p>${e.message}</p></div>`;
+    }
+    el.searchBtn.disabled=false; el.searchBtn.textContent='🔍 Buscar';
+}
+
+function render(tgt,flights,transits) {
+    const sun=S.target==='sun';
+    if(tgt.alt<=0) {
+        el.results.innerHTML=`<div class="state-box"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/></svg><h3>${sun?'El sol':'La luna'} está bajo el horizonte</h3><p>Vuelve cuando ${sun?'el sol':'la luna'} esté visible.</p></div>`;
+        return;
+    }
+    if(!transits.length) {
+        el.results.innerHTML=`<div class="state-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg><h3>Sin tránsitos</h3><p>Ningún avión pasará cerca ${sun?'del sol':'de la luna'} en las próximas ${S.hours}h. Rastreando ${flights.length} aviones.</p></div>`;
+        return;
+    }
+    
+    let html=`
+        <div class="results-header">
+            <h2 class="results-title">Tránsitos Detectados</h2>
+            <div class="results-badges">
+                <span class="badge count">${transits.length} posibles</span>
+                <span class="badge window">${S.hours}h</span>
+            </div>
+        </div>
+        <div class="legend">
+            <span class="high">🟢 Alta (&lt;30min, &lt;1°)</span>
+            <span class="med">🟡 Media (30min-1.5h, 1-2°)</span>
+            <span class="low">⚪ Baja (&gt;1.5h, &gt;2°)</span>
+        </div>
+        <div class="transit-grid">`;
+    
+    for(const t of transits) {
+        const tStr=t.time.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+        const dStr=t.time.toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'});
+        const eta=t.h<1/60?'Ahora':t.h<1?`en ${Math.round(t.h*60)}min`:`en ${Math.floor(t.h)}h${Math.round((t.h%1)*60)}m`;
+        const altCls=t.altD<1?'good':t.altD<2?'ok':'bad';
+        const azCls=t.azD<1?'good':t.azD<2?'ok':'bad';
+        const pct=Math.max(0,100-t.ang/THRESH*100);
+        const confE={high:'🟢',medium:'🟡',low:'⚪'}[t.conf];
+        
+        html+=`
+            <div class="transit-card conf-${t.conf}">
+                <div class="card-top">
+                    <span class="conf-badge ${t.conf}">${confE} ${t.conf==='high'?'Alta':t.conf==='medium'?'Media':'Baja'}</span>
+                    <span class="time-eta">${eta}</span>
+                </div>
+                <div class="transit-time">${tStr}</div>
+                <div class="transit-date">${dStr}</div>
+                <div class="flight-info">
+                    <div class="info-item"><span class="info-label">Vuelo</span><span class="info-value callsign">${t.f.ident}</span></div>
+                    <div class="info-item"><span class="info-label">Tipo</span><span class="info-value">${t.f.type}</span></div>
+                    <div class="info-item"><span class="info-label">Ruta</span><span class="info-value">${t.f.origin}→${t.f.dest}</span></div>
+                    <div class="info-item"><span class="info-label">Altitud</span><span class="info-value">${(t.f.altM/1000).toFixed(1)}km</span></div>
+                    <div class="info-item"><span class="info-label">Velocidad</span><span class="info-value">${(t.f.velMs*3.6).toFixed(0)}km/h</span></div>
+                    <div class="info-item"><span class="info-label">Rumbo</span><span class="info-value">${t.f.hdg.toFixed(0)}°</span></div>
+                </div>
+                <div class="altaz-row">
+                    <div class="altaz-box"><div class="altaz-label">Alt diff</div><div class="altaz-val ${altCls}">${t.altD.toFixed(2)}°</div></div>
+                    <div class="altaz-box"><div class="altaz-label">Az diff</div><div class="altaz-val ${azCls}">${t.azD.toFixed(2)}°</div></div>
+                </div>
+                <div class="ang-dist">
+                    <span class="ang-label">Dist. angular</span>
+                    <div class="ang-bar"><div class="ang-fill" style="width:${pct}%"></div></div>
+                    <span class="ang-val">${t.ang.toFixed(2)}°</span>
+                </div>
+            </div>`;
+    }
+    html+='</div>';
+    el.results.innerHTML=html;
+}
+
+init();
+</script>
+</body>
+</html>
