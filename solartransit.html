@@ -59,7 +59,7 @@
             <div>
                 <h1 class="text-xl font-bold text-amber-400 flex items-center gap-2">
                     <i data-lucide="sun"></i> Transit Hunter 
-                    <span class="text-[10px] font-mono font-normal text-slate-400 bg-slate-800 border border-slate-700 px-1.5 rounded ml-1">v1.3.0</span>
+                    <span class="text-[10px] font-mono font-normal text-slate-400 bg-slate-800 border border-slate-700 px-1.5 rounded ml-1">v1.4.0</span>
                 </h1>
                 <p class="text-xs text-slate-400">Rastreador de Intersección Solar</p>
             </div>
@@ -648,8 +648,41 @@
                 const dx = dAz * pxPerDeg;
                 const dy = -(dAlt * pxPerDeg); 
 
-                // Draw Plane if visible
-                if (Math.abs(dx) < cvs.width/2 + 20 && Math.abs(dy) < cvs.height/2 + 20) {
+                // Draw Plane if visible within reasonable bounds (expanded for lines)
+                if (Math.abs(dx) < cvs.width + 100 && Math.abs(dy) < cvs.height + 100) {
+                    
+                    // --- TRAJECTORY LINE (2 min prediction) ---
+                    // Draw this BEFORE translating context for the plane icon
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)'; // Light Blue, transparent
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([2, 4]); // Dashed line
+
+                    const startX = cx + dx;
+                    const startY = cy + dy;
+                    ctx.moveTo(startX, startY);
+
+                    // Predict next 120 seconds in 10s steps
+                    for(let t=10; t<=120; t+=10) { 
+                         // Use physics projection
+                         let futurePos = p.projectPosition(t);
+                         // Recalculate look angles for that future position
+                         let futureLook = calculateLookAngles(STATE.userLat, STATE.userLon, futurePos.lat, futurePos.lon, p.altitude);
+                         
+                         let fdAz = futureLook.az - sunAz;
+                         if (fdAz > 180) fdAz -= 360;
+                         if (fdAz < -180) fdAz += 360;
+                         let fdAlt = futureLook.alt - sunAlt;
+                         
+                         let fdx = fdAz * pxPerDeg;
+                         let fdy = -(fdAlt * pxPerDeg);
+                         
+                         ctx.lineTo(cx + fdx, cy + fdy);
+                    }
+                    ctx.stroke();
+                    ctx.setLineDash([]); // Reset dash
+
+                    // --- DRAW PLANE ICON ---
                     ctx.save();
                     ctx.translate(cx + dx, cy + dy);
                     
@@ -659,19 +692,14 @@
                     ctx.fillStyle = '#fff';
                     ctx.fill();
                     
-                    // Direction Vector (Line)
-                    let relHead = p.heading - sunAz; 
-                    ctx.rotate((relHead) * Math.PI / 180);
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
-                    ctx.lineTo(12, 0); // Line pointing direction
-                    ctx.stroke();
-
+                    // Small directional tick (heading relative to sun)
+                    // Visual fix: If trajectory line is drawn, this tick is redundant but keeps style consistency
+                    // Let's keep it but make it very subtle or remove it if line exists.
+                    // The line is better. Let's just keep the dot + text.
+                    
                     // Text Label
-                    ctx.rotate(-(relHead) * Math.PI / 180); 
-                    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+                    // Position label away from the trajectory line if possible, or just below
+                    ctx.fillStyle = 'rgba(255,255,255,0.8)';
                     ctx.font = '10px sans-serif';
                     ctx.fillText(p.callsign, 5, -5);
                     
