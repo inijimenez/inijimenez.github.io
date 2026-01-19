@@ -58,7 +58,8 @@
         <div class="p-4 border-b border-slate-700 flex justify-between items-center">
             <div>
                 <h1 class="text-xl font-bold text-amber-400 flex items-center gap-2">
-                    <i data-lucide="sun"></i> Transit Hunter
+                    <i data-lucide="sun"></i> Transit Hunter 
+                    <span class="text-[10px] font-mono font-normal text-slate-400 bg-slate-800 border border-slate-700 px-1.5 rounded ml-1">v1.2.0</span>
                 </h1>
                 <p class="text-xs text-slate-400">Rastreador de Intersección Solar</p>
             </div>
@@ -146,7 +147,7 @@
         };
 
         const SETTINGS = {
-            viewRadiusKm: 100, 
+            viewRadiusKm: 200, 
             sunAngularSizeDeg: 0.53, 
             apiIntervalMs: 10000 // OpenSky rate limit for anon users is ~10s
         };
@@ -220,7 +221,7 @@
             STATE.lastApiFetch = now;
 
             // Bounding box (approx 1 degree ~ 111km)
-            const boxSize = 1.0; 
+            const boxSize = 2.0; // Increased to 2 degrees for wider range
             const lamin = STATE.userLat - boxSize;
             const lamax = STATE.userLat + boxSize;
             const lomin = STATE.userLon - boxSize;
@@ -355,15 +356,16 @@
             const sunAzDeg = (STATE.sunPos.azimuth * (180/Math.PI) + 180) % 360;
 
             if (forceTransit) {
-                const spawnDist = 0.3; // ~30km away to give time for prediction
-                const spawnAngle = sunAzDeg - 35; // slightly wider angle
+                // SPAWN FURTHER AWAY for earlier warning
+                const spawnDist = 1.0; // ~111km away (Increased from 0.3)
+                const spawnAngle = sunAzDeg - 35; 
                 lat = STATE.userLat + (spawnDist * Math.cos(spawnAngle * Math.PI / 180));
                 lon = STATE.userLon + (spawnDist * Math.sin(spawnAngle * Math.PI / 180));
                 heading = (sunAzDeg + 90) % 360;
                 alt = 30000;
             } else {
-                lat = STATE.userLat + (Math.random() - 0.5) * 0.5;
-                lon = STATE.userLon + (Math.random() - 0.5) * 0.5;
+                lat = STATE.userLat + (Math.random() - 0.5) * 1.5; // Wider spawn area
+                lon = STATE.userLon + (Math.random() - 0.5) * 1.5;
                 heading = Math.random() * 360;
                 alt = 10000 + Math.random() * 30000;
             }
@@ -491,7 +493,7 @@
                 STATE.planes.forEach(p => p.moveSimulated(dt));
                 STATE.planes = STATE.planes.filter(p => {
                     const dist = Math.abs(p.lat - STATE.userLat) + Math.abs(p.lon - STATE.userLon);
-                    if (dist > 1.0) {
+                    if (dist > 2.0) { // Keep alive longer
                         if (p.marker) layers.planes.removeLayer(p.marker);
                         return false;
                     }
@@ -518,7 +520,7 @@
                 const altDiff = Math.abs(look.alt - sunAltDeg);
                 const totalAngDist = Math.sqrt(azDist*azDist + altDiff*altDiff);
 
-                if (totalAngDist < 15) { 
+                if (totalAngDist < 45) { // Increased detection range to 45 deg
                     // Calculate Prediction
                     const prediction = predictTransit(p, STATE.userLat, STATE.userLon, sunAzDeg, sunAltDeg);
                     
@@ -560,18 +562,23 @@
                     status = '¡CRUZANDO AHORA!';
                 } else if (willTransit) {
                     colorClass = 'bg-amber-900/40 border-amber-500';
-                    status = 'TRÁNSITO INMINENTE';
+                    status = 'TRÁNSITO PREVISTO';
                     // Calculate absolute time
                     const transitTime = new Date(Date.now() + pred.seconds * 1000);
                     const timeStr = transitTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    
+                    // Color code based on time
+                    let timeColor = "text-amber-200";
+                    if(pred.seconds < 30) timeColor = "text-red-300 font-bold";
+                    
                     timeText = `<div class="mt-1 flex justify-between items-center">
-                        <span class="text-amber-200 font-bold">T-${pred.seconds.toFixed(0)}s</span>
+                        <span class="${timeColor}">T-${pred.seconds.toFixed(0)}s</span>
                         <span class="text-xs text-amber-100/70">a las ${timeStr}</span>
                     </div>`;
                 } else {
                     // Just passing by
-                    if (pred && pred.seconds > 0 && pred.seconds < 60) {
-                         status = `Aproximación máxima: ${pred.minDist.toFixed(2)}° en ${pred.seconds.toFixed(0)}s`;
+                    if (pred && pred.seconds > 0 && pred.seconds < 120) {
+                         status = `Cruce a: ${pred.minDist.toFixed(2)}° en ${pred.seconds.toFixed(0)}s`;
                     }
                 }
                 
@@ -656,12 +663,6 @@
                     ctx.font = '10px sans-serif';
                     ctx.fillText(p.callsign, 6, 3);
                     ctx.restore();
-                    
-                    // Prediction Line (Debug Visual)
-                    const pred = predictTransit(p, STATE.userLat, STATE.userLon, sunAz, sunAlt);
-                    if (pred && pred.seconds < 10) {
-                         // Optional: Draw trajectory line
-                    }
                 }
             });
         }
