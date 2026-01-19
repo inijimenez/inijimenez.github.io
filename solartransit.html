@@ -59,7 +59,7 @@
             <div>
                 <h1 class="text-xl font-bold text-amber-400 flex items-center gap-2">
                     <i data-lucide="sun"></i> Transit Hunter 
-                    <span class="text-[10px] font-mono font-normal text-slate-400 bg-slate-800 border border-slate-700 px-1.5 rounded ml-1">v1.4.0</span>
+                    <span class="text-[10px] font-mono font-normal text-slate-400 bg-slate-800 border border-slate-700 px-1.5 rounded ml-1">v1.5.0</span>
                 </h1>
                 <p class="text-xs text-slate-400">Rastreador de Intersección Solar</p>
             </div>
@@ -348,7 +348,7 @@
             }
         }
 
-        function spawnSimPlane(forceTransit = false) {
+        function spawnSimPlane(forceTransit = false, immediate = false) {
             if (!STATE.userLat) return;
             const id = Math.random().toString(36).substr(2, 5);
             let lat, lon, heading, alt;
@@ -356,15 +356,22 @@
             const sunAzDeg = (STATE.sunPos.azimuth * (180/Math.PI) + 180) % 360;
 
             if (forceTransit) {
-                // SPAWN FURTHER AWAY for earlier warning
-                const spawnDist = 1.0; // ~111km away (Increased from 0.3)
-                const spawnAngle = sunAzDeg - 35; 
+                // SPAWN LOGIC for warning
+                let spawnDist = 1.0; 
+                let spawnAngle = sunAzDeg - (20 + Math.random() * 10); // 20-30 deg offset
+                
+                if (immediate) {
+                    // Force spawn inside view!
+                    spawnDist = 0.5 + Math.random() * 0.2;
+                    spawnAngle = sunAzDeg - (2 + Math.random() * 5); // 2-7 deg offset (visible)
+                }
+
                 lat = STATE.userLat + (spawnDist * Math.cos(spawnAngle * Math.PI / 180));
                 lon = STATE.userLon + (spawnDist * Math.sin(spawnAngle * Math.PI / 180));
                 heading = (sunAzDeg + 90) % 360;
                 alt = 30000;
             } else {
-                lat = STATE.userLat + (Math.random() - 0.5) * 1.5; // Wider spawn area
+                lat = STATE.userLat + (Math.random() - 0.5) * 1.5; 
                 lon = STATE.userLon + (Math.random() - 0.5) * 1.5;
                 heading = Math.random() * 360;
                 alt = 10000 + Math.random() * 30000;
@@ -486,9 +493,14 @@
             updateSunPosition();
 
             if (STATE.mode === 'sim') {
-                if (STATE.planes.length < 5 && STATE.userLat) {
-                    if (Math.random() > 0.7) spawnSimPlane(true);
-                    else spawnSimPlane(false);
+                if (STATE.userLat) {
+                    // Check for immediate gratification spawn
+                    if (STATE.planes.length === 0) {
+                        spawnSimPlane(true, true); // Immediate visible plane
+                    } else if (STATE.planes.length < 5) {
+                        if (Math.random() > 0.7) spawnSimPlane(true);
+                        else spawnSimPlane(false);
+                    }
                 }
                 STATE.planes.forEach(p => p.moveSimulated(dt));
                 STATE.planes = STATE.planes.filter(p => {
@@ -648,8 +660,32 @@
                 const dx = dAz * pxPerDeg;
                 const dy = -(dAlt * pxPerDeg); 
 
+                const isOffScreen = Math.abs(dx) > cvs.width/2 + 10 || Math.abs(dy) > cvs.height/2 + 10;
+                
+                // Draw Off-screen Indicator if it's within "detection range" (which is filtered in updateLoop at 45deg)
+                if (isOffScreen) {
+                    const angle = Math.atan2(dy, dx);
+                    const distFromCenter = Math.min(cvs.width/2, cvs.height/2) - 15;
+                    
+                    const arrowX = cx + Math.cos(angle) * distFromCenter;
+                    const arrowY = cy + Math.sin(angle) * distFromCenter;
+                    
+                    ctx.save();
+                    ctx.translate(arrowX, arrowY);
+                    ctx.rotate(angle);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(-5, -5);
+                    ctx.lineTo(5, 0);
+                    ctx.lineTo(-5, 5);
+                    ctx.closePath();
+                    ctx.fillStyle = '#fbbf24'; // Amber warning
+                    ctx.fill();
+                    ctx.restore();
+                } 
+                
                 // Draw Plane if visible within reasonable bounds (expanded for lines)
-                if (Math.abs(dx) < cvs.width + 100 && Math.abs(dy) < cvs.height + 100) {
+                else if (Math.abs(dx) < cvs.width + 100 && Math.abs(dy) < cvs.height + 100) {
                     
                     // --- TRAJECTORY LINE (2 min prediction) ---
                     // Draw this BEFORE translating context for the plane icon
@@ -691,11 +727,6 @@
                     ctx.arc(0, 0, 3, 0, Math.PI * 2); // 3px dot
                     ctx.fillStyle = '#fff';
                     ctx.fill();
-                    
-                    // Small directional tick (heading relative to sun)
-                    // Visual fix: If trajectory line is drawn, this tick is redundant but keeps style consistency
-                    // Let's keep it but make it very subtle or remove it if line exists.
-                    // The line is better. Let's just keep the dot + text.
                     
                     // Text Label
                     // Position label away from the trajectory line if possible, or just below
