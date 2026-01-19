@@ -237,31 +237,21 @@
 
                 if (!data.states) return;
 
-                // Update planes
-                // OpenSky format: [icao24, callsign, origin_country, time_position, last_contact, longitude, latitude, baro_altitude, on_ground, velocity, true_track, ...]
-                // Mapping: Lon=5, Lat=6, Alt(m)=7, Vel(m/s)=9, Head=10
-                
-                // Clear old real planes (simplified strategy: replace all)
                 STATE.planes = data.states
                     .filter(s => !s[8] && s[6] && s[5]) // Must not be on ground, must have coords
                     .map(s => {
                         const altFt = (s[7] || 0) * 3.28084;
                         const spdKts = (s[9] || 0) * 1.94384;
                         const callsign = s[1].trim() || s[0]; // Callsign or ICAO
-                        
-                        // Check if this plane already exists to preserve some state if needed
-                        // Ideally we would interpolate, but for this demo we just update pos
                         return new Plane(s[0], s[6], s[5], s[10] || 0, spdKts, altFt, callsign);
                     });
 
-                // Update map markers immediately
                 updatePlaneMarkers();
 
             } catch (err) {
                 console.warn("OpenSky fetch failed", err);
                 els.spinner.style.opacity = '0';
                 
-                // Optional: Alert user only once or show small toast
                 const errDiv = document.createElement('div');
                 errDiv.className = "fixed top-4 right-4 bg-red-900 text-white p-2 rounded text-xs z-50 shadow-lg";
                 errDiv.innerText = "Error obteniendo datos reales. Volviendo a Simulación.";
@@ -285,25 +275,14 @@
             els.sunAz.innerText = azDeg.toFixed(1) + '°';
             els.sunAlt.innerText = altDeg.toFixed(1) + '°';
 
-            // Update Sun Line on Map
             layers.sunLine.clearLayers();
-            // Draw a cone or line
             const lineLen = 100000; // meters
-            const endLat = STATE.userLat + (lineLen/111111) * Math.cos(sun.azimuth + Math.PI); // SunCalc Az is South-based? 
-            // Correct SunCalc: 0 is South, Pi/2 is West. Leaflet needs bearing from North.
-            // Converting SunCalc radians to Leaflet degrees (0=N, 90=E):
-            // SunCalc: S=0, W=PI/2, N=PI, E=3PI/2.
-            // Target: N=0, E=90, S=180, W=270.
-            // Formula: (sun.azimuth * 180 / PI) + 180
+            const endLat = STATE.userLat + (lineLen/111111) * Math.cos(sun.azimuth + Math.PI); 
             
-            // Just use the calculated azDeg for direction
             const line = [
                 [STATE.userLat, STATE.userLon],
                 [endLat, STATE.userLon + (lineLen/111111) * Math.sin(sun.azimuth + Math.PI) / Math.cos(STATE.userLat * Math.PI/180)]
             ];
-            // Actually, let's just use the calculated angle for simplicity in map drawing logic
-            // Drawing a simple polyline is tricky without proper geo library for bearing projection
-            // We'll skip the complex line and rely on the SkyView which is accurate
         }
 
         function initLocation() {
@@ -323,7 +302,6 @@
                         .bindPopup("Tu Ubicación").openPopup();
                     map.setView([STATE.userLat, STATE.userLon]);
                     
-                    // Initial update
                     updateSunPosition();
                     if(STATE.mode === 'real') fetchRealPlanes();
 
@@ -348,10 +326,10 @@
                 this.marker = null;
             }
             
-            // Simulation movement only
-            moveSimulated(dt) {
+            // Calculate future position (Simulated physics step)
+            projectPosition(dtSeconds) {
                 const R = 6371; 
-                const distKm = (this.speed * 1.852) * (dt / 3600);
+                const distKm = (this.speed * 1.852) * (dtSeconds / 3600);
                 const brng = this.heading * Math.PI / 180;
                 const lat1 = this.lat * Math.PI / 180;
                 const lon1 = this.lon * Math.PI / 180;
@@ -359,8 +337,13 @@
                 let lat2 = Math.asin( Math.sin(lat1)*Math.cos(distKm/R) + Math.cos(lat1)*Math.sin(distKm/R)*Math.cos(brng) );
                 let lon2 = lon1 + Math.atan2(Math.sin(brng)*Math.sin(distKm/R)*Math.cos(lat1), Math.cos(distKm/R)-Math.sin(lat1)*Math.sin(lat2));
                 
-                this.lat = lat2 * 180 / Math.PI;
-                this.lon = lon2 * 180 / Math.PI;
+                return { lat: lat2 * 180 / Math.PI, lon: lon2 * 180 / Math.PI };
+            }
+
+            moveSimulated(dt) {
+                const next = this.projectPosition(dt);
+                this.lat = next.lat;
+                this.lon = next.lon;
             }
         }
 
@@ -372,8 +355,8 @@
             const sunAzDeg = (STATE.sunPos.azimuth * (180/Math.PI) + 180) % 360;
 
             if (forceTransit) {
-                const spawnDist = 0.2; // ~20km
-                const spawnAngle = sunAzDeg - 30;
+                const spawnDist = 0.3; // ~30km away to give time for prediction
+                const spawnAngle = sunAzDeg - 35; // slightly wider angle
                 lat = STATE.userLat + (spawnDist * Math.cos(spawnAngle * Math.PI / 180));
                 lon = STATE.userLon + (spawnDist * Math.sin(spawnAngle * Math.PI / 180));
                 heading = (sunAzDeg + 90) % 360;
@@ -412,15 +395,65 @@
 
             return { az: bearingDeg, alt: elevationDeg, dist: surfaceDist };
         }
+        
+        // --- PREDICTION LOGIC ---
+        function predictTransit(plane, userLat, userLon, sunAzDeg, sunAltDeg) {
+            // 1. Current State
+            const lookNow = calculateLookAngles(userLat, userLon, plane.lat, plane.lon, plane.altitude);
+            
+            // 2. Future State (1 second later)
+            const futurePos = plane.projectPosition(1); 
+            const lookFuture = calculateLookAngles(userLat, userLon, futurePos.lat, futurePos.lon, plane.altitude);
+            
+            // 3. Angular Velocity (deg/s)
+            let dAz = lookFuture.az - lookNow.az;
+            if (dAz > 180) dAz -= 360; // Handle wrapping
+            if (dAz < -180) dAz += 360;
+            
+            const dAlt = lookFuture.alt - lookNow.alt;
+            
+            // 4. Relative Position to Sun (degrees)
+            let relAz = lookNow.az - sunAzDeg;
+            if (relAz > 180) relAz -= 360;
+            if (relAz < -180) relAz += 360;
+            
+            const relAlt = lookNow.alt - sunAltDeg;
+            
+            // 5. Projection to Cartesian plane for CPA (Closest Point of Approach)
+            // x = Azimuth diff (corrected for elevation), y = Altitude diff
+            // Correction: dx = dAz * cos(SunElevation)
+            const cosAlt = Math.cos(sunAltDeg * Math.PI / 180);
+            
+            const px = relAz * cosAlt;
+            const py = relAlt;
+            
+            const vx = dAz * cosAlt;
+            const vy = dAlt;
+            
+            // 6. Solve for time t where distance is minimized
+            // dist^2 = (px + vx*t)^2 + (py + vy*t)^2
+            // Derivative = 0 => t = -(px*vx + py*vy) / (vx^2 + vy^2)
+            
+            const v2 = vx*vx + vy*vy;
+            if (v2 < 0.000001) return null; // Not moving significantly
+            
+            const t_cpa = -(px*vx + py*vy) / v2;
+            
+            if (t_cpa < 0) return null; // Closest point was in the past
+            
+            // 7. Calculate distance at CPA
+            const cpaX = px + vx * t_cpa;
+            const cpaY = py + vy * t_cpa;
+            const distAtCpa = Math.sqrt(cpaX*cpaX + cpaY*cpaY);
+            
+            return {
+                seconds: t_cpa,
+                minDist: distAtCpa
+            };
+        }
 
         function updatePlaneMarkers() {
-            // Remove old markers for planes that don't exist in new state? 
-            // For simplicity, we clear all and redraw in this logic, but better is to update
-            // Let's iterate current planes and update/create markers
-            
             const activeIds = new Set(STATE.planes.map(p => p.id));
-            
-            // Remove missing
             layers.planes.eachLayer(layer => {
                 if (!activeIds.has(layer.options.planeId)) {
                     layers.planes.removeLayer(layer);
@@ -431,7 +464,7 @@
                 if (!p.marker) {
                     p.marker = L.marker([p.lat, p.lon], {
                         icon: planeIcon,
-                        planeId: p.id // Store ID in options for retrieval
+                        planeId: p.id 
                     }).addTo(layers.planes);
                     p.marker.bindPopup(`<b>${p.callsign}</b><br>Alt: ${Math.round(p.altitude)}ft<br>Spd: ${Math.round(p.speed)}kts`);
                 } else {
@@ -450,16 +483,12 @@
 
             updateSunPosition();
 
-            // Handle Logic based on mode
             if (STATE.mode === 'sim') {
                 if (STATE.planes.length < 5 && STATE.userLat) {
                     if (Math.random() > 0.7) spawnSimPlane(true);
                     else spawnSimPlane(false);
                 }
-                // Move simulated planes
                 STATE.planes.forEach(p => p.moveSimulated(dt));
-                
-                // Cleanup far planes
                 STATE.planes = STATE.planes.filter(p => {
                     const dist = Math.abs(p.lat - STATE.userLat) + Math.abs(p.lon - STATE.userLon);
                     if (dist > 1.0) {
@@ -468,14 +497,11 @@
                     }
                     return true;
                 });
-                
-                updatePlaneMarkers(); // Update map for sim
+                updatePlaneMarkers(); 
             } else {
-                // Real Mode: Fetch periodically
                 fetchRealPlanes();
             }
 
-            // Calculations for UI (Common for both modes)
             const sunAzDeg = (STATE.sunPos.azimuth * (180/Math.PI) + 180) % 360;
             const sunAltDeg = STATE.sunPos.altitude * 180 / Math.PI;
             const sunRad = SETTINGS.sunAngularSizeDeg / 2;
@@ -492,41 +518,72 @@
                 const altDiff = Math.abs(look.alt - sunAltDeg);
                 const totalAngDist = Math.sqrt(azDist*azDist + altDiff*altDiff);
 
-                if (totalAngDist < 15) { // Show if within 15 deg
+                if (totalAngDist < 15) { 
+                    // Calculate Prediction
+                    const prediction = predictTransit(p, STATE.userLat, STATE.userLon, sunAzDeg, sunAltDeg);
+                    
                     transits.push({ 
                         plane: p, 
                         dist: totalAngDist,
-                        isTransit: totalAngDist < sunRad
+                        isTransitNow: totalAngDist < sunRad,
+                        prediction: prediction
                     });
                 }
             });
 
-            renderTransitList(transits);
+            renderTransitList(transits, sunRad);
             drawSkyView(sunAzDeg, sunAltDeg, STATE.planes);
 
             requestAnimationFrame(updateLoop);
         }
 
-        function renderTransitList(transits) {
+        function renderTransitList(transits, sunRadius) {
             els.transitList.innerHTML = '';
             if (transits.length === 0) {
                 els.transitList.innerHTML = `<div class="text-center text-slate-600 text-xs py-4">Sin tráfico cerca del sol</div>`;
                 return;
             }
             transits.sort((a, b) => a.dist - b.dist);
+            
             transits.forEach(t => {
-                const isTransit = t.isTransit;
-                const colorClass = isTransit ? 'bg-red-900/50 border-red-500' : 'bg-slate-800 border-slate-600';
-                const status = isTransit ? '¡CRUZANDO!' : `Aprox: ${t.dist.toFixed(2)}°`;
+                const isTransitNow = t.isTransitNow;
+                const pred = t.prediction;
+                // Will it transit in future? (Min Dist < Sun Radius and time > 0)
+                const willTransit = pred && pred.minDist < sunRadius && pred.seconds > 0;
+                
+                let colorClass = 'bg-slate-800 border-slate-600';
+                let status = `Dist: ${t.dist.toFixed(2)}°`;
+                let timeText = '';
+
+                if (isTransitNow) {
+                    colorClass = 'bg-red-900/50 border-red-500 transit-alert';
+                    status = '¡CRUZANDO AHORA!';
+                } else if (willTransit) {
+                    colorClass = 'bg-amber-900/40 border-amber-500';
+                    status = 'TRÁNSITO INMINENTE';
+                    // Calculate absolute time
+                    const transitTime = new Date(Date.now() + pred.seconds * 1000);
+                    const timeStr = transitTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    timeText = `<div class="mt-1 flex justify-between items-center">
+                        <span class="text-amber-200 font-bold">T-${pred.seconds.toFixed(0)}s</span>
+                        <span class="text-xs text-amber-100/70">a las ${timeStr}</span>
+                    </div>`;
+                } else {
+                    // Just passing by
+                    if (pred && pred.seconds > 0 && pred.seconds < 60) {
+                         status = `Aproximación máxima: ${pred.minDist.toFixed(2)}° en ${pred.seconds.toFixed(0)}s`;
+                    }
+                }
                 
                 const card = document.createElement('div');
-                card.className = `p-2 rounded border ${colorClass} text-xs transition-all ${isTransit ? 'transit-alert' : ''}`;
+                card.className = `p-2 rounded border ${colorClass} text-xs transition-all`;
                 card.innerHTML = `
                     <div class="flex justify-between font-bold text-slate-200">
                         <span>${t.plane.callsign}</span>
                         <span>${Math.round(t.plane.altitude)}ft</span>
                     </div>
                     <div class="text-slate-400 mt-1">${status}</div>
+                    ${timeText}
                 `;
                 els.transitList.appendChild(card);
             });
@@ -588,30 +645,23 @@
                 if (Math.abs(dx) < cvs.width/2 + 20 && Math.abs(dy) < cvs.height/2 + 20) {
                     ctx.save();
                     ctx.translate(cx + dx, cy + dy);
-                    // Approximate visual rotation: if plane is flying "Right", it should point right.
-                    // Plane Heading vs View Heading (Sun Az)
-                    // If Sun Az = 180, Plane Heading = 270 (West), it's moving Right to Left on screen?
-                    // View is looking South. West is Right. So 270 is Right.
-                    // Rotation relative to screen 'up' (-90 deg offset usually for canvas)
-                    // Let's just use heading relative to Sun Azimuth for simplicity visual
-                    
                     let relHead = p.heading - sunAz; 
-                    // This is rough but gives movement indication
                     ctx.rotate((relHead) * Math.PI / 180);
-                    
                     ctx.fillStyle = '#fff';
-                    // Simple plane shape
                     ctx.beginPath();
                     ctx.moveTo(0, -5); ctx.lineTo(3, 5); ctx.lineTo(0, 3); ctx.lineTo(-3, 5);
                     ctx.fill();
-                    
-                    // Label
-                    ctx.rotate(-(relHead) * Math.PI / 180); // Reset rot for text
+                    ctx.rotate(-(relHead) * Math.PI / 180); 
                     ctx.fillStyle = 'rgba(255,255,255,0.7)';
                     ctx.font = '10px sans-serif';
                     ctx.fillText(p.callsign, 6, 3);
-                    
                     ctx.restore();
+                    
+                    // Prediction Line (Debug Visual)
+                    const pred = predictTransit(p, STATE.userLat, STATE.userLon, sunAz, sunAlt);
+                    if (pred && pred.seconds < 10) {
+                         // Optional: Draw trajectory line
+                    }
                 }
             });
         }
