@@ -59,7 +59,7 @@
             <div>
                 <h1 class="text-xl font-bold text-amber-400 flex items-center gap-2">
                     <i data-lucide="sun"></i> Transit Hunter 
-                    <span class="text-[10px] font-mono font-normal text-slate-400 bg-slate-800 border border-slate-700 px-1.5 rounded ml-1">v1.2.0</span>
+                    <span class="text-[10px] font-mono font-normal text-slate-400 bg-slate-800 border border-slate-700 px-1.5 rounded ml-1">v1.3.0</span>
                 </h1>
                 <p class="text-xs text-slate-400">Rastreador de Intersección Solar</p>
             </div>
@@ -652,16 +652,29 @@
                 if (Math.abs(dx) < cvs.width/2 + 20 && Math.abs(dy) < cvs.height/2 + 20) {
                     ctx.save();
                     ctx.translate(cx + dx, cy + dy);
+                    
+                    // Draw Plane as DOT
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 3, 0, Math.PI * 2); // 3px dot
+                    ctx.fillStyle = '#fff';
+                    ctx.fill();
+                    
+                    // Direction Vector (Line)
                     let relHead = p.heading - sunAz; 
                     ctx.rotate((relHead) * Math.PI / 180);
-                    ctx.fillStyle = '#fff';
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+                    ctx.lineWidth = 1;
                     ctx.beginPath();
-                    ctx.moveTo(0, -5); ctx.lineTo(3, 5); ctx.lineTo(0, 3); ctx.lineTo(-3, 5);
-                    ctx.fill();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(12, 0); // Line pointing direction
+                    ctx.stroke();
+
+                    // Text Label
                     ctx.rotate(-(relHead) * Math.PI / 180); 
                     ctx.fillStyle = 'rgba(255,255,255,0.7)';
                     ctx.font = '10px sans-serif';
-                    ctx.fillText(p.callsign, 6, 3);
+                    ctx.fillText(p.callsign, 5, -5);
+                    
                     ctx.restore();
                 }
             });
