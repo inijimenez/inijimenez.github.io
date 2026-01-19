@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transit Tracker - Sol & Luna</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sun-gold: #FFB800;
+            --sun-orange: #FF6B00;
+            --sun-red: #FF2D00;
+            --moon-silver: #C0C0C0;
+            --moon-blue: #B4C5E4;
+            --moon-glow: #E8EEF7;
+            --deep-space: #0A0A12;
+            --space-blue: #12142A;
+            --star-white: #F8F8FF;
+            --transit-cyan: #00FFE0;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --high-conf: #00FF88;
+            --med-conf: #FFB800;
+            --low-conf: #888888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: var(--deep-space);
+            color: var(--star-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated starfield background */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .target-toggle {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .target-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .sun-icon, .moon-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            transition: all 0.5s ease;
+        }
+
+        .sun-icon {
+            background: radial-gradient(circle, var(--sun-gold), var(--sun-orange), var(--sun-red));
+            box-shadow: 0 0 60px var(--sun-orange), 0 0 120px rgba(255, 107, 0, 0.5);
+        }
+
+        .moon-icon {
+            background: radial-gradient(circle at 30% 30%, var(--moon-glow), var(--moon-silver), var(--moon-blue));
+            box-shadow: 0 0 40px rgba(184, 197, 228, 0.5), 0 0 80px rgba(184, 197, 228, 0.3);
+        }
+
+        .target-toggle .hidden { display: none; }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            transition: all 0.3s ease;
+        }
+
+        h1.sun-mode {
+            background: linear-gradient(135deg, var(--sun-gold), var(--sun-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h1.moon-mode {
+            background: linear-gradient(135deg, var(--moon-glow), var(--moon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .target-hint {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 0.5rem;
+        }
+
+        /* Glass panels */
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Location section */
+        .location-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            align-items: end;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input, select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            color: var(--star-white);
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--sun-gold);
+            box-shadow: 0 0 20px rgba(255, 184, 0, 0.2);
+        }
+
+        select option {
+            background: var(--deep-space);
+        }
+
+        /* Buttons */
+        .btn {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sun-gold), var(--sun-orange));
+            color: var(--deep-space);
+        }
+
+        .btn-primary.moon-mode {
+            background: linear-gradient(135deg, var(--moon-silver), var(--moon-blue));
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 184, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--transit-cyan);
+            color: var(--transit-cyan);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 224, 0.1);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        /* Auto mode toggle */
+        .auto-mode-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .auto-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auto-toggle.active {
+            background: var(--transit-cyan);
+        }
+
+        .auto-toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .auto-toggle.active::after {
+            left: 33px;
+        }
+
+        .auto-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .auto-interval {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .auto-interval input {
+            width: 60px;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        /* Status display */
+        .status-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            margin-top: 1.5rem;
+        }
+
+        .status-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .status-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .status-value {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .status-value.sun { color: var(--sun-gold); }
+        .status-value.moon { color: var(--moon-blue); }
+        .status-value.cyan { color: var(--transit-cyan); }
+
+        /* Results section */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .results-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .results-stats {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .results-count {
+            background: var(--transit-cyan);
+            color: var(--deep-space);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .results-window {
+            background: rgba(255, 184, 0, 0.2);
+            color: var(--sun-gold);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .confidence-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .legend-item { color: rgba(255, 255, 255, 0.7); }
+        .legend-item.high { color: var(--high-conf); }
+        .legend-item.medium { color: var(--med-conf); }
+        .legend-item.low { color: var(--low-conf); }
+
+        /* Transit cards */
+        .transit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .transit-card {
+            background: linear-gradient(135deg, rgba(0, 255, 224, 0.08), rgba(255, 184, 0, 0.04));
+            border: 1px solid rgba(0, 255, 224, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+
+        .transit-card.confidence-high::before { background: linear-gradient(90deg, var(--high-conf), #00FFAA); }
+        .transit-card.confidence-medium::before { background: linear-gradient(90deg, var(--med-conf), var(--sun-orange)); }
+        .transit-card.confidence-low::before { background: linear-gradient(90deg, var(--low-conf), #666); }
+        .transit-card.confidence-low { opacity: 0.75; border-color: rgba(255, 255, 255, 0.1); }
+
+        .transit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 255, 224, 0.15);
+            border-color: var(--transit-cyan);
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .confidence-badge {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .confidence-badge.high { background: rgba(0, 255, 136, 0.2); color: var(--high-conf); }
+        .confidence-badge.medium { background: rgba(255, 184, 0, 0.2); color: var(--med-conf); }
+        .confidence-badge.low { background: rgba(255, 255, 255, 0.1); color: var(--low-conf); }
+
+        .time-ahead {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+
+        .transit-time {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--transit-cyan);
+            margin-bottom: 0.25rem;
+        }
+
+        .transit-date {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        .transit-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .detail-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .detail-value {
+            font-size: 0.9rem;
+            color: var(--star-white);
+        }
+
+        .callsign {
+            font-weight: 700;
+            color: var(--sun-gold);
+        }
+
+        /* Alt-Az differences (like FlyMoon) */
+        .altaz-diff {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .altaz-item {
+            text-align: center;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .altaz-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.25rem;
+        }
+
+        .altaz-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .altaz-value.good { color: var(--high-conf); }
+        .altaz-value.medium { color: var(--med-conf); }
+        .altaz-value.poor { color: var(--low-conf); }
+
+        .angular-distance {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .distance-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+            white-space: nowrap;
+        }
+
+        .distance-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .distance-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--transit-cyan), var(--sun-gold));
+            border-radius: 3px;
+        }
+
+        .distance-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--transit-cyan);
+            min-width: 50px;
+            text-align: right;
+        }
+
+        /* Loading & empty states */
+        .loading, .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 184, 0, 0.2);
+            border-top-color: var(--sun-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .empty-state p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            max-width: 400px;
+        }
+
+        .error-message {
+            background: rgba(255, 45, 0, 0.1);
+            border: 1px solid rgba(255, 45, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: #FF6B6B;
+            text-align: center;
+        }
+
+        /* Info panel */
+        .info-panel {
+            background: rgba(0, 255, 224, 0.05);
+            border: 1px solid rgba(0, 255, 224, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .info-panel h4 {
+            font-family: 'Syne', sans-serif;
+            color: var(--transit-cyan);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-panel p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-panel p:last-child { margin-bottom: 0; }
+
+        /* Sound notification */
+        .sound-indicator {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--transit-cyan);
+            color: var(--deep-space);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            animation: pulse-alert 1s infinite;
+            z-index: 1000;
+            display: none;
+        }
+
+        @keyframes pulse-alert {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+        }
+
+        footer a {
+            color: var(--transit-cyan);
+            text-decoration: none;
+        }
+
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .glass-panel { padding: 1.5rem; }
+            .transit-grid { grid-template-columns: 1fr; }
+            .transit-details { grid-template-columns: repeat(2, 1fr); }
+            .location-section { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="starfield" id="starfield"></div>
+    <div class="sound-indicator" id="soundIndicator">🔔 ¡Tránsito detectado!</div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="target-toggle" id="targetToggle" title="Clic para cambiar entre Sol y Luna">
+                    <div class="sun-icon" id="sunIcon"></div>
+                    <div class="moon-icon hidden" id="moonIcon"></div>
+                </div>
+            </div>
+            <h1 id="mainTitle" class="sun-mode">Transit Tracker</h1>
+            <p class="subtitle">Predice tránsitos de aviones sobre el <span id="targetName">Sol</span></p>
+            <p class="target-hint">Clic en el icono para cambiar de objetivo</p>
+        </header>
+
+        <!-- Location Panel -->
+        <section class="glass-panel">
+            <div class="location-section">
+                <div class="input-group">
+                    <label for="latitude">Latitud</label>
+                    <input type="number" id="latitude" step="0.0001" placeholder="40.4168" min="-90" max="90">
+                </div>
+                <div class="input-group">
+                    <label for="longitude">Longitud</label>
+                    <input type="number" id="longitude" step="0.0001" placeholder="-3.7038" min="-180" max="180">
+                </div>
+                <div class="input-group">
+                    <label for="searchRadius">Radio búsqueda (km)</label>
+                    <input type="number" id="searchRadius" value="150" min="10" max="500">
+                </div>
+                <div class="input-group">
+                    <label for="predictionHours">Predicción (horas)</label>
+                    <input type="number" id="predictionHours" value="3" min="0.5" max="6" step="0.5">
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-secondary" id="geolocate">📍 Mi ubicación</button>
+                    <button class="btn btn-primary" id="startTracking">🔍 Buscar</button>
+                </div>
+            </div>
+
+            <div class="auto-mode-container">
+                <div class="auto-toggle" id="autoToggle"></div>
+                <span class="auto-label">Modo automático</span>
+                <div class="auto-interval">
+                    <span>cada</span>
+                    <input type="number" id="autoInterval" value="2" min="1" max="10">
+                    <span>min</span>
+                </div>
+            </div>
+
+            <div class="status-bar" id="statusBar" style="display: none;">
+                <div class="status-item">
+                    <span class="status-label">Tu posición</span>
+                    <span class="status-value cyan" id="positionDisplay">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label" id="targetAltLabel">Altitud solar</span>
+                    <span class="status-value sun" id="targetAltitude">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label" id="targetAzLabel">Azimut solar</span>
+                    <span class="status-value sun" id="targetAzimuth">--</span>
+                </div>
+                <div class="status-item" id="moonPhaseContainer" style="display: none;">
+                    <span class="status-label">Fase lunar</span>
+                    <span class="status-value moon" id="moonPhase">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Aviones</span>
+                    <span class="status-value cyan" id="aircraftCount">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Última actualización</span>
+                    <span class="status-value cyan" id="lastUpdate">--</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Panel -->
+        <section class="glass-panel" id="resultsSection">
+            <div id="resultsContainer">
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <h3>Configura tu ubicación</h3>
+                    <p>Usa geolocalización o introduce coordenadas manualmente. Puedes cambiar entre Sol y Luna haciendo clic en el icono.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <h4>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
+                </svg>
+                ¿Cómo funciona?
+            </h4>
+            <p>
+                Inspirado en <a href="https://github.com/dbetm/flymoon" target="_blank">FlyMoon</a>, esta app calcula la posición del Sol o la Luna y consulta datos de <strong>OpenSky Network</strong> (ADS-B open source). 
+                Proyecta trayectorias hasta <strong>6 horas</strong> y muestra diferencias en coordenadas alt-azimutales.
+            </p>
+            <p>
+                <strong>Interpretación:</strong> Un tránsito es probable cuando <strong>Alt diff</strong> y <strong>Az diff</strong> son menores a ~2°. 
+                Los colores indican probabilidad: 🟢 Alta (&lt;1°), 🟡 Media (1-2°), ⚪ Baja (&gt;2°).
+            </p>
+            <p>
+                <strong>Modo Auto:</strong> Activa el interruptor para buscar tránsitos periódicamente. Recibirás una alerta sonora cuando se detecte uno probable.
+            </p>
+        </div>
+
+        <footer>
+            Datos: <a href="https://opensky-network.org" target="_blank">OpenSky Network</a> · 
+            Inspirado en <a href="https://github.com/dbetm/flymoon" target="_blank">FlyMoon</a> · 
+            Cálculos astronómicos: SunCalc
+        </footer>
+    </div>
+
+    <!-- Audio for notifications -->
+    <audio id="alertSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdH2Onp6SgXBjYW17jZ6nm5KAdWZjbX+SoaijlYNzZGB1hZeorKWYh3dpYW6ClaOttKmbjHxrYWx/k6KwuK6gkH5tYGp9kKGvt7CjlIF0Z2d7jJ2ss7GomYyCcmVqfY+eqrKwppqMfW5mbHyOnamuq6OSh3tsaG19jp2oqqafjYJzam18jJqmqKaejH9ya250hJSgoqGXiXxvaXB4iJifoJyShH1xbHJ4h5OampqRhX1zcXV6hI+WmJaOhH15dnd7go6Sk5CLhYB7eXt+hIqOj42JhYKAf4GEh4qLi4mGg4GAgIKFh4mJiIaEgoGBgoSGiIiIhoSDgoKDhIaHh4eGhYSDg4OEhYaGhoaFhISDhISFhYaGhYWFhISEhISFhYWFhYWEhISEhIWFhYWFhIWEhISEhYWFhYSFhISEhISFhYWFhYWEhISEhIWFhYWFhISFhISEhIWFhYWFhISEhISEhYWFhYWFhISEhISFhYWFhYWEhISEhISFhYWFhYWEhISEhISFhYWFhYWFhISEhIWFhYWFhYSEhISEhYWFhYWFhISE" type="audio/wav">
+    </audio>
+
+    <script>
+    // ============================================
+    // ASTRONOMICAL CALCULATIONS
+    // ============================================
+    const Astro = (function() {
+        const PI = Math.PI, sin = Math.sin, cos = Math.cos, tan = Math.tan,
+              asin = Math.asin, atan2 = Math.atan2, acos = Math.acos, rad = PI / 180;
+        const dayMs = 864e5, J1970 = 2440588, J2000 = 2451545, e = rad * 23.4397;
+
+        const toJulian = d => d.valueOf() / dayMs - 0.5 + J1970;
+        const toDays = d => toJulian(d) - J2000;
+        const rightAscension = (l, b) => atan2(sin(l) * cos(e) - tan(b) * sin(e), cos(l));
+        const declination = (l, b) => asin(sin(b) * cos(e) + cos(b) * sin(e) * sin(l));
+        const azimuth = (H, phi, dec) => atan2(sin(H), cos(H) * sin(phi) - tan(dec) * cos(phi));
+        const altitude = (H, phi, dec) => asin(sin(phi) * sin(dec) + cos(phi) * cos(dec) * cos(H));
+        const siderealTime = (d, lw) => rad * (280.16 + 360.9856235 * d) - lw;
+
+        // Sun calculations
+        const solarMeanAnomaly = d => rad * (357.5291 + 0.98560028 * d);
+        const eclipticLongitude = M => {
+            const C = rad * (1.9148 * sin(M) + 0.02 * sin(2*M) + 0.0003 * sin(3*M));
+            return M + C + rad * 102.9372 + PI;
+        };
+        const sunCoords = d => {
+            const M = solarMeanAnomaly(d), L = eclipticLongitude(M);
+            return { dec: declination(L, 0), ra: rightAscension(L, 0) };
+        };
+
+        // Moon calculations
+        const moonCoords = d => {
+            const L = rad * (218.316 + 13.176396 * d),
+                  M = rad * (134.963 + 13.064993 * d),
+                  F = rad * (93.272 + 13.229350 * d),
+                  l = L + rad * 6.289 * sin(M),
+                  b = rad * 5.128 * sin(F),
+                  dt = 385001 - 20905 * cos(M);
+            return { ra: rightAscension(l, b), dec: declination(l, b), dist: dt };
+        };
+
+        // Moon illumination / phase
+        const getMoonIllumination = date => {
+            const d = toDays(date), s = sunCoords(d), m = moonCoords(d);
+            const sdist = 149598000,
+                  phi = acos(sin(s.dec) * sin(m.dec) + cos(s.dec) * cos(m.dec) * cos(s.ra - m.ra)),
+                  inc = atan2(sdist * sin(phi), m.dist - sdist * cos(phi)),
+                  angle = atan2(
+                      cos(s.dec) * sin(s.ra - m.ra),
+                      sin(s.dec) * cos(m.dec) - cos(s.dec) * sin(m.dec) * cos(s.ra - m.ra)
+                  );
+            return {
+                fraction: (1 + cos(inc)) / 2,
+                phase: 0.5 + 0.5 * inc * (angle < 0 ? -1 : 1) / PI,
+                angle: angle
+            };
+        };
+
+        const getMoonPhaseName = phase => {
+            if (phase < 0.03 || phase > 0.97) return '🌑 Nueva';
+            if (phase < 0.22) return '🌒 Creciente';
+            if (phase < 0.28) return '🌓 Cuarto Creciente';
+            if (phase < 0.47) return '🌔 Gibosa Creciente';
+            if (phase < 0.53) return '🌕 Llena';
+            if (phase < 0.72) return '🌖 Gibosa Menguante';
+            if (phase < 0.78) return '🌗 Cuarto Menguante';
+            return '🌘 Menguante';
+        };
+
+        return {
+            getSunPosition(date, lat, lng) {
+                const lw = rad * -lng, phi = rad * lat, d = toDays(date), c = sunCoords(d),
+                      H = siderealTime(d, lw) - c.ra;
+                return {
+                    altitude: altitude(H, phi, c.dec) * 180 / PI,
+                    azimuth: (azimuth(H, phi, c.dec) * 180 / PI + 180) % 360
+                };
+            },
+            getMoonPosition(date, lat, lng) {
+                const lw = rad * -lng, phi = rad * lat, d = toDays(date), c = moonCoords(d),
+                      H = siderealTime(d, lw) - c.ra,
+                      h = altitude(H, phi, c.dec),
+                      pa = atan2(sin(H), tan(phi) * cos(c.dec) - sin(c.dec) * cos(H));
+                // Parallax correction for moon (it's close!)
+                const hCorr = h - rad * 0.95 * cos(h) * (385001 / c.dist);
+                return {
+                    altitude: hCorr * 180 / PI,
+                    azimuth: (azimuth(H, phi, c.dec) * 180 / PI + 180) % 360,
+                    distance: c.dist
+                };
+            },
+            getMoonIllumination,
+            getMoonPhaseName
+        };
+    })();
+
+    // ============================================
+    // CONSTANTS AND STATE
+    // ============================================
+    const EARTH_RADIUS = 6371;
+    const TRANSIT_THRESHOLD = 2.5; // degrees
+    const MAX_PREDICTION_HOURS = 6;
+
+    let state = {
+        target: 'sun', // 'sun' or 'moon'
+        userLat: null,
+        userLon: null,
+        searchRadius: 150,
+        predictionHours: 3,
+        autoMode: false,
+        autoInterval: 2,
+        trackingInterval: null,
+        lastTransits: []
+    };
+
+    // DOM Elements
+    const $ = id => document.getElementById(id);
+    const elements = {
+        targetToggle: $('targetToggle'),
+        sunIcon: $('sunIcon'),
+        moonIcon: $('moonIcon'),
+        mainTitle: $('mainTitle'),
+        targetName: $('targetName'),
+        latitude: $('latitude'),
+        longitude: $('longitude'),
+        searchRadius: $('searchRadius'),
+        predictionHours: $('predictionHours'),
+        geolocate: $('geolocate'),
+        startTracking: $('startTracking'),
+        autoToggle: $('autoToggle'),
+        autoInterval: $('autoInterval'),
+        statusBar: $('statusBar'),
+        resultsContainer: $('resultsContainer'),
+        positionDisplay: $('positionDisplay'),
+        targetAltitude: $('targetAltitude'),
+        targetAzimuth: $('targetAzimuth'),
+        targetAltLabel: $('targetAltLabel'),
+        targetAzLabel: $('targetAzLabel'),
+        moonPhaseContainer: $('moonPhaseContainer'),
+        moonPhase: $('moonPhase'),
+        aircraftCount: $('aircraftCount'),
+        lastUpdate: $('lastUpdate'),
+        soundIndicator: $('soundIndicator'),
+        alertSound: $('alertSound')
+    };
+
+    // ============================================
+    // UI FUNCTIONS
+    // ============================================
+    function generateStars() {
+        const starfield = $('starfield');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${Math.random()*2+1}px;height:${star.style.width};animation-delay:${Math.random()*3}s`;
+            starfield.appendChild(star);
+        }
+    }
+
+    function toggleTarget() {
+        state.target = state.target === 'sun' ? 'moon' : 'sun';
+        const isSun = state.target === 'sun';
+        
+        elements.sunIcon.classList.toggle('hidden', !isSun);
+        elements.moonIcon.classList.toggle('hidden', isSun);
+        elements.mainTitle.className = isSun ? 'sun-mode' : 'moon-mode';
+        elements.targetName.textContent = isSun ? 'Sol' : 'Luna';
+        elements.targetAltLabel.textContent = isSun ? 'Altitud solar' : 'Altitud lunar';
+        elements.targetAzLabel.textContent = isSun ? 'Azimut solar' : 'Azimut lunar';
+        elements.targetAltitude.className = 'status-value ' + (isSun ? 'sun' : 'moon');
+        elements.targetAzimuth.className = 'status-value ' + (isSun ? 'sun' : 'moon');
+        elements.moonPhaseContainer.style.display = isSun ? 'none' : 'block';
+        elements.startTracking.classList.toggle('moon-mode', !isSun);
+    }
+
+    function toggleAutoMode() {
+        state.autoMode = !state.autoMode;
+        elements.autoToggle.classList.toggle('active', state.autoMode);
+        
+        if (state.autoMode && state.userLat !== null) {
+            startAutoTracking();
+        } else {
+            stopAutoTracking();
+        }
+    }
+
+    function startAutoTracking() {
+        stopAutoTracking();
+        const intervalMs = state.autoInterval * 60 * 1000;
+        state.trackingInterval = setInterval(updateTracking, intervalMs);
+        updateTracking();
+    }
+
+    function stopAutoTracking() {
+        if (state.trackingInterval) {
+            clearInterval(state.trackingInterval);
+            state.trackingInterval = null;
+        }
+    }
+
+    function playAlert() {
+        elements.soundIndicator.style.display = 'block';
+        try {
+            // Create a simple beep using Web Audio API
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = 880;
+            osc.type = 'sine';
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.5);
+        } catch (e) {
+            console.log('Audio not available');
+        }
+        setTimeout(() => { elements.soundIndicator.style.display = 'none'; }, 3000);
+    }
+
+    // ============================================
+    // CALCULATION FUNCTIONS
+    // ============================================
+    function getTargetPosition(lat, lon, date = new Date()) {
+        return state.target === 'sun' 
+            ? Astro.getSunPosition(date, lat, lon)
+            : Astro.getMoonPosition(date, lat, lon);
+    }
+
+    function angularDistance(az1, alt1, az2, alt2) {
+        const [a1, e1, a2, e2] = [az1, alt1, az2, alt2].map(x => x * Math.PI / 180);
+        const cosD = Math.sin(e1) * Math.sin(e2) + Math.cos(e1) * Math.cos(e2) * Math.cos(a1 - a2);
+        return Math.acos(Math.max(-1, Math.min(1, cosD))) * 180 / Math.PI;
+    }
+
+    function getAircraftSkyPosition(obsLat, obsLon, acLat, acLon, acAlt) {
+        const [lat1, lon1, lat2, lon2] = [obsLat, obsLon, acLat, acLon].map(x => x * Math.PI / 180);
+        const dLon = lon2 - lon1;
+        
+        // Azimuth
+        const y = Math.sin(dLon) * Math.cos(lat2);
+        const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+        const azimuth = (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+        
+        // Distance (Haversine)
+        const a = Math.sin((lat2-lat1)/2)**2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon/2)**2;
+        const distance = EARTH_RADIUS * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        
+        // Altitude angle
+        const heightKm = acAlt / 1000;
+        const altitude = Math.atan2(heightKm, distance) * 180 / Math.PI;
+        
+        return { azimuth, altitude, distance };
+    }
+
+    function predictTransit(aircraft, targetPos, obsLat, obsLon, maxHours) {
+        if (!aircraft.latitude || !aircraft.longitude) return null;
+        
+        const acAlt = aircraft.geo_altitude || aircraft.baro_altitude || 10000;
+        const skyPos = getAircraftSkyPosition(obsLat, obsLon, aircraft.latitude, aircraft.longitude, acAlt);
+        
+        const altDiff = Math.abs(skyPos.altitude - targetPos.altitude);
+        const azDiff = Math.abs(skyPos.azimuth - targetPos.azimuth);
+        const azDiffNorm = Math.min(azDiff, 360 - azDiff);
+        const currentAngDist = angularDistance(targetPos.azimuth, targetPos.altitude, skyPos.azimuth, skyPos.altitude);
+        
+        // Check current position
+        if (currentAngDist < TRANSIT_THRESHOLD) {
+            return createTransitResult(aircraft, skyPos, targetPos, 0, currentAngDist, altDiff, azDiffNorm);
+        }
+        
+        // Need velocity for prediction
+        if (!aircraft.velocity || !aircraft.true_track) return null;
+        
+        const velocityKmH = aircraft.velocity * 3.6;
+        const heading = aircraft.true_track * Math.PI / 180;
+        const totalMinutes = maxHours * 60;
+        const sampleInterval = totalMinutes > 60 ? 2 : 1;
+        
+        let best = { angDist: currentAngDist, time: null, skyPos, altDiff, azDiff: azDiffNorm, hours: 0 };
+        
+        for (let min = sampleInterval; min <= totalMinutes; min += sampleInterval) {
+            const hours = min / 60;
+            const dist = velocityKmH * hours;
+            if (dist > 1500) break;
+            
+            // Project position
+            const lat1 = aircraft.latitude * Math.PI / 180;
+            const lon1 = aircraft.longitude * Math.PI / 180;
+            const d = dist / EARTH_RADIUS;
+            
+            const lat2 = Math.asin(Math.sin(lat1) * Math.cos(d) + Math.cos(lat1) * Math.sin(d) * Math.cos(heading));
+            const lon2 = lon1 + Math.atan2(Math.sin(heading) * Math.sin(d) * Math.cos(lat1), Math.cos(d) - Math.sin(lat1) * Math.sin(lat2));
+            
+            const newLat = lat2 * 180 / Math.PI;
+            const newLon = lon2 * 180 / Math.PI;
+            
+            // Check distance from observer
+            const distFromObs = haversine(obsLat, obsLon, newLat, newLon);
+            if (distFromObs > 500) continue;
+            
+            // Future target position
+            const futureDate = new Date(Date.now() + min * 60000);
+            const futureTarget = getTargetPosition(obsLat, obsLon, futureDate);
+            if (futureTarget.altitude <= 0) continue;
+            
+            const newSkyPos = getAircraftSkyPosition(obsLat, obsLon, newLat, newLon, acAlt);
+            const angDist = angularDistance(futureTarget.azimuth, futureTarget.altitude, newSkyPos.azimuth, newSkyPos.altitude);
+            const newAltDiff = Math.abs(newSkyPos.altitude - futureTarget.altitude);
+            const newAzDiff = Math.min(Math.abs(newSkyPos.azimuth - futureTarget.azimuth), 360 - Math.abs(newSkyPos.azimuth - futureTarget.azimuth));
+            
+            if (angDist < best.angDist) {
+                best = { angDist, time: futureDate, skyPos: newSkyPos, altDiff: newAltDiff, azDiff: newAzDiff, hours };
+            }
+        }
+        
+        if (best.angDist < TRANSIT_THRESHOLD && best.time) {
+            return createTransitResult(aircraft, best.skyPos, null, best.hours, best.angDist, best.altDiff, best.azDiff, best.time);
+        }
+        
+        return null;
+    }
+
+    function createTransitResult(aircraft, skyPos, targetPos, hoursAhead, angDist, altDiff, azDiff, time = null) {
+        const confidence = hoursAhead < 0.5 ? 'high' : hoursAhead < 1.5 ? 'medium' : 'low';
+        return {
+            aircraft,
+            transitTime: time || new Date(),
+            angularDistance: angDist,
+            altDiff,
+            azDiff,
+            skyPosition: skyPos,
+            confidence,
+            hoursAhead,
+            isPredicted: hoursAhead > 0
+        };
+    }
+
+    function haversine(lat1, lon1, lat2, lon2) {
+        const [φ1, φ2, Δφ, Δλ] = [lat1, lat2, lat2-lat1, lon2-lon1].map((x,i) => i < 2 ? x * Math.PI/180 : x * Math.PI/180);
+        const a = Math.sin(Δφ/2)**2 + Math.cos(φ1 * Math.PI/180) * Math.cos(φ2 * Math.PI/180) * Math.sin(Δλ/2)**2;
+        return EARTH_RADIUS * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    // ============================================
+    // API FUNCTIONS
+    // ============================================
+    async function fetchAircraftData(lat, lon, radius) {
+        const latDelta = radius / 111;
+        const lonDelta = radius / (111 * Math.cos(lat * Math.PI / 180));
+        
+        const url = `https://opensky-network.org/api/states/all?lamin=${lat-latDelta}&lomin=${lon-lonDelta}&lamax=${lat+latDelta}&lomax=${lon+lonDelta}`;
+        
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const data = await response.json();
+        if (!data.states) return [];
+        
+        return data.states.map(s => ({
+            icao24: s[0], callsign: s[1]?.trim() || 'N/A', origin_country: s[2],
+            longitude: s[5], latitude: s[6], baro_altitude: s[7], on_ground: s[8],
+            velocity: s[9], true_track: s[10], vertical_rate: s[11], geo_altitude: s[13]
+        })).filter(a => !a.on_ground && a.latitude && a.longitude);
+    }
+
+    // ============================================
+    // DISPLAY FUNCTIONS
+    // ============================================
+    function updateDisplay(targetPos, aircraft, transits) {
+        const isSun = state.target === 'sun';
+        
+        // Update status
+        elements.positionDisplay.textContent = `${state.userLat.toFixed(4)}°, ${state.userLon.toFixed(4)}°`;
+        elements.targetAltitude.textContent = targetPos.altitude > 0 ? `${targetPos.altitude.toFixed(1)}°` : 'Bajo horizonte';
+        elements.targetAzimuth.textContent = `${targetPos.azimuth.toFixed(1)}°`;
+        elements.aircraftCount.textContent = aircraft.length;
+        elements.lastUpdate.textContent = new Date().toLocaleTimeString('es-ES');
+        
+        if (!isSun) {
+            const illum = Astro.getMoonIllumination(new Date());
+            elements.moonPhase.textContent = `${Astro.getMoonPhaseName(illum.phase)} (${(illum.fraction * 100).toFixed(0)}%)`;
+        }
+        
+        // Check for alerts
+        const highConfTransits = transits.filter(t => t.confidence === 'high' || t.confidence === 'medium');
+        if (state.autoMode && highConfTransits.length > 0) {
+            const newTransit = highConfTransits.some(t => 
+                !state.lastTransits.find(lt => lt.aircraft.icao24 === t.aircraft.icao24)
+            );
+            if (newTransit) playAlert();
+        }
+        state.lastTransits = transits;
+        
+        // Render results
+        if (targetPos.altitude <= 0) {
+            elements.resultsContainer.innerHTML = `
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/></svg>
+                    <h3>${isSun ? 'El sol' : 'La luna'} está bajo el horizonte</h3>
+                    <p>Los tránsitos solo pueden predecirse cuando ${isSun ? 'el sol' : 'la luna'} está visible.</p>
+                </div>`;
+            return;
+        }
+        
+        if (transits.length === 0) {
+            elements.resultsContainer.innerHTML = `
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/>
+                    </svg>
+                    <h3>Sin tránsitos previstos</h3>
+                    <p>No hay aviones que vayan a cruzar cerca ${isSun ? 'del sol' : 'de la luna'} en las próximas ${state.predictionHours} horas. Rastreando ${aircraft.length} aviones.</p>
+                </div>`;
+            return;
+        }
+        
+        transits.sort((a, b) => a.transitTime - b.transitTime);
+        
+        elements.resultsContainer.innerHTML = `
+            <div class="results-header">
+                <h2 class="results-title">Tránsitos Detectados</h2>
+                <div class="results-stats">
+                    <span class="results-count">${transits.length} posibles</span>
+                    <span class="results-window">Próximas ${state.predictionHours}h</span>
+                </div>
+            </div>
+            <div class="confidence-legend">
+                <span class="legend-item high">🟢 Alta (&lt;30min, diff &lt;1°)</span>
+                <span class="legend-item medium">🟡 Media (30min-1.5h, diff 1-2°)</span>
+                <span class="legend-item low">⚪ Baja (&gt;1.5h, diff &gt;2°)</span>
+            </div>
+            <div class="transit-grid">
+                ${transits.map(renderTransitCard).join('')}
+            </div>`;
+    }
+
+    function renderTransitCard(t) {
+        const timeStr = t.transitTime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const dateStr = t.transitTime.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
+        const altM = t.aircraft.geo_altitude || t.aircraft.baro_altitude || 0;
+        const speedKmh = (t.aircraft.velocity || 0) * 3.6;
+        const proximityPct = Math.max(0, 100 - (t.angularDistance / TRANSIT_THRESHOLD * 100));
+        
+        const timeAhead = t.hoursAhead < 1/60 ? 'Ahora' : 
+            t.hoursAhead < 1 ? `en ${Math.round(t.hoursAhead * 60)} min` :
+            `en ${Math.floor(t.hoursAhead)}h ${Math.round((t.hoursAhead % 1) * 60)}min`;
+        
+        const altDiffClass = t.altDiff < 1 ? 'good' : t.altDiff < 2 ? 'medium' : 'poor';
+        const azDiffClass = t.azDiff < 1 ? 'good' : t.azDiff < 2 ? 'medium' : 'poor';
+        
+        const confEmoji = { high: '🟢', medium: '🟡', low: '⚪' }[t.confidence];
+        const confText = { high: 'Alta', medium: 'Media', low: 'Baja' }[t.confidence];
+        
+        return `
+            <div class="transit-card confidence-${t.confidence}">
+                <div class="card-header">
+                    <span class="confidence-badge ${t.confidence}">${confEmoji} ${confText}</span>
+                    <span class="time-ahead">${timeAhead}</span>
+                </div>
+                <div class="transit-time">${timeStr}</div>
+                <div class="transit-date">${dateStr}</div>
+                <div class="transit-details">
+                    <div class="detail-item"><span class="detail-label">Callsign</span><span class="detail-value callsign">${t.aircraft.callsign}</span></div>
+                    <div class="detail-item"><span class="detail-label">País</span><span class="detail-value">${t.aircraft.origin_country}</span></div>
+                    <div class="detail-item"><span class="detail-label">ICAO</span><span class="detail-value">${t.aircraft.icao24.toUpperCase()}</span></div>
+                    <div class="detail-item"><span class="detail-label">Altitud</span><span class="detail-value">${(altM/1000).toFixed(1)} km</span></div>
+                    <div class="detail-item"><span class="detail-label">Velocidad</span><span class="detail-value">${speedKmh.toFixed(0)} km/h</span></div>
+                    <div class="detail-item"><span class="detail-label">Rumbo</span><span class="detail-value">${(t.aircraft.true_track || 0).toFixed(0)}°</span></div>
+                </div>
+                <div class="altaz-diff">
+                    <div class="altaz-item">
+                        <div class="altaz-label">Alt diff</div>
+                        <div class="altaz-value ${altDiffClass}">${t.altDiff.toFixed(2)}°</div>
+                    </div>
+                    <div class="altaz-item">
+                        <div class="altaz-label">Az diff</div>
+                        <div class="altaz-value ${azDiffClass}">${t.azDiff.toFixed(2)}°</div>
+                    </div>
+                </div>
+                <div class="angular-distance">
+                    <span class="distance-label">Distancia angular</span>
+                    <div class="distance-bar"><div class="distance-fill" style="width:${proximityPct}%"></div></div>
+                    <span class="distance-value">${t.angularDistance.toFixed(2)}°</span>
+                </div>
+            </div>`;
+    }
+
+    // ============================================
+    // MAIN FUNCTIONS
+    // ============================================
+    async function startTracking() {
+        state.userLat = parseFloat(elements.latitude.value);
+        state.userLon = parseFloat(elements.longitude.value);
+        state.searchRadius = parseInt(elements.searchRadius.value) || 150;
+        state.predictionHours = Math.max(0.5, Math.min(MAX_PREDICTION_HOURS, parseFloat(elements.predictionHours.value) || 3));
+        state.autoInterval = parseInt(elements.autoInterval.value) || 2;
+        
+        if (isNaN(state.userLat) || isNaN(state.userLon)) {
+            alert('Por favor, introduce coordenadas válidas');
+            return;
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('transitTracker', JSON.stringify({
+            lat: state.userLat, lon: state.userLon, radius: state.searchRadius, hours: state.predictionHours
+        }));
+        
+        elements.statusBar.style.display = 'grid';
+        elements.startTracking.disabled = true;
+        elements.startTracking.textContent = '⏳ Cargando...';
+        
+        elements.resultsContainer.innerHTML = `
+            <div class="loading">
+                <div class="loader"></div>
+                <span class="loading-text">Consultando OpenSky Network...</span>
+            </div>`;
+        
+        try {
+            await updateTracking();
+            if (state.autoMode) startAutoTracking();
+            elements.startTracking.textContent = '🔄 Actualizar';
+        } catch (error) {
+            elements.resultsContainer.innerHTML = `
+                <div class="error-message">
+                    <h3>⚠️ Error obteniendo datos</h3>
+                    <p>${error.message}</p>
+                    <p style="margin-top:1rem;font-size:0.85rem;opacity:0.7">OpenSky tiene límites de uso. Espera unos segundos.</p>
+                </div>`;
+            elements.startTracking.textContent = '🔍 Reintentar';
+        }
+        elements.startTracking.disabled = false;
+    }
+
+    async function updateTracking() {
+        const targetPos = getTargetPosition(state.userLat, state.userLon);
+        const aircraft = await fetchAircraftData(state.userLat, state.userLon, state.searchRadius);
+        
+        const transits = aircraft
+            .map(ac => predictTransit(ac, targetPos, state.userLat, state.userLon, state.predictionHours))
+            .filter(Boolean);
+        
+        updateDisplay(targetPos, aircraft, transits);
+    }
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    function init() {
+        generateStars();
+        
+        // Load saved settings
+        try {
+            const saved = JSON.parse(localStorage.getItem('transitTracker'));
+            if (saved) {
+                elements.latitude.value = saved.lat;
+                elements.longitude.value = saved.lon;
+                elements.searchRadius.value = saved.radius || 150;
+                elements.predictionHours.value = saved.hours || 3;
+            } else {
+                // Default: Madrid
+                elements.latitude.value = '40.4168';
+                elements.longitude.value = '-3.7038';
+            }
+        } catch (e) {
+            elements.latitude.value = '40.4168';
+            elements.longitude.value = '-3.7038';
+        }
+        
+        // Event listeners
+        elements.targetToggle.addEventListener('click', toggleTarget);
+        elements.autoToggle.addEventListener('click', toggleAutoMode);
+        elements.startTracking.addEventListener('click', startTracking);
+        
+        elements.geolocate.addEventListener('click', () => {
+            if (!navigator.geolocation) return alert('Geolocalización no disponible');
+            elements.geolocate.disabled = true;
+            elements.geolocate.textContent = '⏳ Obteniendo...';
+            navigator.geolocation.getCurrentPosition(
+                pos => {
+                    elements.latitude.value = pos.coords.latitude.toFixed(4);
+                    elements.longitude.value = pos.coords.longitude.toFixed(4);
+                    elements.geolocate.disabled = false;
+                    elements.geolocate.textContent = '📍 Mi ubicación';
+                },
+                err => {
+                    alert('Error: ' + err.message);
+                    elements.geolocate.disabled = false;
+                    elements.geolocate.textContent = '📍 Mi ubicación';
+                }
+            );
+        });
+    }
+
+    init();
+    </script>
+</body>
+</html>
