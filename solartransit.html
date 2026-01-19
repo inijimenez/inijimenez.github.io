@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Transit Hunter - Rastreador de Aviones y Sol</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Leaflet CSS & JS (Mapas) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- SunCalc (Posición del Sol) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        #map { height: 100%; width: 100%; z-index: 0; }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Animación para alerta de tránsito */
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .transit-alert {
+            animation: pulse-red 2s infinite;
+            border-color: #ef4444;
+        }
+        canvas { touch-action: none; }
+        
+        /* Spinner de carga */
+        .loader {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #fbbf24;
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-slate-900 text-white h-screen overflow-hidden flex flex-col md:flex-row">
+
+    <!-- Sidebar / Dashboard -->
+    <div class="w-full md:w-96 glass-panel flex flex-col h-1/3 md:h-full z-20 border-r border-slate-700 shadow-2xl">
+        <div class="p-4 border-b border-slate-700 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold text-amber-400 flex items-center gap-2">
+                    <i data-lucide="sun"></i> Transit Hunter
+                </h1>
+                <p class="text-xs text-slate-400">Rastreador de Intersección Solar</p>
+            </div>
+            <div id="gps-status" class="text-xs px-2 py-1 rounded bg-red-900 text-red-200">No GPS</div>
+        </div>
+
+        <!-- Solar Data -->
+        <div class="p-4 grid grid-cols-2 gap-2 text-sm border-b border-slate-700 bg-slate-800/50">
+            <div>
+                <span class="text-slate-400 block text-xs">Azimut Solar</span>
+                <span id="sun-az" class="font-mono text-amber-200">--°</span>
+            </div>
+            <div>
+                <span class="text-slate-400 block text-xs">Elevación Solar</span>
+                <span id="sun-alt" class="font-mono text-amber-200">--°</span>
+            </div>
+        </div>
+
+        <!-- Transit List -->
+        <div class="flex-1 overflow-y-auto p-2">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-2 flex justify-between items-center">
+                <span>Próximos Tránsitos</span>
+                <span id="data-indicator" class="text-[10px] text-slate-500 font-normal border border-slate-700 px-1 rounded">SIMULACIÓN</span>
+            </h3>
+            <div id="transit-list" class="space-y-2">
+                <div class="text-center text-slate-500 py-4 italic text-sm">
+                    Esperando datos...
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="p-4 border-t border-slate-700 bg-slate-900 space-y-3">
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold text-slate-300">Fuente de Datos</span>
+                <div id="loading-spinner" class="loader opacity-0"></div>
+            </div>
+            
+            <div class="flex bg-slate-800 rounded p-1">
+                <button onclick="setMode('sim')" id="btn-sim" class="flex-1 text-xs py-1.5 px-2 rounded bg-slate-600 text-white font-medium transition-colors">Simulación</button>
+                <button onclick="setMode('real')" id="btn-real" class="flex-1 text-xs py-1.5 px-2 rounded text-slate-400 hover:text-white transition-colors">OpenSky (Real)</button>
+            </div>
+
+            <p class="text-[10px] text-slate-500 leading-tight">
+                <span class="text-amber-500 font-bold">Nota OpenSky:</span> Los datos reales tienen 10-20s de retraso. Si falla, el sistema volverá a simulación.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 relative h-2/3 md:h-full flex flex-col">
+        
+        <!-- Sky View (Canvas) -->
+        <div class="h-1/2 relative bg-gradient-to-b from-sky-900 to-sky-700 border-b border-slate-700 overflow-hidden group">
+            <div class="absolute top-2 left-2 bg-black/50 px-2 py-1 rounded text-xs z-10">Vista del Cielo (Cámara Virtual)</div>
+            <canvas id="skyCanvas" class="w-full h-full object-cover"></canvas>
+            
+            <!-- Crosshair overlay -->
+            <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
+                <div class="w-full h-px bg-white/20 absolute"></div>
+                <div class="h-full w-px bg-white/20 absolute"></div>
+                <div class="w-20 h-20 border border-white/20 rounded-full absolute"></div>
+            </div>
+        </div>
+
+        <!-- Map View -->
+        <div class="h-1/2 relative">
+            <div id="map"></div>
+            <div class="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded z-[1000] pointer-events-none">
+                Línea Amarilla: Sol | Azul: Aviones
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION & STATE ---
+        const STATE = {
+            userLat: null,
+            userLon: null,
+            sunPos: { azimuth: 0, altitude: 0 },
+            planes: [],
+            mode: 'sim', // 'sim' or 'real'
+            lastUpdate: Date.now(),
+            lastApiFetch: 0
+        };
+
+        const SETTINGS = {
+            viewRadiusKm: 100, 
+            sunAngularSizeDeg: 0.53, 
+            apiIntervalMs: 10000 // OpenSky rate limit for anon users is ~10s
+        };
+
+        // --- DOM ELEMENTS ---
+        const els = {
+            sunAz: document.getElementById('sun-az'),
+            sunAlt: document.getElementById('sun-alt'),
+            gpsStatus: document.getElementById('gps-status'),
+            transitList: document.getElementById('transit-list'),
+            skyCanvas: document.getElementById('skyCanvas'),
+            dataIndicator: document.getElementById('data-indicator'),
+            btnSim: document.getElementById('btn-sim'),
+            btnReal: document.getElementById('btn-real'),
+            spinner: document.getElementById('loading-spinner')
+        };
+
+        // --- INITIALIZATION ---
+        lucide.createIcons();
+        
+        const map = L.map('map').setView([40.4168, -3.7038], 8);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        const planeIcon = L.divIcon({
+            className: 'custom-plane-icon',
+            html: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(45deg); filter: drop-shadow(0 0 4px #38bdf8);"><path d="M2 12h20"/><path d="M13 2l9 10-9 10"/><path d="M2 12l5-5m-5 5l5 5"/></svg>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+        });
+
+        const layers = {
+            user: L.layerGroup().addTo(map),
+            sunLine: L.layerGroup().addTo(map),
+            planes: L.layerGroup().addTo(map)
+        };
+
+        // --- MODE SWITCHING ---
+        window.setMode = function(mode) {
+            STATE.mode = mode;
+            STATE.planes = []; // Clear current planes
+            layers.planes.clearLayers();
+            
+            if (mode === 'sim') {
+                els.btnSim.className = "flex-1 text-xs py-1.5 px-2 rounded bg-slate-600 text-white font-medium transition-colors";
+                els.btnReal.className = "flex-1 text-xs py-1.5 px-2 rounded text-slate-400 hover:text-white transition-colors";
+                els.dataIndicator.innerText = "SIMULACIÓN";
+                els.dataIndicator.className = "text-[10px] text-slate-500 font-normal border border-slate-700 px-1 rounded bg-slate-800";
+            } else {
+                els.btnReal.className = "flex-1 text-xs py-1.5 px-2 rounded bg-emerald-700 text-white font-medium transition-colors";
+                els.btnSim.className = "flex-1 text-xs py-1.5 px-2 rounded text-slate-400 hover:text-white transition-colors";
+                els.dataIndicator.innerText = "OPENSKY NETWORK";
+                els.dataIndicator.className = "text-[10px] text-emerald-300 font-normal border border-emerald-800 px-1 rounded bg-emerald-900/30";
+                
+                // Trigger immediate fetch
+                if(STATE.userLat) fetchRealPlanes();
+            }
+        };
+
+        // --- API INTEGRATION (OpenSky) ---
+        async function fetchRealPlanes() {
+            if (!STATE.userLat || STATE.mode !== 'real') return;
+            
+            const now = Date.now();
+            if (now - STATE.lastApiFetch < SETTINGS.apiIntervalMs) return;
+
+            els.spinner.style.opacity = '1';
+            STATE.lastApiFetch = now;
+
+            // Bounding box (approx 1 degree ~ 111km)
+            const boxSize = 1.0; 
+            const lamin = STATE.userLat - boxSize;
+            const lamax = STATE.userLat + boxSize;
+            const lomin = STATE.userLon - boxSize;
+            const lomax = STATE.userLon + boxSize;
+
+            const url = `https://opensky-network.org/api/states/all?lamin=${lamin}&lomin=${lomin}&lamax=${lamax}&lomax=${lomax}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('API Limit or Error');
+                
+                const data = await response.json();
+                els.spinner.style.opacity = '0';
+
+                if (!data.states) return;
+
+                // Update planes
+                // OpenSky format: [icao24, callsign, origin_country, time_position, last_contact, longitude, latitude, baro_altitude, on_ground, velocity, true_track, ...]
+                // Mapping: Lon=5, Lat=6, Alt(m)=7, Vel(m/s)=9, Head=10
+                
+                // Clear old real planes (simplified strategy: replace all)
+                STATE.planes = data.states
+                    .filter(s => !s[8] && s[6] && s[5]) // Must not be on ground, must have coords
+                    .map(s => {
+                        const altFt = (s[7] || 0) * 3.28084;
+                        const spdKts = (s[9] || 0) * 1.94384;
+                        const callsign = s[1].trim() || s[0]; // Callsign or ICAO
+                        
+                        // Check if this plane already exists to preserve some state if needed
+                        // Ideally we would interpolate, but for this demo we just update pos
+                        return new Plane(s[0], s[6], s[5], s[10] || 0, spdKts, altFt, callsign);
+                    });
+
+                // Update map markers immediately
+                updatePlaneMarkers();
+
+            } catch (err) {
+                console.warn("OpenSky fetch failed", err);
+                els.spinner.style.opacity = '0';
+                
+                // Optional: Alert user only once or show small toast
+                const errDiv = document.createElement('div');
+                errDiv.className = "fixed top-4 right-4 bg-red-900 text-white p-2 rounded text-xs z-50 shadow-lg";
+                errDiv.innerText = "Error obteniendo datos reales. Volviendo a Simulación.";
+                document.body.appendChild(errDiv);
+                setTimeout(() => errDiv.remove(), 3000);
+                
+                setMode('sim');
+            }
+        }
+
+        // --- GEOLOCATION & SUN CALC ---
+        function updateSunPosition() {
+            if (!STATE.userLat) return;
+            const now = new Date();
+            const sun = SunCalc.getPosition(now, STATE.userLat, STATE.userLon);
+            STATE.sunPos = sun; 
+
+            const azDeg = (sun.azimuth * (180/Math.PI) + 180) % 360;
+            const altDeg = sun.altitude * (180/Math.PI);
+
+            els.sunAz.innerText = azDeg.toFixed(1) + '°';
+            els.sunAlt.innerText = altDeg.toFixed(1) + '°';
+
+            // Update Sun Line on Map
+            layers.sunLine.clearLayers();
+            // Draw a cone or line
+            const lineLen = 100000; // meters
+            const endLat = STATE.userLat + (lineLen/111111) * Math.cos(sun.azimuth + Math.PI); // SunCalc Az is South-based? 
+            // Correct SunCalc: 0 is South, Pi/2 is West. Leaflet needs bearing from North.
+            // Converting SunCalc radians to Leaflet degrees (0=N, 90=E):
+            // SunCalc: S=0, W=PI/2, N=PI, E=3PI/2.
+            // Target: N=0, E=90, S=180, W=270.
+            // Formula: (sun.azimuth * 180 / PI) + 180
+            
+            // Just use the calculated azDeg for direction
+            const line = [
+                [STATE.userLat, STATE.userLon],
+                [endLat, STATE.userLon + (lineLen/111111) * Math.sin(sun.azimuth + Math.PI) / Math.cos(STATE.userLat * Math.PI/180)]
+            ];
+            // Actually, let's just use the calculated angle for simplicity in map drawing logic
+            // Drawing a simple polyline is tricky without proper geo library for bearing projection
+            // We'll skip the complex line and rely on the SkyView which is accurate
+        }
+
+        function initLocation() {
+            if (navigator.geolocation) {
+                els.gpsStatus.innerText = "Localizando...";
+                els.gpsStatus.className = "text-xs px-2 py-1 rounded bg-yellow-900 text-yellow-200";
+                
+                navigator.geolocation.watchPosition((pos) => {
+                    STATE.userLat = pos.coords.latitude;
+                    STATE.userLon = pos.coords.longitude;
+                    
+                    els.gpsStatus.innerText = "GPS Activo";
+                    els.gpsStatus.className = "text-xs px-2 py-1 rounded bg-emerald-900 text-emerald-200";
+
+                    layers.user.clearLayers();
+                    L.marker([STATE.userLat, STATE.userLon]).addTo(layers.user)
+                        .bindPopup("Tu Ubicación").openPopup();
+                    map.setView([STATE.userLat, STATE.userLon]);
+                    
+                    // Initial update
+                    updateSunPosition();
+                    if(STATE.mode === 'real') fetchRealPlanes();
+
+                }, (err) => {
+                    els.gpsStatus.innerText = "Error GPS";
+                });
+            } else {
+                alert("Geolocalización no soportada.");
+            }
+        }
+
+        // --- CLASS & UTILS ---
+        class Plane {
+            constructor(id, lat, lon, heading, speedKnots, altitudeFt, callsign) {
+                this.id = id;
+                this.lat = lat;
+                this.lon = lon;
+                this.heading = heading; 
+                this.speed = speedKnots; 
+                this.altitude = altitudeFt;
+                this.callsign = callsign || id;
+                this.marker = null;
+            }
+            
+            // Simulation movement only
+            moveSimulated(dt) {
+                const R = 6371; 
+                const distKm = (this.speed * 1.852) * (dt / 3600);
+                const brng = this.heading * Math.PI / 180;
+                const lat1 = this.lat * Math.PI / 180;
+                const lon1 = this.lon * Math.PI / 180;
+                
+                let lat2 = Math.asin( Math.sin(lat1)*Math.cos(distKm/R) + Math.cos(lat1)*Math.sin(distKm/R)*Math.cos(brng) );
+                let lon2 = lon1 + Math.atan2(Math.sin(brng)*Math.sin(distKm/R)*Math.cos(lat1), Math.cos(distKm/R)-Math.sin(lat1)*Math.sin(lat2));
+                
+                this.lat = lat2 * 180 / Math.PI;
+                this.lon = lon2 * 180 / Math.PI;
+            }
+        }
+
+        function spawnSimPlane(forceTransit = false) {
+            if (!STATE.userLat) return;
+            const id = Math.random().toString(36).substr(2, 5);
+            let lat, lon, heading, alt;
+            
+            const sunAzDeg = (STATE.sunPos.azimuth * (180/Math.PI) + 180) % 360;
+
+            if (forceTransit) {
+                const spawnDist = 0.2; // ~20km
+                const spawnAngle = sunAzDeg - 30;
+                lat = STATE.userLat + (spawnDist * Math.cos(spawnAngle * Math.PI / 180));
+                lon = STATE.userLon + (spawnDist * Math.sin(spawnAngle * Math.PI / 180));
+                heading = (sunAzDeg + 90) % 360;
+                alt = 30000;
+            } else {
+                lat = STATE.userLat + (Math.random() - 0.5) * 0.5;
+                lon = STATE.userLon + (Math.random() - 0.5) * 0.5;
+                heading = Math.random() * 360;
+                alt = 10000 + Math.random() * 30000;
+            }
+            
+            const airlines = ['IBE', 'RYR', 'VLG', 'AEA', 'Lufthansa'];
+            const callsign = airlines[Math.floor(Math.random()*airlines.length)] + Math.floor(Math.random()*9000);
+            
+            STATE.planes.push(new Plane(id, lat, lon, heading, 300 + Math.random()*200, alt, callsign));
+        }
+
+        function calculateLookAngles(userLat, userLon, planeLat, planeLon, planeAltFt) {
+            const R = 6371e3; 
+            const dLat = (planeLat - userLat) * Math.PI / 180;
+            const dLon = (planeLon - userLon) * Math.PI / 180;
+            const lat1 = userLat * Math.PI / 180;
+            const lat2 = planeLat * Math.PI / 180;
+
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            const surfaceDist = R * c;
+
+            const y = Math.sin(dLon) * Math.cos(lat2);
+            const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+            let az = Math.atan2(y, x);
+            let bearingDeg = (az * 180 / Math.PI + 360) % 360;
+
+            const elevationRad = Math.atan2(planeAltFt * 0.3048, surfaceDist);
+            const elevationDeg = elevationRad * 180 / Math.PI;
+
+            return { az: bearingDeg, alt: elevationDeg, dist: surfaceDist };
+        }
+
+        function updatePlaneMarkers() {
+            // Remove old markers for planes that don't exist in new state? 
+            // For simplicity, we clear all and redraw in this logic, but better is to update
+            // Let's iterate current planes and update/create markers
+            
+            const activeIds = new Set(STATE.planes.map(p => p.id));
+            
+            // Remove missing
+            layers.planes.eachLayer(layer => {
+                if (!activeIds.has(layer.options.planeId)) {
+                    layers.planes.removeLayer(layer);
+                }
+            });
+
+            STATE.planes.forEach(p => {
+                if (!p.marker) {
+                    p.marker = L.marker([p.lat, p.lon], {
+                        icon: planeIcon,
+                        planeId: p.id // Store ID in options for retrieval
+                    }).addTo(layers.planes);
+                    p.marker.bindPopup(`<b>${p.callsign}</b><br>Alt: ${Math.round(p.altitude)}ft<br>Spd: ${Math.round(p.speed)}kts`);
+                } else {
+                    p.marker.setLatLng([p.lat, p.lon]);
+                    const el = p.marker.getElement().querySelector('svg');
+                    if(el) el.style.transform = `rotate(${p.heading - 45}deg)`;
+                }
+            });
+        }
+
+        // --- MAIN LOOP ---
+        function updateLoop() {
+            const now = Date.now();
+            const dt = (now - STATE.lastUpdate) / 1000;
+            STATE.lastUpdate = now;
+
+            updateSunPosition();
+
+            // Handle Logic based on mode
+            if (STATE.mode === 'sim') {
+                if (STATE.planes.length < 5 && STATE.userLat) {
+                    if (Math.random() > 0.7) spawnSimPlane(true);
+                    else spawnSimPlane(false);
+                }
+                // Move simulated planes
+                STATE.planes.forEach(p => p.moveSimulated(dt));
+                
+                // Cleanup far planes
+                STATE.planes = STATE.planes.filter(p => {
+                    const dist = Math.abs(p.lat - STATE.userLat) + Math.abs(p.lon - STATE.userLon);
+                    if (dist > 1.0) {
+                        if (p.marker) layers.planes.removeLayer(p.marker);
+                        return false;
+                    }
+                    return true;
+                });
+                
+                updatePlaneMarkers(); // Update map for sim
+            } else {
+                // Real Mode: Fetch periodically
+                fetchRealPlanes();
+            }
+
+            // Calculations for UI (Common for both modes)
+            const sunAzDeg = (STATE.sunPos.azimuth * (180/Math.PI) + 180) % 360;
+            const sunAltDeg = STATE.sunPos.altitude * 180 / Math.PI;
+            const sunRad = SETTINGS.sunAngularSizeDeg / 2;
+            const transits = [];
+
+            STATE.planes.forEach(p => {
+                if (!STATE.userLat) return;
+                
+                const look = calculateLookAngles(STATE.userLat, STATE.userLon, p.lat, p.lon, p.altitude);
+                p.look = look;
+
+                const azDiff = Math.abs(look.az - sunAzDeg);
+                const azDist = Math.min(azDiff, 360 - azDiff);
+                const altDiff = Math.abs(look.alt - sunAltDeg);
+                const totalAngDist = Math.sqrt(azDist*azDist + altDiff*altDiff);
+
+                if (totalAngDist < 15) { // Show if within 15 deg
+                    transits.push({ 
+                        plane: p, 
+                        dist: totalAngDist,
+                        isTransit: totalAngDist < sunRad
+                    });
+                }
+            });
+
+            renderTransitList(transits);
+            drawSkyView(sunAzDeg, sunAltDeg, STATE.planes);
+
+            requestAnimationFrame(updateLoop);
+        }
+
+        function renderTransitList(transits) {
+            els.transitList.innerHTML = '';
+            if (transits.length === 0) {
+                els.transitList.innerHTML = `<div class="text-center text-slate-600 text-xs py-4">Sin tráfico cerca del sol</div>`;
+                return;
+            }
+            transits.sort((a, b) => a.dist - b.dist);
+            transits.forEach(t => {
+                const isTransit = t.isTransit;
+                const colorClass = isTransit ? 'bg-red-900/50 border-red-500' : 'bg-slate-800 border-slate-600';
+                const status = isTransit ? '¡CRUZANDO!' : `Aprox: ${t.dist.toFixed(2)}°`;
+                
+                const card = document.createElement('div');
+                card.className = `p-2 rounded border ${colorClass} text-xs transition-all ${isTransit ? 'transit-alert' : ''}`;
+                card.innerHTML = `
+                    <div class="flex justify-between font-bold text-slate-200">
+                        <span>${t.plane.callsign}</span>
+                        <span>${Math.round(t.plane.altitude)}ft</span>
+                    </div>
+                    <div class="text-slate-400 mt-1">${status}</div>
+                `;
+                els.transitList.appendChild(card);
+            });
+        }
+
+        function drawSkyView(sunAz, sunAlt, planes) {
+            const cvs = els.skyCanvas;
+            const ctx = cvs.getContext('2d');
+            
+            // Resize logic
+            const rect = cvs.getBoundingClientRect();
+            if (cvs.width !== rect.width || cvs.height !== rect.height) {
+                cvs.width = rect.width;
+                cvs.height = rect.height;
+            }
+
+            const cx = cvs.width / 2;
+            const cy = cvs.height / 2;
+            const fov = 15; 
+            const pxPerDeg = cvs.width / fov;
+
+            // Background
+            const grad = ctx.createLinearGradient(0, 0, 0, cvs.height);
+            grad.addColorStop(0, '#0c4a6e'); 
+            grad.addColorStop(1, '#0369a1'); 
+            ctx.fillStyle = grad;
+            ctx.fillRect(0,0, cvs.width, cvs.height);
+
+            // Sun
+            const sunRadiusPx = (SETTINGS.sunAngularSizeDeg / 2) * pxPerDeg;
+            ctx.beginPath();
+            ctx.arc(cx, cy, sunRadiusPx, 0, Math.PI * 2);
+            ctx.fillStyle = '#fbbf24'; 
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = '#fbbf24';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // Crosshair
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.beginPath();
+            ctx.moveTo(0, cy); ctx.lineTo(cvs.width, cy);
+            ctx.moveTo(cx, 0); ctx.lineTo(cx, cvs.height);
+            ctx.stroke();
+
+            // Planes
+            planes.forEach(p => {
+                if (!p.look) return;
+
+                let dAz = p.look.az - sunAz;
+                if (dAz > 180) dAz -= 360;
+                if (dAz < -180) dAz += 360;
+                const dAlt = p.look.alt - sunAlt;
+
+                const dx = dAz * pxPerDeg;
+                const dy = -(dAlt * pxPerDeg); 
+
+                // Draw Plane if visible
+                if (Math.abs(dx) < cvs.width/2 + 20 && Math.abs(dy) < cvs.height/2 + 20) {
+                    ctx.save();
+                    ctx.translate(cx + dx, cy + dy);
+                    // Approximate visual rotation: if plane is flying "Right", it should point right.
+                    // Plane Heading vs View Heading (Sun Az)
+                    // If Sun Az = 180, Plane Heading = 270 (West), it's moving Right to Left on screen?
+                    // View is looking South. West is Right. So 270 is Right.
+                    // Rotation relative to screen 'up' (-90 deg offset usually for canvas)
+                    // Let's just use heading relative to Sun Azimuth for simplicity visual
+                    
+                    let relHead = p.heading - sunAz; 
+                    // This is rough but gives movement indication
+                    ctx.rotate((relHead) * Math.PI / 180);
+                    
+                    ctx.fillStyle = '#fff';
+                    // Simple plane shape
+                    ctx.beginPath();
+                    ctx.moveTo(0, -5); ctx.lineTo(3, 5); ctx.lineTo(0, 3); ctx.lineTo(-3, 5);
+                    ctx.fill();
+                    
+                    // Label
+                    ctx.rotate(-(relHead) * Math.PI / 180); // Reset rot for text
+                    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+                    ctx.font = '10px sans-serif';
+                    ctx.fillText(p.callsign, 6, 3);
+                    
+                    ctx.restore();
+                }
+            });
+        }
+
+        // Start
+        initLocation();
+        requestAnimationFrame(updateLoop);
+
+    </script>
+</body>
+</html>
